@@ -1,11 +1,9 @@
+package FrontEnd;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 
 public class GradeSheet extends JFrame implements ActionListener{
@@ -15,7 +13,7 @@ public class GradeSheet extends JFrame implements ActionListener{
     JButton addColumn = new JButton("Alter Section");
     JButton grade = new JButton("Grade");
     JButton complete = new JButton("End Course");
-    JButton report = new JButton("Report");
+    JButton report = new JButton("BackEnd.Report");
     JButton exCredit = new JButton("Extra Credit");
     DefaultTableModel mSheet;
     JLabel lSheet1 = new JLabel("Select Students Info：");
