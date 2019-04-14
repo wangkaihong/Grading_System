@@ -43,7 +43,7 @@ public class Select_Course_UI extends JFrame implements ActionListener{
             for(int i = 0; i< course.length;i++) {
                 if (e.getSource() == course[i]) {
 //                    dispose();
-//                    System.out.print(i);
+//                    Grading_System.out.print(i);
                     // go to course i;
                     dispose();
                     new GradeSheet();

@@ -5,10 +5,10 @@ import java.util.ArrayList;
 /**
  * Created by wangkaihong on 2019/4/9.
  */
-public class System {
+public class Grading_System {
     private ArrayList<Course> courses;
 
-    public System() { // Constructor: read from IO and construct system instance
+    public Grading_System() { // Constructor: read from IO and construct system instance
 
     }
 
