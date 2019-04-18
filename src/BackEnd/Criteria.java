@@ -8,8 +8,8 @@ import java.util.ArrayList;
 public class Criteria {
     private ArrayList<Double> weight;
 
-    public Criteria() {
-
+    public Criteria(ArrayList<Double> weight) {
+        this.weight = weight;
     }
 
     public ArrayList<Double> getWeight() {

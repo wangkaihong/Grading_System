@@ -4,11 +4,12 @@ package BackEnd;
  * Created by wangkaihong on 2019/4/9.
  */
 public abstract class Student implements Reportable{
-    private String firstName;
-    private String secondName;
-    private String thirdName;
-    private String studentId;
-    private String emailAddress;
+    protected String firstName;
+    protected String secondName;
+    protected String thirdName;
+    protected String studentId;
+    protected String emailAddress;
+
 
     public String getFirstName() {
         return firstName;
