@@ -19,6 +19,19 @@ public class Course implements Reportable {
         //Constructor
 
     }
+    public Course(String courseName, String lecturerName, String semester) {
+        this.courseName = courseName;
+        this.lecturerName = lecturerName;
+        this.semester = semester;
+        this.sheet = null;
+        this.students = null;
+        this.assignments = null;
+        this.criteria = null;
+    }
+    public int addCriteriaFromPrevious(Course previous) {
+        this.criteria = previous.criteria;
+        return 1; // todo
+    }
 
     public String getCourseName() {
         return courseName;
