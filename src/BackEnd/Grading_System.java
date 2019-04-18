@@ -30,4 +30,8 @@ public class Grading_System {
         // return 1 if succeeded, return 2 if course not found, return 3 if unknown error
         return 1;
     }
+
+    public static void main(String[] args) {
+        Grading_System s = new Grading_System();
+    }
 }
