@@ -84,7 +84,7 @@ public class GradeSheet extends JFrame implements ActionListener{
         else if(e.getSource() == addColumn){
 //            mSheet.addColumn("New Column");
             dispose();
-            new ModifyCol();
+            new ModifyCol_UI();
         }
         else if(e.getSource() == grade){
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to get final grade?");
