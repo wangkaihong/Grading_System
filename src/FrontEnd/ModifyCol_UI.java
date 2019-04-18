@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class ModifyCol extends JFrame implements ActionListener {
+public class ModifyCol_UI extends JFrame implements ActionListener {
     JPanel pTable = new JPanel(new BorderLayout());
     JPanel pFuncs = new JPanel(new GridLayout(1,5));
     JRadioButton deduction = new JRadioButton("Deduction");
@@ -19,37 +19,31 @@ public class ModifyCol extends JFrame implements ActionListener {
     static DefaultTableModel table;
 
 
-    public ModifyCol(){
+    public ModifyCol_UI(){
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
 
-        String[] columnNames =  {"Name", "Weighted", "Scoring Way"};
+        String[] columnNames =  {"Name", "Total", "Weighted", "Scoring Way"};
         //item data
-        Object[][] rowData = {{"hw1",20,"deduction"},{"hw2", 10, "percentage"}};
-
+        Object[][] rowData = {{"hw1",100, 20,"deduction"},{"hw2",160, 10, "percentage"}};
         table = new DefaultTableModel(rowData, columnNames) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return (columnIndex != 2);
+                return (columnIndex != 4);
             }
         };
         JTable tSheet = new JTable(table);
         JScrollPane scrollPane = new JScrollPane(tSheet);
         pTable.add(scrollPane);
-        pFuncs.add(deduction);
-        pFuncs.add(percentage);
         pFuncs.add(confirm);
         pFuncs.add(addRow);
         pFuncs.add(back);
-        G1.add(deduction);
-        G1.add(percentage);
         back.addActionListener(this);
         confirm.addActionListener(this);
         addRow.addActionListener(this);
-        this.deduction.setActionCommand("Deduction");
-        this.percentage.setActionCommand("Percentage");
-        pTable.setBounds(50,50,900,300);
-        pFuncs.setBounds(50,400,900,150);
+
+        pTable.setBounds(50,50,500,500);
+        pFuncs.setBounds(600,400,300,50);
         contentPane.add(pTable);
         contentPane.add(pFuncs);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -57,14 +51,15 @@ public class ModifyCol extends JFrame implements ActionListener {
         this.setTitle("Modify Column");
         this.setVisible(true);
 
+
     }
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == back) {
             dispose();
             new GradeSheet();
         }else if(e.getSource() == addRow){
-//            String selection = this.G1.getSelection().getActionCommand();
-//            addRows(selection);
+            //String selection = this.G1.getSelection().getActionCommand();
+            //addRows(selection);
             new AddAssignment_UI();
         }else if(e.getSource() ==confirm){
             dispose();
