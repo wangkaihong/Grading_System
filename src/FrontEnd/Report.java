@@ -31,7 +31,7 @@ public class Report extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == returnToTable){
-            new GradeSheet();
+            new GradeSheet_UI();
             this.setVisible(false);
         }
     }
