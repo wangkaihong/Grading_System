@@ -16,7 +16,7 @@ public class ModifyCol extends JFrame implements ActionListener {
     JButton addRow = new JButton("Add");
     JButton back = new JButton("Back");
     JButton confirm = new JButton("Confirm");
-    DefaultTableModel table;
+    static DefaultTableModel table;
 
 
     public ModifyCol(){
@@ -63,15 +63,16 @@ public class ModifyCol extends JFrame implements ActionListener {
             dispose();
             new GradeSheet();
         }else if(e.getSource() == addRow){
-            String selection = this.G1.getSelection().getActionCommand();
-            addRows(selection);
+//            String selection = this.G1.getSelection().getActionCommand();
+//            addRows(selection);
+            new AddAssignment_UI();
         }else if(e.getSource() ==confirm){
             dispose();
             new GradeSheet();
         }
     }
-    public void addRows(String scoring){
-        table.addRow(new Object[]{"new", 0, scoring});
+    public static void addRows(String name, double total, double weight, String scoring){
+        table.addRow(new Object[]{name,total,weight, scoring});
 
     }
 
