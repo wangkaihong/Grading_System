@@ -31,7 +31,7 @@ public class Grading_System {
         return 1;
     }
 
-    public static void main(String[] args){
-        System.out.println("Hello_World!");
+    public static void main(String[] args) {
+        Grading_System s = new Grading_System();
     }
 }

@@ -7,4 +7,7 @@ public class Undergraduate extends Student {
     public Undergraduate() {
         super();
     }
+    public Undergraduate(String firstName, String middleInitial, String lastName, String studentId, String emailAddress) {
+        super(firstName, middleInitial, lastName, studentId, emailAddress);
+    }
 }
