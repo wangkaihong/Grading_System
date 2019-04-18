@@ -1,6 +1,9 @@
 package BackEnd;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
+import java.io.File;
 
 /**
  * Created by wangkaihong on 2019/4/9.
@@ -16,21 +19,40 @@ public class Course implements Reportable {
     private ArrayList<Criteria> criteria;
 
     public Course() {
-        //Constructor
 
     }
-    public Course(String courseName, String lecturerName, String semester) {
+    public Course(String courseName, String lecturerName, String semester, String student_file_dir, Course previous) {
         this.courseName = courseName;
         this.lecturerName = lecturerName;
         this.semester = semester;
         this.sheet = null;
-        this.students = null;
-        this.assignments = null;
-        this.criteria = null;
+        this.students = getStudentsFromFile(student_file_dir);
+        if(previous == null) {
+            this.assignments = null;
+            this.criteria = null;
+        }
+        else {
+            this.assignments = previous.assignments;
+            this.criteria = previous.criteria;
+        }
     }
-    public int addCriteriaFromPrevious(Course previous) {
-        this.criteria = previous.criteria;
-        return 1; // todo
+    public ArrayList<Student> getStudentsFromFile(String student_file_dir) {
+        ArrayList<Student> temp_student = new ArrayList<>();
+        try {
+            Scanner scanner = new Scanner(new File(student_file_dir));
+            scanner.useDelimiter("\n");
+            while (scanner.hasNext()) {
+                String temp = scanner.next();
+                String[] arr = temp.split(",");
+                temp_student.add(new Undergraduate(arr[0],arr[1],arr[2],arr[3],arr[4]));
+            }
+            scanner.close();
+        }
+        catch (Exception e) {
+            System.out.print("Something went wrong in importing Student information!");
+            return null;
+        }
+        return temp_student;
     }
 
     public String getCourseName() {
@@ -117,5 +139,7 @@ public class Course implements Reportable {
         //return double score if succeeded , return -1 if unknown error
         return 1;
     }
-
+    public static void main(String[] args) {
+        Course c = new Course("a","b","c","students.csv",null);
+    }
 }
