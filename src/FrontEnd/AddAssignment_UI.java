@@ -76,7 +76,7 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
             String name = assignmentname.getText();
             double total = Double.parseDouble(totalPoint.getText());
             double weight = Double.parseDouble(weighted.getText());
-            ModifyCol.addRows(name, total, weight, scoring);
+            ModifyCol_UI.addRows(name, total, weight, scoring);
             dispose();
             System.out.print("scoring way is :" + scoring);
             // add course info to course
