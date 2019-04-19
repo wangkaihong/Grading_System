@@ -20,6 +20,17 @@ public class Course implements Reportable {
 
     }
 
+    public Course(String cN, String lN, String s, Sheet sh, ArrayList<Student> stu, ArrayList<Assignment> assign, ArrayList<Criteria> cri){
+        courseName = cN;
+        lecturerName = lN;
+        semester = s;
+        sheet = sh;
+        students = stu;
+        assignments = assign;
+        criteria = cri;
+    }
+
+
     public String getCourseName() {
         return courseName;
     }

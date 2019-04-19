@@ -12,6 +12,12 @@ public class Note {
     public Note() {
 
     }
+
+    public Note(String info, Date d){
+        information = info;
+        time = d;
+    }
+
     public String getInformation() {
         return information;
     }
