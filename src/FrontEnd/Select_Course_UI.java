@@ -4,52 +4,79 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
-/**
- * Created by wangkaihong on 2019/3/30.
- */
-public class Select_Course_UI extends JFrame implements ActionListener{
-    JPanel p = new JPanel();
-    JButton add = new JButton("Add Class");
-    JButton[] course;
 
-    public Select_Course_UI(){
-        course = new JButton[1];
-        course[0] = new JButton("Course");
+public class Select_Course_UI extends JFrame implements ActionListener {
+    JPanel courseList = new JPanel();
+    JPanel buttons = new JPanel();
+
+    String[] course = new String[10];
+    JLabel courseLabel = new JLabel("Course: ");
+
+
+    JButton enter = new JButton("Enter Course");
+    JButton add = new JButton("Create New Course");
+    JButton logout = new JButton("Log out");
+
+    static String getSelect;
+
+    public Select_Course_UI() {
+        course[0] = "CS 591 P1: Object Oriented Design";
+        JComboBox courses = new JComboBox(course);
         Container contentPane = this.getContentPane();
-        contentPane.setLayout(new FlowLayout());
-        p.setLayout(new GridLayout(0,1));
-        for(int i = 0;i < course.length;i++) {
-            p.add(course[i]);
-            course[i].addActionListener(this);
-        }
-        p.add(add);
-        add.addActionListener(this);
+        getSelect = "CS 591 P1: Object Oriented Design";
 
-        contentPane.add(p);
+        contentPane.setLayout(null);
+
+        courses.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    getSelect = courses.getSelectedItem().toString();
+                }
+            }
+        });
+
+
+        courseList.setLayout(new GridLayout(1, 2));
+        courseList.add(courseLabel);
+        courseList.add(courses);
+        courseList.setBounds(50, 100, 500, 30);
+        contentPane.add(courseList);
+
+        add.addActionListener(this);
+        enter.addActionListener(this);
+        logout.addActionListener(this);
+        buttons.setLayout(new GridLayout(3, 1));
+        buttons.add(enter);
+        buttons.add(add);
+        buttons.add(logout);
+        buttons.setBounds(400, 200, 200, 100);
+        contentPane.add(buttons);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(1000, 600);
+        setSize(640, 360);
         setTitle("Select Course");
         setResizable(false);
         setVisible(true);
     }
 
-    public void actionPerformed(ActionEvent e){
-        if(e.getSource() == add){
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == add) {
             dispose();
             new Add_Class_UI();
-        }
-        else {
-            for(int i = 0; i< course.length;i++) {
-                if (e.getSource() == course[i]) {
-//                    dispose();
-//                    Grading_System.out.print(i);
-                    // go to course i;
+        } else if (e.getSource() == enter) {
+            for (int i = 0; i < course.length; i++) {
+                if (getSelect.equals(course[i])) {
                     dispose();
                     new GradeSheet_UI();
                 }
             }
+        } else if (e.getSource() == logout) {
+            dispose();
+            new Grading_System_UI();
         }
     }
-
 }
