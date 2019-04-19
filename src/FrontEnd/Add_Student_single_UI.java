@@ -70,12 +70,16 @@ public class Add_Student_single_UI extends JFrame implements ActionListener {
             dispose();
 
         }else if(e.getSource() == confirm){
-            //io?
+            String studentFName = fname.getText();
+            String studentMName = mname.getText();
+            String studentLName = lname.getText();
+            String studentID = id.getText();
+            String studentEmail = email.getText();
+            String studentType = this.G2.getSelection().getActionCommand();
+
+            //??
         }
 
     }
 
-//    public static void main(String[] args){
-//        new Add_Student_single_UI();
-//    }
 }

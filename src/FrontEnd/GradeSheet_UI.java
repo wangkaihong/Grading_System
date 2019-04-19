@@ -39,6 +39,8 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
                 {"Full Points","", 80, 80, 80, ""},
                 {},
                 {"U12345","Jack", 80, 80, 80, ""},
+                {"U12345","Jack", 80, 80, 80, ""},
+                {"U12345","Jack", 80, 80, 80, ""}
         };
         //JTable tSheet = new JTable(rowData, columnNames);
         mSheet = new DefaultTableModel(rowData, columnNames) {
@@ -125,10 +127,13 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
             new Add_Student_single_UI();
         }
         else if(e.getSource() == removeStudent){
+            //??
+            int select = mSheet.getRowCount();
+            mSheet.removeRow(select-1);
 
         }
     }
-//    public static void main(String[] args){
-//        new GradeSheet_UI();
-//    }
+    public static void main(String[] args){
+        new GradeSheet_UI();
+    }
 }
