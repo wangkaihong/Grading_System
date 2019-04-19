@@ -84,6 +84,8 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         contentPane.add(note);
         contentPane.add(pFunc6);
         contentPane.add(pFunc2);
+        addStudent.addActionListener(this);
+        removeStudent.addActionListener(this);
         back.addActionListener(this);
         addColumn.addActionListener(this);
         grade.addActionListener(this);
@@ -119,8 +121,14 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         else if(e.getSource() == exCredit){
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to add extra credit?");
         }
+        else if(e.getSource() == addStudent){
+            new Add_Student_single_UI();
+        }
+        else if(e.getSource() == removeStudent){
+
+        }
     }
-    public static void main(String[] args){
-        new GradeSheet_UI();
-    }
+//    public static void main(String[] args){
+//        new GradeSheet_UI();
+//    }
 }

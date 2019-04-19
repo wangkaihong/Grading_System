@@ -15,7 +15,6 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
     JTextField totalPoint = new JTextField(20);
     JLabel weight = new JLabel("Weight: ");
     JTextField weighted = new JTextField(20);
-    JLabel score = new JLabel("Scoring Method");
     JRadioButton deduction = new JRadioButton("Deduction");
     JRadioButton percentage = new JRadioButton("Percentage");
     JRadioButton raw = new JRadioButton("Raw Point");
