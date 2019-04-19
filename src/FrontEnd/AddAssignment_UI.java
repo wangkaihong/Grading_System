@@ -82,8 +82,6 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
             // add course info to course
         }
     }
-    public static void main(String[] args){
-        new AddAssignment_UI();
-    }
+
 
 }

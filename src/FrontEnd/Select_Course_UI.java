@@ -46,7 +46,7 @@ public class Select_Course_UI extends JFrame implements ActionListener{
 //                    Grading_System.out.print(i);
                     // go to course i;
                     dispose();
-                    new GradeSheet();
+                    new GradeSheet_UI();
                 }
             }
         }
