@@ -24,6 +24,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
     JPanel pFunc2 = new JPanel();
     JTextField jt = new JTextField();
     DefaultTableModel mSheet;
+    Object[] columnNames = { "ID", "Name","HW1", "HW2", "Exam1", "Total"};
     //JLabel lSheet1 = new JLabel("Select Students Info：");
     //String[] listInfo = new String[]{"FirstName", "ID", "Email"};
 
@@ -31,20 +32,19 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         setTitle("Grade Sheet");
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
-        Object[] columnNames = {"Name", "HW1", "HW2", "Exam1", "Total"};
+
         // student data
         Object[][] rowData = {
-                {"Jack", 80, 80, 80, ""},
-                {"John", 70, 80, 90, ""},
-                {"Sue", 70, 70, 70, ""},
-                {"Jane", 80, 70, 60, ""},
-                {"Joe", 80, 70, 60, ""}
+                {"Weights","", 80, 80, 80, ""},
+                {"Full Points","", 80, 80, 80, ""},
+                {},
+                {"U12345","Jack", 80, 80, 80, ""},
         };
         //JTable tSheet = new JTable(rowData, columnNames);
         mSheet = new DefaultTableModel(rowData, columnNames) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return (columnIndex != 0) & (columnIndex != 4);
+                return (columnIndex != 0) & (columnIndex != 5);
             }
         };
         JTable tSheet = new JTable(mSheet);
