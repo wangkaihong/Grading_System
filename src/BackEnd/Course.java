@@ -1,5 +1,6 @@
 package BackEnd;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -37,22 +38,26 @@ public class Course implements Reportable {
         }
     }
     public ArrayList<Student> getStudentsFromFile(String student_file_dir) {
-        ArrayList<Student> temp_student = new ArrayList<>();
+        ArrayList<Student> stduent_list = new ArrayList<>();
         try {
             Scanner scanner = new Scanner(new File(student_file_dir));
             scanner.useDelimiter("\n");
             while (scanner.hasNext()) {
                 String temp = scanner.next();
                 String[] arr = temp.split(",");
-                temp_student.add(new Undergraduate(arr[0],arr[1],arr[2],arr[3],arr[4]));
+                stduent_list.add(new Undergraduate(arr[0],arr[1],arr[2],arr[3],arr[4]));
             }
             scanner.close();
+        }
+        catch (FileNotFoundException e) {
+            System.out.print("File not found!");
+            return null;
         }
         catch (Exception e) {
             System.out.print("Something went wrong in importing Student information!");
             return null;
         }
-        return temp_student;
+        return stduent_list;
     }
 
     public String getCourseName() {
