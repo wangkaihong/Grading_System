@@ -11,6 +11,10 @@ public class Sheet {
     public Sheet() {
     }
 
+    public Sheet(ArrayList<ArrayList<Cell>> c){
+        cell = c;
+    }
+
     public ArrayList<ArrayList<Cell>> getCell() {
         return cell;
     }

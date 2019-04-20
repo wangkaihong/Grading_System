@@ -1,10 +1,6 @@
 package BackEnd;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Scanner;
-import java.io.File;
 
 /**
  * Created by wangkaihong on 2019/4/9.
@@ -20,45 +16,20 @@ public class Course implements Reportable {
     private ArrayList<Criteria> criteria;
 
     public Course() {
+        //Constructor
 
     }
-    public Course(String courseName, String lecturerName, String semester, String student_file_dir, Course previous) {
-        this.courseName = courseName;
-        this.lecturerName = lecturerName;
-        this.semester = semester;
-        this.sheet = null;
-        this.students = getStudentsFromFile(student_file_dir);
-        if(previous == null) {
-            this.assignments = null;
-            this.criteria = null;
-        }
-        else {
-            this.assignments = previous.assignments;
-            this.criteria = previous.criteria;
-        }
+
+    public Course(String cN, String lN, String s, Sheet sh, ArrayList<Student> stu, ArrayList<Assignment> assign, ArrayList<Criteria> cri){
+        courseName = cN;
+        lecturerName = lN;
+        semester = s;
+        sheet = sh;
+        students = stu;
+        assignments = assign;
+        criteria = cri;
     }
-    public ArrayList<Student> getStudentsFromFile(String student_file_dir) {
-        ArrayList<Student> stduent_list = new ArrayList<>();
-        try {
-            Scanner scanner = new Scanner(new File(student_file_dir));
-            scanner.useDelimiter("\n");
-            while (scanner.hasNext()) {
-                String temp = scanner.next();
-                String[] arr = temp.split(",");
-                stduent_list.add(new Undergraduate(arr[0],arr[1],arr[2],arr[3],arr[4]));
-            }
-            scanner.close();
-        }
-        catch (FileNotFoundException e) {
-            System.out.print("File not found!");
-            return null;
-        }
-        catch (Exception e) {
-            System.out.print("Something went wrong in importing Student information!");
-            return null;
-        }
-        return stduent_list;
-    }
+
 
     public String getCourseName() {
         return courseName;
@@ -144,7 +115,5 @@ public class Course implements Reportable {
         //return double score if succeeded , return -1 if unknown error
         return 1;
     }
-    public static void main(String[] args) {
-        Course c = new Course("a","b","c","students.csv",null);
-    }
+
 }
