@@ -23,6 +23,7 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
     ButtonGroup G1 = new ButtonGroup();
     JButton confirm = new JButton("Confirm");
     JButton ret = new JButton("Cancel");
+    JCheckBox copy = new JCheckBox("Same Weights");
     String scoring = "" ;
 
     public AddAssignment_UI(){
@@ -31,7 +32,7 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
         layout.setHgap(100);
         layout.setVgap(30);
         contentPane.setLayout(layout);
-        p.setLayout(new GridLayout(4,2));
+        p.setLayout(new GridLayout(5,2));
         radioPanel.setLayout(new GridLayout(1, 3));
         radioPanel.add(raw);
         radioPanel.add(deduction);
@@ -49,7 +50,9 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
         p.add(weightedU);
         p.add(weightG);
         p.add(weightedG);
+        p.add(copy);
         func.add(confirm);
+        copy.addActionListener(this);
         this.deduction.setActionCommand("Deduction");
         this.percentage.setActionCommand("Percentage");
         this.raw.setActionCommand("raw");
@@ -59,6 +62,7 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
         p.setBounds(100,100, 475,100);
         //contentPane.setSize(450,160);
         contentPane.add(p);
+        //contentPane.add(copy);
         contentPane.add(radioPanel);
         contentPane.add(func);
         //contentPane.add(p);
@@ -70,11 +74,12 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
+        //if(e.getSource() == copy)
         if(e.getSource() == ret) {
             dispose();
             //new ModifyCol();
         }
-        if(e.getSource() == confirm) {
+        else if(e.getSource() == confirm) {
             scoring = this.G1.getSelection().getActionCommand();
             String name = assignmentname.getText();
             double total = Double.parseDouble(totalPoint.getText());

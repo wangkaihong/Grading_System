@@ -1,9 +1,12 @@
 package FrontEnd;
 
+import BackEnd.Student;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import BackEnd.*;
 
 public class Add_Student_single_UI extends JFrame implements ActionListener {
     JPanel infoP = new JPanel();
@@ -78,6 +81,15 @@ public class Add_Student_single_UI extends JFrame implements ActionListener {
             String studentID = id.getText();
             String studentEmail = email.getText();
             String studentType = this.G2.getSelection().getActionCommand();
+
+            if(studentType == "Graduate"){
+                Student s1 = new Graduate(studentFName, studentMName,studentLName,studentID,studentEmail);
+            }else{
+                Student s = new Undergraduate(studentFName, studentMName,studentLName,studentID,studentEmail);
+            }
+            //GradeSheet_UI.addRows(studentID, studentFName, studentLName);
+            dispose();
+
 
             //??
         }

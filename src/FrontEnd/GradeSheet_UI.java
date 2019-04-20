@@ -6,9 +6,11 @@ import java.awt.event.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import BackEnd.Course;
 
 
 public class GradeSheet_UI extends JFrame implements ActionListener{
+    Course course;
     JPanel pSheet = new JPanel();
     //JScrollPane spSheet;
     JButton addStudent = new JButton("+ Add Student");
@@ -25,9 +27,9 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
     JPanel pFunc6 = new JPanel();
     JPanel pFunc2 = new JPanel();
     JTextField jt = new JTextField();
-    DefaultTableModel mSheet;
+    static DefaultTableModel mSheet;
     JTable tSheet;
-    String[] columnNames = { "ID", "Name","HW1", "HW2", "Exam1", "Total"};
+    String[] columnNames = { "ID", "FirstName","LastName","HW1", "HW2", "Exam1", "Total"};
     //
     //JLabel lSheet1 = new JLabel("Select Students Info：");
     //String[] listInfo = new String[]{"FirstName", "ID", "Email"};
@@ -38,14 +40,15 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         contentPane.setLayout(null);
 
         // student data
-        String[][] rowData = {
+        String[][] rowData = //course.getTable();
+                {
                 {"Weights_UG","", "80", "80", "80", ""},
                 {"Weights_Graduate","", "80", "80", "80", ""},
                 {"Full Points","", "80", "80", "80", ""},
                 {},
-                {"U12345","Jack", "80", "80", "80", ""},
-                {"U12345","Jack", "80", "80", "80",  ""},
-                {"U12345","Jack", "80", "80", "80",  ""}
+                {"U12345","Jack", "LJack","80", "80", "80", ""},
+                {"U1245","Jack","LJack", "80", "80", "80",  ""},
+                {"U1345","Jack","LJack", "80", "80", "80",  ""}
         };
         //JTable tSheet = new JTable(rowData, columnNames);
         mSheet = new DefaultTableModel(rowData, columnNames) {
@@ -167,4 +170,8 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
 //    public static void main(String[] args){
 ////        new GradeSheet_UI();
 ////    }
+    public static void addRows(String id, String first, String last){
+        mSheet.addRow(new Object[]{id,first,last});
+
+}
 }
