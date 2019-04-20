@@ -280,6 +280,15 @@ public class Course implements Reportable {
             return 4;
         }
     }
+    public String[][] getTable() { // todo
+        return null;
+    }
+    public int setScore(int cor1,int cor2, String score) { // todo
+        double input = Double.valueOf(score);
+        sheet.setScore(cor1,cor2,input);
+        return 1;
+    }
+
     public Report getReport() {
         // tbd
         return null;

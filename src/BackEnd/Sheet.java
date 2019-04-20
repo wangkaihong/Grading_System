@@ -18,8 +18,8 @@ public class Sheet {
     public void setCell(ArrayList<ArrayList<Cell>> cell) {
         this.cells = cell;
     }
-    public int setScore(int cor1,int cor2) {
-        return cells.get(cor1).get(cor2).setScore(100);
+    public int setScore(int cor1,int cor2, double score) {
+        return cells.get(cor1).get(cor2).setScore(score);
     }
     public int setnote(int cor1,int cor2) {
         return cells.get(cor1).get(cor2).setNote(null);
