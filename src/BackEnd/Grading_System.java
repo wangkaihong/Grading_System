@@ -1,6 +1,5 @@
 package BackEnd;
 
-import com.sun.media.sound.InvalidFormatException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -80,7 +79,7 @@ public class Grading_System {
                         catch (FileNotFoundException e) {
                             return 9;
                         }
-                        catch (InvalidFormatException e) {
+                        catch (InvalidStudentFileException e) {
                             return 8;
                         }
                         catch (Exception e) {
@@ -92,7 +91,7 @@ public class Grading_System {
         }
     }
 
-    public ArrayList<Student> getStudentsFromFile(String student_file_dir) throws FileNotFoundException, InvalidFormatException, Exception{
+    public ArrayList<Student> getStudentsFromFile(String student_file_dir) throws FileNotFoundException, InvalidStudentFileException, Exception{
         ArrayList<Student> stduent_list = new ArrayList<>();
         try {
             Scanner scanner = new Scanner(new File(student_file_dir));
@@ -108,7 +107,7 @@ public class Grading_System {
                         stduent_list.add(new Graduate(arr[0], arr[1], arr[2], arr[3], arr[4]));
                     }
                     else {
-                        throw new InvalidFormatException();
+                        throw new InvalidStudentFileException();
                     }
                 }
             }
@@ -117,8 +116,8 @@ public class Grading_System {
         catch (FileNotFoundException e) {
             throw new FileNotFoundException();
         }
-        catch (InvalidFormatException e) {
-            throw new InvalidFormatException();
+        catch (InvalidStudentFileException e) {
+            throw new InvalidStudentFileException();
         }
         catch (Exception e) {
             throw new Exception();
@@ -238,7 +237,7 @@ public class Grading_System {
             listCriRead = tempc.getCriteria();
             listStudentRead = tempc.getStudents();
             listAssignRead = tempc.getAssignments();
-            matrixCellRead = tempc.getSheet().getCell();
+            matrixCellRead = tempc.getSheet().getAllCell();
             //System.out.println(tempc.getAssignments());
             //System.out.println(tempc.getCriteria());
             //System.out.println(tempc.getSheet());

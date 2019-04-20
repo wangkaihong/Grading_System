@@ -292,6 +292,8 @@ public class Course implements Reportable {
         }
     }
     public String[][] getTable() { // todo
+//        String[][] table = new String[][]();
+//        Cell = sheet.getAllCell()
         return null;
     }
     public int setScore(int cor1,int cor2, String score) { // todo

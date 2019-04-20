@@ -15,9 +15,13 @@ public class Sheet {
         cells = c;
     }
 
-    public ArrayList<ArrayList<Cell>> getCell() {
+    public ArrayList<ArrayList<Cell>> getAllCell() {
         return cells;
     }
+    public Cell getCell(int cor1, int cor2) {
+        return cells.get(cor1).get(cor2);
+    }
+
 
     public void setCell(ArrayList<ArrayList<Cell>> cell) {
         this.cells = cell;
