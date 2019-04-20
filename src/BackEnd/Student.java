@@ -9,7 +9,7 @@ public abstract class Student implements Reportable{
     private String lastName;
     private String studentId;
     private String emailAddress;
-    
+
     public Student() {
         this.firstName = null;
         this.middleInitial = null;
@@ -17,7 +17,7 @@ public abstract class Student implements Reportable{
         this.studentId = null;
         this.emailAddress = null;
     }
-    
+
     public Student(String firstName, String middleInitial, String lastName, String studentId, String emailAddress) {
         this.firstName = firstName;
         this.middleInitial = middleInitial;

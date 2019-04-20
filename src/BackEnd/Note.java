@@ -20,6 +20,12 @@ public class Note {
         time = Calendar.getInstance().getTime().toString();
         information = info;
     }
+
+    public Note(String info, String d){
+        information = info;
+        time = d;
+    }
+
     public String getInformation() {
         return information;
     }

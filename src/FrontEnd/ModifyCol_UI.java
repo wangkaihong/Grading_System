@@ -17,6 +17,7 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
     JButton addRow = new JButton("Add");
     JButton back = new JButton("Back");
     JButton confirm = new JButton("Confirm");
+    String[][] rowData = {{"hw1","80", "80", "80", "deduction"},{"hw2","80", "80", "80",   "percentage"}};
     static DefaultTableModel table;
     static double totalWeight;
 
@@ -25,13 +26,12 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
 
-        String[] columnNames =  {"Name", "Total", "Weighted", "Scoring Way"};
+        String[] columnNames =  {"Name", "Total", "Weighted_UG", "Weighted_G","Scoring Way"};
         //item data
-        Object[][] rowData = {{"hw1",100, 20,"deduction"},{"hw2",160, 10, "percentage"}};
         table = new DefaultTableModel(rowData, columnNames) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return (columnIndex != 4);
+                return (columnIndex != 5);
             }
         };
         JTable tSheet = new JTable(table);
@@ -45,9 +45,9 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
         back.addActionListener(this);
         confirm.addActionListener(this);
         addRow.addActionListener(this);
-        pTable.setBounds(50,50,500,500);
-        pFuncs.setBounds(600,400,300,50);
-        pWaring.setBounds(600,200,300,200);
+        pTable.setBounds(50,50,600,500);
+        pFuncs.setBounds(650,400,300,50);
+        pWaring.setBounds(650,200,300,200);
         if(totalWeight > 1){
             pWaring.setVisible(true);
         }
@@ -75,8 +75,8 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
             new GradeSheet_UI();
         }
     }
-    public static void addRows(String name, double total, double weight, String scoring){
-        table.addRow(new Object[]{name,total,weight, scoring});
+    public static void addRows(String name, double total, double weight,double weightG, String scoring){
+        table.addRow(new Object[]{name,total,weight,weightG,scoring});
 
     }
 
