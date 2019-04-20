@@ -25,7 +25,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
     JTextField jt = new JTextField();
     DefaultTableModel mSheet;
     JTable tSheet;
-    Object[] columnNames = { "ID", "Name","HW1", "HW2", "Exam1", "Total"};
+    String[] columnNames = { "ID", "Name","HW1", "HW2", "Exam1", "Total"};
     //JLabel lSheet1 = new JLabel("Select Students Info：");
     //String[] listInfo = new String[]{"FirstName", "ID", "Email"};
 
@@ -35,19 +35,20 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         contentPane.setLayout(null);
 
         // student data
-        Object[][] rowData = {
-                {"Weights","", 80, 80, 80, ""},
-                {"Full Points","", 80, 80, 80, ""},
+        String[][] rowData = {
+                {"Weights_UG","", "80", "80", "80", ""},
+                {"Weights_Graduate","", "80", "80", "80", ""},
+                {"Full Points","", "80", "80", "80", ""},
                 {},
-                {"U12345","Jack", 80, 80, 80, ""},
-                {"U12345","Jack", 80, 80, 80, ""},
-                {"U12345","Jack", 80, 80, 80, ""}
+                {"U12345","Jack", "80", "80", "80", ""},
+                {"U12345","Jack", "80", "80", "80",  ""},
+                {"U12345","Jack", "80", "80", "80",  ""}
         };
         //JTable tSheet = new JTable(rowData, columnNames);
         mSheet = new DefaultTableModel(rowData, columnNames) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return (columnIndex != 0) & (columnIndex != 5);
+                return (columnIndex != 0) & (columnIndex != 1);
             }
         };
 
@@ -119,7 +120,6 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to end this course?");
         }
         else if(e.getSource() == report){
-            dispose();
             new GetReport_UI();
         }
         else if(e.getSource() == exCredit){

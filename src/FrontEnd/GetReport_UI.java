@@ -66,7 +66,7 @@ public class GetReport_UI extends JFrame implements ActionListener{
         }
         if (e.getSource() == returnBack){
             dispose();
-            new Report_UI();
+
         }
 
     }

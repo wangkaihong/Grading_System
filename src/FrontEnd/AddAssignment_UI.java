@@ -13,8 +13,10 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
     JTextField assignmentname = new JTextField(20);
     JLabel total = new JLabel("Total Point: ");
     JTextField totalPoint = new JTextField(20);
-    JLabel weight = new JLabel("Weight: ");
-    JTextField weighted = new JTextField(20);
+    JLabel weightU = new JLabel("Weight For Undergraduate: ");
+    JTextField weightedU = new JTextField(20);
+    JLabel weightG = new JLabel("Weight For Grad: ");
+    JTextField weightedG = new JTextField(20);
     JRadioButton deduction = new JRadioButton("Deduction");
     JRadioButton percentage = new JRadioButton("Percentage");
     JRadioButton raw = new JRadioButton("Raw Point");
@@ -29,7 +31,7 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
         layout.setHgap(100);
         layout.setVgap(30);
         contentPane.setLayout(layout);
-        p.setLayout(new GridLayout(3,2));
+        p.setLayout(new GridLayout(4,2));
         radioPanel.setLayout(new GridLayout(1, 3));
         radioPanel.add(raw);
         radioPanel.add(deduction);
@@ -43,8 +45,10 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
         p.add(assignmentname);
         p.add(total);
         p.add(totalPoint);
-        p.add(weight);
-        p.add(weighted);
+        p.add(weightU);
+        p.add(weightedU);
+        p.add(weightG);
+        p.add(weightedG);
         func.add(confirm);
         this.deduction.setActionCommand("Deduction");
         this.percentage.setActionCommand("Percentage");
@@ -52,7 +56,7 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
         confirm.addActionListener(this);
         func.add(ret);
         ret.addActionListener(this);
-        p.setBounds(100,100, 450,100);
+        p.setBounds(100,100, 475,100);
         //contentPane.setSize(450,160);
         contentPane.add(p);
         contentPane.add(radioPanel);
@@ -74,8 +78,9 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
             scoring = this.G1.getSelection().getActionCommand();
             String name = assignmentname.getText();
             double total = Double.parseDouble(totalPoint.getText());
-            double weight = Double.parseDouble(weighted.getText());
-            ModifyCol_UI.addRows(name, total, weight, scoring);
+            double weightU = Double.parseDouble(weightedU.getText());
+            double weightG = Double.parseDouble(weightedG.getText());
+            ModifyCol_UI.addRows(name, total, weightU, weightG, scoring);
             dispose();
             System.out.print("scoring way is :" + scoring);
             // add course info to course
