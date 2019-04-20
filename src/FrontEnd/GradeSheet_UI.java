@@ -10,7 +10,7 @@ import BackEnd.Course;
 
 
 public class GradeSheet_UI extends JFrame implements ActionListener{
-    Course course;
+    Course course = new Course();
     JPanel pSheet = new JPanel();
     //JScrollPane spSheet;
     JButton addStudent = new JButton("+ Add Student");

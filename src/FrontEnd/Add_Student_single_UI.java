@@ -27,7 +27,7 @@ public class Add_Student_single_UI extends JFrame implements ActionListener {
     JRadioButton under = new JRadioButton("Undergraduate");
     JButton confirm = new JButton("Confirm");
     JButton ret = new JButton("Cancel");
-    Course course;
+    Course course = new Course();
 
     public Add_Student_single_UI(){
         Container contentPane = this.getContentPane();
@@ -47,8 +47,11 @@ public class Add_Student_single_UI extends JFrame implements ActionListener {
         radioPanel.setLayout(new GridLayout(1,2));
         radioPanel.add(grad);
         radioPanel.add(under);
+        this.grad.setActionCommand("graduate");
+        this.under.setActionCommand("undergraduate");
         G2.add(grad);
         G2.add(under);
+
         radioPanel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Student Type"));
 
@@ -81,16 +84,16 @@ public class Add_Student_single_UI extends JFrame implements ActionListener {
             String studentLName = lname.getText();
             String studentID = id.getText();
             String studentEmail = email.getText();
-            String studentType = this.G2.getSelection().getActionCommand();
+            String studentType = this.G2.getSelection().getActionCommand().toLowerCase();
 
-            if(studentType == "Graduate"){
-                Student s1 = new Graduate(studentFName, studentMName,studentLName,studentID,studentEmail);
-                course.addStudent(studentFName, studentMName,studentLName,studentID,studentEmail,studentType);
-            }else{
-                Student s = new Undergraduate(studentFName, studentMName,studentLName,studentID,studentEmail);
-                course.addStudent(studentFName, studentMName,studentLName,studentID,studentEmail,studentType);
-            }
+            System.out.println(studentType);
+            System.out.println(course.addStudent(studentFName, studentMName,studentLName,studentID,studentEmail,studentType));
+//            }else{
+//                Student s = new Undergraduate(studentFName, studentMName,studentLName,studentID,studentEmail);
+//                course.addStudent(studentFName, studentMName,studentLName,studentID,studentEmail,studentType);
+//            }
             //GradeSheet_UI.addRows(studentID, studentFName, studentLName);
+            System.out.println(course.getStudents());
             dispose();
 
 
