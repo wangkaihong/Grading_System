@@ -132,7 +132,11 @@ public class Course implements Reportable {
         // studentType: String: Undergraduate or graduate
         //
         // return 1 if succeeded, return 2 if invalid firstName, return 3 if invalid middleInitial, return 4 if invalid lastName,
-        // return 5 if invalid studentId, return 6 if invalid emailAddress, return 7 if invalid studentType, return 8 if unknown error
+        // return 5 if invalid studentId, return 6 if invalid emailAddress, return 7 if invalid studentType,
+        // return 8 if course is ended, return 9 if unknown error
+        if(end) {
+            return 8;
+        }
         if(firstName == null || firstName.equals("")) {
             return 2;
         }
@@ -168,14 +172,17 @@ public class Course implements Reportable {
 
         }
         catch (Exception e) {
-            return 8;
+            return 9;
         }
     }
     public int removeStudent(int index) {
         // parameters:
         // index: int: index of student in the arraylist you would like to remove
         //
-        // return 1 if succeeded , return 2 if student not found, return 3 if unknown error
+        // return 1 if succeeded , return 2 if student not found, return 3 if course is ended, return 4 if unknown error
+        if(end) {
+            return 3;
+        }
         try {
             if (index >= students.size() || index < 0) {
                 return 2;
@@ -185,7 +192,7 @@ public class Course implements Reportable {
             }
         }
         catch (Exception e) {
-            return 3;
+            return 4;
         }
     }
     public int addAssignment(String name, double total, String scoring_method) {
@@ -194,8 +201,11 @@ public class Course implements Reportable {
         // total: double: total score of the assignment
         // scoring_method: String: scoring method of the assignment
         //
-        // return 1 if succeeded, return 2 if invalid name, return 3 if invalid total, return 4 if invalid scoring_method, return 5 if unknown error
-
+        // return 1 if succeeded, return 2 if invalid name, return 3 if invalid total,
+        // return 4 if invalid scoring_method, return 5 if course is ended, return 6 if unknown error
+        if(end) {
+            return 5;
+        }
         try {
             if (name == null || name.equals("")) {
                 return 2;
@@ -212,7 +222,7 @@ public class Course implements Reportable {
             return 1;
         }
         catch (Exception e) {
-            return 5;
+            return 6;
         }
 
     }
@@ -223,7 +233,12 @@ public class Course implements Reportable {
         // total: double: total score of the assignment
         // scoring_method: String: scoring method of the assignment
         //
-        //return 1 if succeeded , return 2 if assignment not found, return 3 if invalid name, return 4 if invalid total, return 5 if invalid scoring_method, return 6 if unknown error
+        //return 1 if succeeded , return 2 if assignment not found, return 3 if invalid name,
+        // return 4 if invalid total, return 5 if invalid scoring_method,
+        // return 6 if course is ended, return 7 is unknown error
+        if(end) {
+            return 6;
+        }
         try {
             if (index >= assignments.size() || index < 0) {
                 return 2;
@@ -242,14 +257,17 @@ public class Course implements Reportable {
             return 1;
         }
         catch (Exception e) {
-            return 6;
+            return 7;
         }
     }
     public int addCriteria(double[] weights) {
         //parameters:
         // weights: double[]: Array of double representing weights
         //
-        //return 1 if succeeded , return 2 if sum of weights not equals to 1, return 3 if unknown error
+        //return 1 if succeeded , return 2 if sum of weights not equals to 1, return 3 if cuorse is ended, return 4 if unknown error
+        if(end) {
+            return 3;
+        }
         try {
             double sum = 0;
             for (int i = 0; i < weights.length; i++) {
@@ -263,14 +281,18 @@ public class Course implements Reportable {
             return 1;
         }
         catch (Exception e) {
-            return 3;
+            return 4;
         }
     }
     public int changeCriteria(int index, double[] weights) {
         //parameters:
         // weights: double[]: Array of double representing weights
         //
-        //return 1 if succeeded , return 2 if sum of weights not equals to 1, return 3 if criteria not found, return 4 if unknown error
+        // return 1 if succeeded , return 2 if sum of weights not equals to 1, return 3 if criteria not found,
+        // return 4 if course is ended, return 5 if unknown error
+        if(end) {
+            return 4;
+        }
         try {
             double sum = 0;
 
@@ -288,7 +310,7 @@ public class Course implements Reportable {
             return 1;
         }
         catch (Exception e) {
-            return 4;
+            return 5;
         }
     }
     public String[][] getTable() { //
@@ -316,7 +338,10 @@ public class Course implements Reportable {
         // cor2: int: coordinate of column of cell to modify
         // score: String: score to be modified
         //
-        // return 1 if succeeded, return 2 if invalid score type, return 3 if unknown error
+        // return 1 if succeeded, return 2 if invalid score type, return 3 if course is ended, return 4 if unknown error
+        if(end) {
+            return 3;
+        }
         try {
             double input = Double.valueOf(score);
             sheet.setScore(cor1, cor2, input);
@@ -326,7 +351,7 @@ public class Course implements Reportable {
             return 2;
         }
         catch (Exception e) {
-            return 3;
+            return 4;
         }
     }
     public String[] getNote(int cor1,int cor2) { //
@@ -349,13 +374,16 @@ public class Course implements Reportable {
         // cor2: int: coordinate of column of cell to modify
         // note: String: note to be modified
         //
-        // return 1 if succeeded, return 2 if unknown error
+        // return 1 if succeeded, return 2 if course is ended, return 3 if unknown error
+        if(end) {
+            return 2;
+        }
         try {
             sheet.setNote(cor1, cor2, note);
             return 1;
         }
         catch (Exception e) {
-            return 2;
+            return 3;
         }
     }
 
