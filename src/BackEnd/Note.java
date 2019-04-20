@@ -1,6 +1,9 @@
 package BackEnd;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Calendar;
 
 /**
  * Created by wangkaihong on 2019/4/9.
@@ -26,5 +29,12 @@ public class Note {
 
     public void setTime(Date time) {
         this.time = time;
+    }
+
+    public static void main(String[] args) {
+        Date date = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        String strDate = dateFormat.format(date);
+        System.out.print(strDate);
     }
 }
