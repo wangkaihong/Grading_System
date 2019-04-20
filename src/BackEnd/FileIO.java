@@ -40,15 +40,11 @@ public class FileIO {
 
     public void writeCriteria(Criteria cri, String filename){
         //Input a list of Criteria instances, write it to JSON file
-        JSONObject out1 = new JSONObject();
-        int count1 = 0;
         JSONObject obj1 = new JSONObject();
         obj1.put("Weights",cri.getWeight());
-        out1.put("jOut"+Integer.toString(count1),obj1);
-        count1 = count1 + 1;
 
         try(FileWriter fw1 = new FileWriter(filename+"Criteria.json")){
-            fw1.write(out1.toJSONString());
+            fw1.write(obj1.toJSONString());
             fw1.flush();
 
         } catch (IOException e) {
@@ -61,28 +57,11 @@ public class FileIO {
         //from JSON file name
         JSONParser parser1 = new JSONParser();
         ArrayList<Double> listWeights = new ArrayList<Double>();
-        //ArrayList<Criteria> listCriteria = new ArrayList<Criteria>();
-        try (FileReader reader = new FileReader(filename+"Criteria.json"))
-        {
+        try (FileReader reader = new FileReader(filename+"Criteria.json")){
             //Read JSON file
             Object obj = parser1.parse(reader);
-            JSONObject readListCriteria = (JSONObject) obj;
-            int countRead = 0;
-            int i = 0;
-            Iterator ite = readListCriteria.keySet().iterator();
-            while(ite.hasNext()){
-                countRead = countRead + 1;
-                ite.next();
-            }
-            while(i < countRead){
-                JSONObject tempRead = (JSONObject) readListCriteria.get("jOut"+Integer.toString(i));
-                listWeights = (ArrayList<Double>) tempRead.get("Weights");
-                //listWeights = (double[]) tempRead.get("Weights");
-                Criteria c = new Criteria(listWeights);
-                //listCriteria.add(c);
-                i = i + 1;
-            }
-
+            JSONObject readCriteria = (JSONObject) obj;
+            listWeights = (ArrayList<Double>) readCriteria.get("Weights");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -334,8 +313,8 @@ public class FileIO {
             writeCell(course.getSheet().getAllCell(), course.getCourseName());
             writeStudentInfo(course.getStudents(), course.getCourseName());
             writeAssignment(course.getAssignments(), course.getCourseName());
-
-            writeCriteria(course.getCriteria_UG(), course.getCourseName());
+            writeCriteria(course.getCriteria_UG(), course.getCourseName()+"UG");
+            writeCriteria(course.getCriteria_G(), course.getCourseName()+"G");
 
             out1.put("jOut"+Integer.toString(count1),obj1);
 
@@ -360,8 +339,8 @@ public class FileIO {
         ArrayList<Student> students;
         ArrayList<Assignment> assignments;
         //ArrayList<Criteria> criteria;
-        Criteria critemp1;
-        Criteria critemp2;
+        Criteria criUG;
+        Criteria criG;
         try (FileReader reader = new FileReader(filename+"Course.json")){
             //Read JSON file
             Object obj = parser1.parse(reader);
@@ -382,9 +361,9 @@ public class FileIO {
                 sheet = new Sheet(readCell(courseName));
                 students = readStudentInfo(courseName);
                 assignments = readAssignment(courseName);
-                critemp1 = readCriteria(courseName);
-                critemp2 = readCriteria(courseName);
-                Course course = new Course(courseName,lecturerName,semester,sheet,students,assignments,critemp1,critemp2);
+                criUG = readCriteria(courseName+"UG");
+                criG = readCriteria(courseName+"G");
+                Course course = new Course(courseName,lecturerName,semester,sheet,students,assignments,criUG,criG);
                 listCourse.add(course);
                 i = i + 1;
             }

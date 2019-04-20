@@ -176,22 +176,17 @@ public class Grading_System {
         listAssign.add(assign1);
         listAssign.add(assign2);
         //set Criteria
-        /*
+
         ArrayList<Double> weights1 = new ArrayList<Double>();
         weights1.add(0.4);
         weights1.add(0.6);
         ArrayList<Double> weights2 = new ArrayList<Double>();
         weights2.add(0.3);
         weights2.add(0.7);
-        */
-        /*
-        double [] weights1 = {0.4,0.6};
-        double [] weights2 = {0.3,0.7};
+
+
         Criteria criteria1 = new Criteria(weights1);
         Criteria criteria2 = new Criteria(weights2);
-        ArrayList<Criteria> listCri = new ArrayList<Criteria>();
-        listCri.add(criteria1);
-        listCri.add(criteria2);
         //set Notes
         Date time1 = new Date();
         String strDate = "04/19/2019";
@@ -222,7 +217,7 @@ public class Grading_System {
         //set Sheet
         Sheet sheet1 = new Sheet(matrixCell);
         //set Course
-        Course course1 = new Course("CS591","Christine","Spring2019",sheet1,listStu,listAssign,listCri);
+        Course course1 = new Course("CS591","Christine","Spring2019",sheet1,listStu,listAssign,criteria1,criteria2);
         //set Grading_System
         Grading_System gradSys = new Grading_System();
         ArrayList<Course> listCourse = new ArrayList<Course>();
@@ -232,13 +227,12 @@ public class Grading_System {
         //write file
         FileIO fileIO1 = new FileIO();
         fileIO1.writeCourse(listCourse,"Test");
-        */
+
 
         //read file
-        /*
-
         ArrayList<Course> listCourseRead = new ArrayList<Course>();
-        ArrayList<Criteria> listCriRead = new ArrayList<Criteria>();
+        Criteria criUG = new Criteria();
+        Criteria criG = new Criteria();
         ArrayList<Student> listStudentRead = new ArrayList<Student>();
         ArrayList<Assignment> listAssignRead = new ArrayList<Assignment>();
         ArrayList<ArrayList<Cell>> matrixCellRead = new ArrayList<ArrayList<Cell>>();
@@ -248,7 +242,9 @@ public class Grading_System {
             System.out.println(tempc.getLecturerName());
             System.out.println(tempc.getSemester());
 
-            listCriRead = tempc.getCriteria();
+            //listCriRead = tempc.getCriteria();
+            criG = tempc.getCriteria_G();
+            criUG = tempc.getCriteria_UG();
             listStudentRead = tempc.getStudents();
             listAssignRead = tempc.getAssignments();
             matrixCellRead = tempc.getSheet().getAllCell();
@@ -259,11 +255,12 @@ public class Grading_System {
         }
 
         //read Criteria
-        //ArrayList<Criteria> listCriRead = fileIO1.readCriteria("CS591");
-        for(Criteria temp : listCriRead){
-            ArrayList<Double> listWeights = temp.getWeight();
-            System.out.println(listWeights);
-        }
+        Criteria criTemp = fileIO1.readCriteria("CS591G");
+        //System.out.println(criTemp.getWeight());
+        ArrayList<Double> listWeights = criUG.getWeight();
+        System.out.println(listWeights);
+        listWeights = criG.getWeight();
+        System.out.println(listWeights);
         //read Student
         //ArrayList<Student> listStudentRead = fileIO1.readStudentInfo("CS591");
         for(Student temp : listStudentRead) {
@@ -304,7 +301,7 @@ public class Grading_System {
 
             }
         }
-        */
+
         //end test
         System.out.println("Test Complete");
     }
