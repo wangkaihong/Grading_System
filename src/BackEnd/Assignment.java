@@ -49,6 +49,7 @@ public class Assignment implements Reportable{
     public String isScoring_method() {
         return scoring_method;
     }
+
     public Report getReport() {
         return null;
     }
