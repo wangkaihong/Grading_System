@@ -12,7 +12,7 @@ public class Select_Course_UI extends JFrame implements ActionListener {
     JPanel courseList = new JPanel();
     JPanel buttons = new JPanel();
 
-    String[] course = new String[10];
+    static String[] course = new String[10];
     JLabel courseLabel = new JLabel("Course: ");
 
 
