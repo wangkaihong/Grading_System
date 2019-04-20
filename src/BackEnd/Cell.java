@@ -19,19 +19,20 @@ public class Cell implements Reportable {
     public Note getNote() {
         return note;
     }
+    public String[] getNoteContent() {
+        return note.getNoteContent();
+    }
 
-    public int setNote(Note note) {
-        this.note = note;
-        return 1;
+    public void setNote(String note) {
+        this.note.setInformation(note);
     }
 
     public double getScore() {
         return score;
     }
 
-    public int setScore(double score) {
+    public void setScore(double score) {
         this.score = score;
-        return 1;
     }
     public Report getReport() {
         return null;

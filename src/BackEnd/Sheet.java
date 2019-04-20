@@ -18,8 +18,11 @@ public class Sheet {
     public ArrayList<ArrayList<Cell>> getAllCell() {
         return cells;
     }
-    public Cell getCell(int cor1, int cor2) {
-        return cells.get(cor1).get(cor2);
+    public double getCellScore(int cor1, int cor2) {
+        return cells.get(cor1).get(cor2).getScore();
+    }
+    public Note getCellNote(int cor1, int cor2) {
+        return cells.get(cor1).get(cor2).getNote();
     }
     public int getHeight() {
         return cells.size();
@@ -34,11 +37,11 @@ public class Sheet {
     public void setCell(ArrayList<ArrayList<Cell>> cell) {
         this.cells = cell;
     }
-    public int setScore(int cor1,int cor2, double score) {
-        return cells.get(cor1).get(cor2).setScore(score);
+    public void setScore(int cor1,int cor2, double score) {
+        cells.get(cor1).get(cor2).setScore(score);
     }
-    public int setnote(int cor1,int cor2) {
-        return cells.get(cor1).get(cor2).setNote(null);
+    public void setNote(int cor1,int cor2, String note) {
+        cells.get(cor1).get(cor2).setNote(note);
     }
 
 }
