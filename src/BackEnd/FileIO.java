@@ -38,17 +38,15 @@ public class FileIO {
     then read instances iteratively and construct an arraylist as output.
     */
 
-    public void writeCriteria(ArrayList<Criteria> listCriteria, String filename){
+    public void writeCriteria(Criteria cri, String filename){
         //Input a list of Criteria instances, write it to JSON file
         JSONObject out1 = new JSONObject();
         int count1 = 0;
+        JSONObject obj1 = new JSONObject();
+        obj1.put("Weights",cri.getWeight());
+        out1.put("jOut"+Integer.toString(count1),obj1);
+        count1 = count1 + 1;
 
-        for(Criteria cri : listCriteria){
-            JSONObject obj1 = new JSONObject();
-            obj1.put("Weights",cri.getWeight());
-            out1.put("jOut"+Integer.toString(count1),obj1);
-            count1 = count1 + 1;
-        }
         try(FileWriter fw1 = new FileWriter(filename+"Criteria.json")){
             fw1.write(out1.toJSONString());
             fw1.flush();
@@ -58,13 +56,12 @@ public class FileIO {
         }
     }
 
-    public ArrayList<Criteria> readCriteria(String filename){
+    public Criteria readCriteria(String filename){
         //Input the additional JSON file name, output a list of Criteria instances, whose data are read
         //from JSON file name
         JSONParser parser1 = new JSONParser();
         ArrayList<Double> listWeights = new ArrayList<Double>();
-        //double [] listWeights;
-        ArrayList<Criteria> listCriteria = new ArrayList<Criteria>();
+        //ArrayList<Criteria> listCriteria = new ArrayList<Criteria>();
         try (FileReader reader = new FileReader(filename+"Criteria.json"))
         {
             //Read JSON file
@@ -82,7 +79,7 @@ public class FileIO {
                 listWeights = (ArrayList<Double>) tempRead.get("Weights");
                 //listWeights = (double[]) tempRead.get("Weights");
                 Criteria c = new Criteria(listWeights);
-                listCriteria.add(c);
+                //listCriteria.add(c);
                 i = i + 1;
             }
 
@@ -93,7 +90,7 @@ public class FileIO {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return listCriteria;
+        return new Criteria(listWeights);
     }
 
     public void writeStudentInfo(ArrayList<Student> listStu, String filename){
@@ -337,7 +334,9 @@ public class FileIO {
             writeCell(course.getSheet().getAllCell(), course.getCourseName());
             writeStudentInfo(course.getStudents(), course.getCourseName());
             writeAssignment(course.getAssignments(), course.getCourseName());
-            writeCriteria(course.getCriteria(), course.getCourseName());
+            //writeCriteria(course.getCriteria(), course.getCourseName());
+            writeCriteria(course.getCriteria_G(), course.getCourseName());
+            writeCriteria(course.getCriteria_UG(), course.getCourseName());
 
             out1.put("jOut"+Integer.toString(count1),obj1);
 
@@ -361,7 +360,9 @@ public class FileIO {
         Sheet sheet;
         ArrayList<Student> students;
         ArrayList<Assignment> assignments;
-        ArrayList<Criteria> criteria;
+        //ArrayList<Criteria> criteria;
+        Criteria critemp1;
+        Criteria critemp2;
         try (FileReader reader = new FileReader(filename+"Course.json")){
             //Read JSON file
             Object obj = parser1.parse(reader);
@@ -382,8 +383,9 @@ public class FileIO {
                 sheet = new Sheet(readCell(courseName));
                 students = readStudentInfo(courseName);
                 assignments = readAssignment(courseName);
-                criteria = readCriteria(courseName);
-                Course course = new Course(courseName,lecturerName,semester,sheet,students,assignments,criteria);
+                critemp1 = readCriteria(courseName);
+                critemp2 = readCriteria(courseName);
+                Course course = new Course(courseName,lecturerName,semester,sheet,students,assignments,critemp1,critemp2);
                 listCourse.add(course);
                 i = i + 1;
             }
