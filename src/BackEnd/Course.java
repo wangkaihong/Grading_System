@@ -291,13 +291,72 @@ public class Course implements Reportable {
             return 4;
         }
     }
-    public String[][] getTable() { // todo
-        return null;
+    public String[][] getTable() { //
+        // parameters:
+        // None
+        // return String[][] of content of sheet, null of unknown error
+        try {
+            int height = sheet.getHeight();
+            int width = sheet.getWidth();
+            String[][] table = new String[height][width];
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width; j++) {
+                    table[i][j] = String.valueOf(sheet.getCellScore(i, j));
+                }
+            }
+            return table;
+        }
+        catch (Exception e) {
+            return null;
+        }
     }
-    public int setScore(int cor1,int cor2, String score) { // todo
-        double input = Double.valueOf(score);
-        sheet.setScore(cor1,cor2,input);
-        return 1;
+    public int setScore(int cor1,int cor2, String score) { //
+        // parameters:
+        // cor1: int: coordinate of row of cell to modify
+        // cor2: int: coordinate of column of cell to modify
+        // score: String: score to be modified
+        //
+        // return 1 if succeeded, return 2 if invalid score type, return 3 if unknown error
+        try {
+            double input = Double.valueOf(score);
+            sheet.setScore(cor1, cor2, input);
+            return 1;
+        }
+        catch (NumberFormatException e) {
+            return 2;
+        }
+        catch (Exception e) {
+            return 3;
+        }
+    }
+    public String[] getNote(int cor1,int cor2) { //
+        // parameters:
+        // cor1: int: coordinate of row of cell to check
+        // cor2: int: coordinate of column of cell to check
+        //
+        // return String[] of content of Note including content of note and time of last change, null of unknown error
+        try {
+            return sheet.getCellNote(cor1,cor2).getNoteContent();
+        }
+        catch (Exception e) {
+            return null;
+        }
+    }
+
+    public int setNote(int cor1,int cor2, String note) { //
+        // parameters:
+        // cor1: int: coordinate of row of cell to modify
+        // cor2: int: coordinate of column of cell to modify
+        // note: String: note to be modified
+        //
+        // return 1 if succeeded, return 2 if unknown error
+        try {
+            sheet.setNote(cor1, cor2, note);
+            return 1;
+        }
+        catch (Exception e) {
+            return 2;
+        }
     }
 
     public Report getReport() {
@@ -322,5 +381,8 @@ public class Course implements Reportable {
         return 1;
     }
     public static void main(String[] args) {
+        String a = "1a";
+        double b = Double.valueOf(a);
+        System.out.print(b);
     }
 }

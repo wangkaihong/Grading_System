@@ -25,6 +25,12 @@ public class Note {
         information = info;
         time = d;
     }
+    public String[] getNoteContent() {
+        String[] content = new String[2];
+        content[0] = information;
+        content[1] = time;
+        return content;
+    }
 
     public String getInformation() {
         return information;
@@ -32,6 +38,7 @@ public class Note {
 
     public void setInformation(String information) {
         this.information = information;
+        this.time = Calendar.getInstance().getTime().toString();
     }
 
     public String getTime() {
