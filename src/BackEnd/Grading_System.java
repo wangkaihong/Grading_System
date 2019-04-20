@@ -28,6 +28,13 @@ public class Grading_System {
         this.courses = courses;
     }
 
+    public String[] getCourseList() {
+        String[] list = new String[courses.size()];
+        for(int i = 0; i < list.length;i++) {
+            list[i] = courses.get(i).getCourseName();
+        }
+        return list;
+    }
 
     public int addCourse(String courseName, String lecturerName, String semester, String student_file_dir, int previous_Course_ind) {
         // parameters:
@@ -156,6 +163,7 @@ public class Grading_System {
         2 notes: Jack's hw1: "Good", Alice's hw2: "Well done"
         */
         //set Student
+
         Student stu1 = new Undergraduate("Jack","St","Martin","12345","jacksl@ggmail.com");
         Student stu2 = new Graduate("Alice","Von","Ludwika","67890","alicevl@ggmail.com");
         ArrayList<Student> listStu = new ArrayList<Student>();
@@ -176,6 +184,7 @@ public class Grading_System {
         weights2.add(0.3);
         weights2.add(0.7);
         */
+        /*
         double [] weights1 = {0.4,0.6};
         double [] weights2 = {0.3,0.7};
         Criteria criteria1 = new Criteria(weights1);
@@ -223,8 +232,10 @@ public class Grading_System {
         //write file
         FileIO fileIO1 = new FileIO();
         fileIO1.writeCourse(listCourse,"Test");
+        */
 
         //read file
+        /*
 
         ArrayList<Course> listCourseRead = new ArrayList<Course>();
         ArrayList<Criteria> listCriRead = new ArrayList<Criteria>();
@@ -293,6 +304,7 @@ public class Grading_System {
 
             }
         }
+        */
         //end test
         System.out.println("Test Complete");
     }
