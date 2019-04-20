@@ -99,6 +99,9 @@ public class Grading_System {
             while (scanner.hasNext()) {
                 String temp = scanner.next();
                 String[] arr = temp.split(",");
+                if(arr.length != 6) {
+                    throw new InvalidStudentFileException();
+                }
                 if(arr[5].equals("U")) {
                     stduent_list.add(new Undergraduate(arr[0], arr[1], arr[2], arr[3], arr[4]));
                 }
