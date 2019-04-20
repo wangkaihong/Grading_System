@@ -11,6 +11,11 @@ public class Cell implements Reportable {
 
     }
 
+    public Cell(Note n, double s){
+        note = n;
+        score = s;
+    }
+
     public Note getNote() {
         return note;
     }
