@@ -6,10 +6,24 @@ package BackEnd;
 public class Assignment implements Reportable{
     private String name;
     private double total;
-    private boolean scoring_method;
+    private String scoring_method; // three possible fields: deduction, percentage, raw
 
     public Assignment() {
+        this.name = "";
+        this.total = 0;
+        this.scoring_method = "";
+    }
 
+    public Assignment(String name, double total, String scoring_method) {
+        this.name = name;
+        this.total = total;
+        this.scoring_method = scoring_method;
+    }
+
+    public void changeAssignment(String name, double total, String scoring_method) {
+        this.name = name;
+        this.total = total;
+        this.scoring_method = scoring_method;
     }
 
     public void setName(String name) {
@@ -20,7 +34,7 @@ public class Assignment implements Reportable{
         this.total = total;
     }
 
-    public void setScoring_method(boolean scoring_method) {
+    public void setScoring_method(String scoring_method) {
         this.scoring_method = scoring_method;
     }
 
@@ -32,7 +46,7 @@ public class Assignment implements Reportable{
         return total;
     }
 
-    public boolean isScoring_method() {
+    public String isScoring_method() {
         return scoring_method;
     }
     public Report getReport() {

@@ -11,7 +11,11 @@ public abstract class Student implements Reportable{
     private String emailAddress;
     
     public Student() {
-        
+        this.firstName = null;
+        this.middleInitial = null;
+        this.lastName = null;
+        this.studentId = null;
+        this.emailAddress = null;
     }
     
     public Student(String firstName, String middleInitial, String lastName, String studentId, String emailAddress) {
