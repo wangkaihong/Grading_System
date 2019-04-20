@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class GetReport extends JFrame implements ActionListener{
+public class GetReport_UI extends JFrame implements ActionListener{
     JPanel selectReport = new JPanel();
     JPanel confirmOrNot = new JPanel();
     JLabel select = new JLabel("Select one assignment to view report:");
@@ -15,7 +15,7 @@ public class GetReport extends JFrame implements ActionListener{
 
     static String getSelect;
 
-    public GetReport(){
+    public GetReport_UI(){
         Container contentPane = this.getContentPane();
 
         selectReport.add(select);
@@ -25,6 +25,7 @@ public class GetReport extends JFrame implements ActionListener{
 
         confirm.addActionListener(this);
         returnBack.addActionListener(this);
+        getSelect = "HW1";
         assignment.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -37,17 +38,21 @@ public class GetReport extends JFrame implements ActionListener{
 
         selectReport.setLayout(new GridLayout(2,1));
         confirmOrNot.setLayout(new GridLayout(1,2));
+        selectReport.setBounds(10,10,600,50);
 
 
-        contentPane.setLayout(new GridLayout(5, 1));;
+        confirmOrNot.setLayout(new GridLayout(2,1));
+        confirmOrNot.add(confirm);
+        confirmOrNot.add(returnBack);
+        confirmOrNot.setBounds(420,250,120,60);
+
+
+        contentPane.setLayout(null);;
         contentPane.add(selectReport);
-        contentPane.add(new JLabel());
-        contentPane.add(new JLabel());
         contentPane.add(confirmOrNot);
-        contentPane.add(new JLabel());
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(1000, 600);
+        setSize(640, 360);
         setTitle("Get reports");
         setResizable(false);
         setVisible(true);
@@ -56,12 +61,12 @@ public class GetReport extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == confirm){
-            new Report();
+            new Report_UI();
             dispose();
         }
         if (e.getSource() == returnBack){
             dispose();
-            new Report();
+            new Report_UI();
         }
 
     }

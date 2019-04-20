@@ -62,15 +62,18 @@ public class Add_Class_UI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == next){
             dispose();
-            new Add_Section_info_UI();
+            String name = nameInput.getText();
+            for (int i = 0; i < Select_Course_UI.course.length; i++){
+                if (Select_Course_UI.course[i] == null){
+                    Select_Course_UI.course[i] = name;
+                    break;
+                }
+            }
+            new Add_Assignment_info_UI();
         } else if(e.getSource() == cancel){
             dispose();
             new Select_Course_UI();
         }
-    }
-
-    public static void main(String[] args) {
-        new Add_Class_UI();
     }
 
 }
