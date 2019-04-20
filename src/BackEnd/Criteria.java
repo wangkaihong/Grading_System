@@ -6,18 +6,24 @@ import java.util.ArrayList;
  * Created by wangkaihong on 2019/4/9.
  */
 public class Criteria {
-    private ArrayList<Double> weight;
+    private ArrayList<Double> weights;
 
     public Criteria() {
-
+        weights = new ArrayList<>();
+    }
+    public Criteria(double[] add_weights) {
+        weights = new ArrayList<>();
+        for(int i = 0; i < add_weights.length;i++) {
+            weights.add(add_weights[i]);
+        }
     }
 
     public ArrayList<Double> getWeight() {
-        return weight;
+        return weights;
     }
 
     public void setWeight(ArrayList<Double> weight) {
-        this.weight = weight;
+        this.weights = weight;
     }
 
     public boolean validateWeight() {

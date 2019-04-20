@@ -2,3 +2,4 @@
 Grading_System.iml
 *.class
 out/
+.DS_Store

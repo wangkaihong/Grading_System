@@ -5,59 +5,72 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * Created by wangkaihong on 2019/3/30.
- */
+
 public class Add_Class_UI extends JFrame implements ActionListener {
-    JPanel p = new JPanel();
-    JButton student_info = new JButton("Add Student");
-    JButton section_info = new JButton("Add Section");
-    JButton course_info = new JButton("Add Course info");
-    JButton confirm = new JButton("confirm");
-    JButton ret = new JButton("Return");
+    JPanel labels = new JPanel();
+    JPanel inputs = new JPanel();
+    JPanel buttons = new JPanel();
+
+    JLabel courseName = new JLabel("Course Name: ");
+    JLabel lecturer = new JLabel("lecturer: ");
+    JLabel semester = new JLabel("Semester: ");
+
+    JTextField nameInput = new JTextField();
+    JTextField lecturerInput = new JTextField();
+    JTextField semesterInput = new JTextField();
+
+    JButton next = new JButton("Next");
+    JButton cancel = new JButton("Cancel");
 
     public Add_Class_UI(){
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
-        p.setLayout(new GridLayout(0, 1));
-        p.add(student_info);
-        student_info.addActionListener(this);
-        p.add(section_info);
-        section_info.addActionListener(this);
-        p.add(course_info);
-        course_info.addActionListener(this);
-        p.add(confirm);
-        confirm.addActionListener(this);
-        p.add(ret);
-        ret.addActionListener(this);
-        p.setBounds(425,225,150,150);
-        contentPane.add(p);
+
+        labels.setLayout(new GridLayout(3, 1));
+        labels.add(courseName);
+        labels.add(lecturer);
+        labels.add(semester);
+        labels.setBounds(50,40,100,180);
+        contentPane.add(labels);
+
+        inputs.setLayout(new GridLayout(7, 1));
+        inputs.add(new JLabel());
+        inputs.add(nameInput);
+        inputs.add(new JLabel());
+        inputs.add(lecturerInput);
+        inputs.add(new JLabel());
+        inputs.add(semesterInput);
+        inputs.add(new JLabel());
+        inputs.setBounds(170,30,350,205);
+        contentPane.add(inputs);
+
+        next.addActionListener(this);
+        cancel.addActionListener(this);
+        buttons.setLayout(new GridLayout(2,1));
+        buttons.add(next);
+        buttons.add(cancel);
+        buttons.setBounds(420,250,120,60);
+        contentPane.add(buttons);
+
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(1000, 600);
+        setSize(640, 360);
         setTitle("Add Course");
         setResizable(false);
         setVisible(true);
     }
 
     public void actionPerformed(ActionEvent e){
-        if(e.getSource() == student_info){
+        if(e.getSource() == next){
             dispose();
-            new Add_Student_info_UI();
-        }
-        if(e.getSource() == section_info){
-            dispose();
-            new Add_Section_info_UI();
-        }
-        if(e.getSource() == course_info){
-            dispose();
-            new Add_Course_info_UI();
-        }
-        if(e.getSource() == confirm){
-            dispose();
-            // add new course in backend
-            new Select_Course_UI();
-        }
-        if(e.getSource() == ret){
+            String name = nameInput.getText();
+            for (int i = 0; i < Select_Course_UI.course.length; i++){
+                if (Select_Course_UI.course[i] == null){
+                    Select_Course_UI.course[i] = name;
+                    break;
+                }
+            }
+            new Add_Assignment_info_UI();
+        } else if(e.getSource() == cancel){
             dispose();
             new Select_Course_UI();
         }
