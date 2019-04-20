@@ -50,6 +50,8 @@ public class Add_Student_single_UI extends JFrame implements ActionListener {
 
         bntP.add(confirm);
         bntP.add(ret);
+        ret.addActionListener(this);
+        confirm.addActionListener(this);
 
         infoP.setBounds(100,50, 450,150 );
         radioPanel.setBounds(100,200,450,50);
