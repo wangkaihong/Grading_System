@@ -3,6 +3,8 @@ package FrontEnd;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -26,6 +28,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
     DefaultTableModel mSheet;
     JTable tSheet;
     String[] columnNames = { "ID", "Name","HW1", "HW2", "Exam1", "Total"};
+    //
     //JLabel lSheet1 = new JLabel("Select Students Info：");
     //String[] listInfo = new String[]{"FirstName", "ID", "Email"};
 
@@ -50,7 +53,24 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return (columnIndex != 0) & (columnIndex != 1);
             }
+//            @Override
+//            public String getValueAt(int rowIndex, int columnIndex) {
+//                return rowData[rowIndex][columnIndex];
+//            }
+
         };
+        mSheet.addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                int row = e.getFirstRow();
+                int col = e.getColumn();
+
+                //Object value = mSheet.getValueAt(row,col);
+                String value = (String)  mSheet.getValueAt(row,col);
+                S
+                System.out.println(value);
+            }
+        });
 
         tSheet = new JTable(mSheet);
         // Set the size of scroll panel window
@@ -130,11 +150,19 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         }
         else if(e.getSource() == removeStudent){
             //??
+//            int selectR = tSheet.getSelectedRow();
+//            int selectC = tSheet.getSelectedColumn();
+            //System.out.println("Row-- "+ selectR + "Col--  "+ selectC);
 
             int select = tSheet.getSelectedRow();
-            System.out.println(select);
+            //System.out.println(select);
             mSheet.removeRow(select);
 
+        }
+        else{
+            int selectR = tSheet.getSelectedRow();
+            int selectC = tSheet.getSelectedColumn();
+            System.out.println(mSheet.getValueAt(selectR,selectC));
         }
     }
 //    public static void main(String[] args){
