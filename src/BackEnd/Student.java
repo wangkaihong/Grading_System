@@ -3,7 +3,7 @@ package BackEnd;
 /**
  * Created by wangkaihong on 2019/4/9.
  */
-public abstract class Student implements Reportable{
+public abstract class Student {
     private String firstName;
     private String middleInitial;
     private String lastName;
@@ -64,9 +64,6 @@ public abstract class Student implements Reportable{
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
-    }
-    public Report getReport() {
-        return null;
     }
 
 }

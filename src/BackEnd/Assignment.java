@@ -3,7 +3,7 @@ package BackEnd;
 /**
  * Created by wangkaihong on 2019/4/9.
  */
-public class Assignment implements Reportable{
+public class Assignment {
     private String name;
     private double total;
     private String scoring_method; // three possible fields: deduction, percentage, raw
@@ -48,9 +48,5 @@ public class Assignment implements Reportable{
 
     public String isScoring_method() {
         return scoring_method;
-    }
-
-    public Report getReport() {
-        return null;
     }
 }
