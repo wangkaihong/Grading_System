@@ -15,6 +15,7 @@ public class Add_Student_info_UI extends JFrame implements ActionListener {
 
     JPanel buttons = new JPanel();
     JButton ok = new JButton("OK");
+    JButton returnBack = new JButton("Return");
     JButton cancel = new JButton("Cancel");
 
     public Add_Student_info_UI(){
@@ -25,10 +26,12 @@ public class Add_Student_info_UI extends JFrame implements ActionListener {
 
         ok.addActionListener(this);
         cancel.addActionListener(this);
-        buttons.setLayout(new GridLayout(2,1));
+        returnBack.addActionListener(this);
+        buttons.setLayout(new GridLayout(1,3));
         buttons.add(ok);
+        buttons.add(returnBack);
         buttons.add(cancel);
-        buttons.setBounds(420,250,120,60);
+        buttons.setBounds(300,250,300,30);
         contentPane.add(buttons);
 
         p.setBounds(20,100,680,50);
@@ -44,10 +47,12 @@ public class Add_Student_info_UI extends JFrame implements ActionListener {
         if(e.getSource() == cancel){
             dispose();
             new Select_Course_UI();
-        }
-        if(e.getSource() == ok){
+        } else if(e.getSource() == ok){
             dispose();
             new Select_Course_UI();
+        } else if(e.getSource() == returnBack){
+            dispose();
+            new Add_Assignment_info_UI();
         }
     }
 
