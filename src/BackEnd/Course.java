@@ -17,7 +17,8 @@ public class Course implements Reportable {
     private Sheet sheet;
     private ArrayList<Student> students;
     private ArrayList<Assignment> assignments;
-    private ArrayList<Criteria> criteria;
+    private ArrayList<Criteria> criterias;
+    private boolean end;
 
     public Course() {
         this.courseName = null;
@@ -26,7 +27,8 @@ public class Course implements Reportable {
         this.sheet = null;
         this.students = null;
         this.assignments = null;
-        this.criteria = null;
+        this.criterias = null;
+        this.end = false;
     }
     public Course(String courseName, String lecturerName, String semester, String student_file_dir, Course previous) {
         this.courseName = courseName;
@@ -36,12 +38,13 @@ public class Course implements Reportable {
         this.students = getStudentsFromFile(student_file_dir);
         if(previous == null) {
             this.assignments = null;
-            this.criteria = null;
+            this.criterias = null;
         }
         else {
             this.assignments = previous.assignments;
-            this.criteria = previous.criteria;
+            this.criterias = previous.criterias;
         }
+        this.end = false;
     }
     public ArrayList<Student> getStudentsFromFile(String student_file_dir) {
         ArrayList<Student> stduent_list = new ArrayList<>();
@@ -115,28 +118,57 @@ public class Course implements Reportable {
     }
 
     public ArrayList<Criteria> getCriteria() {
-        return criteria;
+        return criterias;
     }
 
     public void setCriteria(ArrayList<Criteria> criteria) {
-        this.criteria = criteria;
+        this.criterias = criteria;
     }
 
-    public int addStudent(String firstName, String middleInitial, String lastName, String studentId, String emailAddress) {
+    public boolean isEnd() {
+        return end;
+    }
+
+    public void setEnd(boolean end) {
+        this.end = end;
+    }
+
+    public int addStudent(String firstName, String middleInitial, String lastName, String studentId, String emailAddress, String stduentType) {
         // parameter:
         // firstName: String: First name of student
         // middleInitial: String: middleInitial of student
         // lastName: String: Last name of student
         // studentId: String: ID of student
         // emailAddress: String: Email address of student
+        // studentType: String: Undergraduate or graduate
         //
-        // return 1 if succeeded, return 2 if failed
-        Student student = new Undergraduate(firstName,middleInitial,lastName,studentId,emailAddress);
-        if(students.add(student)) {
+        // return 1 if succeeded, return 2 if invalid firstName, return 3 if invalid middleInitial, return 4 if invalid lastName,
+        // return 5 if invalid studentId, return 6 if invalid emailAddress, return 7 if invalid stduentType, return 8 if unknown error
+        if(firstName == null || firstName.equals("")) {
+            return 2;
+        }
+        if(middleInitial == null || middleInitial.equals("")) {
+            return 3;
+        }
+        if(lastName == null || lastName.equals("")) {
+            return 4;
+        }
+        if(studentId == null || studentId.equals("")) {
+            return 5;
+        }
+        if(emailAddress == null || emailAddress.equals("")) {
+            return 6;
+        }
+        if(stduentType == null || stduentType.equals("")) {
+            return 7;
+        }
+        try {
+            Student student = new Undergraduate(firstName, middleInitial, lastName, studentId, emailAddress);
+            students.add(student);
             return 1;
         }
-        else {
-            return 2;
+        catch (Exception e) {
+            return 8;
         }
     }
     public int removeStudent(int index) {
@@ -144,16 +176,16 @@ public class Course implements Reportable {
         // index: int: index of student in the arraylist you would like to remove
         //
         // return 1 if succeeded , return 2 if student not found, return 3 if unknown error
-        if(index >= students.size()) {
-            return 2;
-        }
-        else {
-            if(students.remove(index) == null) {
-                return 3;
-            }
-            else {
+        try {
+            if (index >= students.size() || index < 0) {
+                return 2;
+            } else {
+                students.remove(index);
                 return 1;
             }
+        }
+        catch (Exception e) {
+            return 3;
         }
     }
     public int addAssignment(String name, double total, String scoring_method) {
@@ -163,22 +195,26 @@ public class Course implements Reportable {
         // scoring_method: String: scoring method of the assignment
         //
         // return 1 if succeeded, return 2 if invalid name, return 3 if invalid total, return 4 if invalid scoring_method, return 5 if unknown error
-        if(name == null || name.equals("")) {
-            return 2;
-        }
-        if(total <= 0) {
-            return 3;
-        }
-        if(!scoring_method.equals("deduction") && !scoring_method.equals("raw") && !scoring_method.equals("percentage")) {
-            return 4;
-        }
-        Assignment assignment = new Assignment(name,total,scoring_method);
-        if(assignments.add(assignment)) {
+
+        try {
+            if (name == null || name.equals("")) {
+                return 2;
+            }
+
+            if (total <= 0) {
+                return 3;
+            }
+            if (!scoring_method.equals("deduction") && !scoring_method.equals("raw") && !scoring_method.equals("percentage")) {
+                return 4;
+            }
+            Assignment assignment = new Assignment(name, total, scoring_method);
+            assignments.add(assignment);
             return 1;
         }
-        else {
+        catch (Exception e) {
             return 5;
         }
+
     }
     public int changeAssignment(int index, String name, double total, String scoring_method) {
         //parameters:
@@ -188,30 +224,72 @@ public class Course implements Reportable {
         // scoring_method: String: scoring method of the assignment
         //
         //return 1 if succeeded , return 2 if assignment not found, return 3 if invalid name, return 4 if invalid total, return 5 if invalid scoring_method, return 6 if unknown error
-        if(index >= assignments.size()) {
-            return 2;
+        try {
+            if (index >= assignments.size() || index < 0) {
+                return 2;
+            }
+            if (name == null || name.equals("")) {
+                return 3;
+            }
+            if (total <= 0) {
+                return 4;
+            }
+            if (!scoring_method.equals("deduction") && !scoring_method.equals("raw") && !scoring_method.equals("percentage")) {
+                return 5;
+            }
+            Assignment assignment = assignments.get(index);
+            assignment.changeAssignment(name, total, scoring_method);
+            return 1;
         }
-        if(name == null || name.equals("")) {
-            return 3;
-        }
-        if(total <= 0) {
-            return 4;
-        }
-        if(!scoring_method.equals("deduction") && !scoring_method.equals("raw") && !scoring_method.equals("percentage")) {
-            return 5;
-        }
-        Assignment assignment = assignments.get(index);
-        if(assignment == null) {
+        catch (Exception e) {
             return 6;
         }
-        assignment.changeAssignment(name,total,scoring_method);
-        return 1;
     }
     public int addCriteria(double[] weights) {
-        return 1;
+        //parameters:
+        // weights: double[]: Array of double representing weights
+        //
+        //return 1 if succeeded , return 2 if sum of weights not equals to 1, return 3 if unknown error
+        try {
+            double sum = 0;
+            for (int i = 0; i < weights.length; i++) {
+                sum += weights[i];
+            }
+            if (sum != 1) {
+                return 2;
+            }
+            Criteria criteria = new Criteria(weights);
+            criterias.add(criteria);
+            return 1;
+        }
+        catch (Exception e) {
+            return 3;
+        }
     }
     public int changeCriteria(int index, double[] weights) {
-        return 1;
+        //parameters:
+        // weights: double[]: Array of double representing weights
+        //
+        //return 1 if succeeded , return 2 if sum of weights not equals to 1, return 3 if criteria not found, return 4 if unknown error
+        try {
+            double sum = 0;
+
+            for (int i = 0; i < weights.length; i++) {
+                sum += weights[i];
+            }
+            if (sum != 1) {
+                return 2;
+            }
+            if (index >= criterias.size() || index < 0) {
+                return 3;
+            }
+            Criteria criteria = criterias.get(index);
+            criteria.changeCriteria(weights);
+            return 1;
+        }
+        catch (Exception e) {
+            return 4;
+        }
     }
     public Report getReport() {
         // tbd
@@ -219,7 +297,16 @@ public class Course implements Reportable {
     }
     public int endCourse() {
         //return 1 if succeeded , return 2 if course is already ended, return 3 if unknown error
-        return 1;
+        try {
+            if (end) {
+                return 2;
+            }
+            end = true;
+            return 1;
+        }
+        catch (Exception e) {
+            return 3;
+        }
     }
     public double calTotal() {
         //return double score if succeeded , return -1 if unknown error
