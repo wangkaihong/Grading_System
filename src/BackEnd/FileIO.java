@@ -334,7 +334,7 @@ public class FileIO {
             obj1.put("lecturerName",course.getLecturerName());
             obj1.put("semester",course.getSemester());
             //write cell matrix instead of sheet
-            writeCell(course.getSheet().getCell(), course.getCourseName());
+            writeCell(course.getSheet().getAllCell(), course.getCourseName());
             writeStudentInfo(course.getStudents(), course.getCourseName());
             writeAssignment(course.getAssignments(), course.getCourseName());
             writeCriteria(course.getCriteria(), course.getCourseName());

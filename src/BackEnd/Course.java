@@ -338,5 +338,8 @@ public class Course implements Reportable {
         return 1;
     }
     public static void main(String[] args) {
+        String a = "1a";
+        double b = Double.valueOf(a);
+        System.out.print(b);
     }
 }
