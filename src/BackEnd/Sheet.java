@@ -12,7 +12,7 @@ public class Sheet {
     }
 
     public Sheet(ArrayList<ArrayList<Cell>> c){
-        cell = c;
+        cells = c;
     }
 
     public ArrayList<ArrayList<Cell>> getCell() {

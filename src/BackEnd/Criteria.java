@@ -19,6 +19,12 @@ public class Criteria {
         }
 
     }
+
+    public Criteria(ArrayList<Double> weight) {
+        this.weights = weight;
+    }
+
+
     public void changeCriteria(double[] add_weights) {
         weights = new ArrayList<>();
         for(int i = 0; i < add_weights.length;i++) {

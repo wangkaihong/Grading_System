@@ -1,6 +1,9 @@
 package BackEnd;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Created by wangkaihong on 2019/4/9.
@@ -26,6 +29,18 @@ public class Course implements Reportable {
         this.criterias = null;
         this.end = false;
     }
+
+    public Course(String cN, String lN, String s, Sheet sh, ArrayList<Student> stu, ArrayList<Assignment> assign, ArrayList<Criteria> cri){
+        courseName = cN;
+        lecturerName = lN;
+        semester = s;
+        sheet = sh;
+        students = stu;
+        assignments = assign;
+        criterias = cri;
+    }
+
+
     public Course(String courseName, String lecturerName, String semester, String student_file_dir, Course previous) {
         this.courseName = courseName;
         this.lecturerName = lecturerName;

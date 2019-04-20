@@ -106,18 +106,22 @@ public class Grading_System {
         listStu.add(stu1);
         listStu.add(stu2);
         //set Assignments
-        Assignment assign1 = new Assignment("hw1",100,false);
-        Assignment assign2 = new Assignment("hw2",120,true);
+        Assignment assign1 = new Assignment("hw1",100,"Deduction");
+        Assignment assign2 = new Assignment("hw2",120,"Percentage");
         ArrayList<Assignment> listAssign = new ArrayList<Assignment>();
         listAssign.add(assign1);
         listAssign.add(assign2);
         //set Criteria
+        /*
         ArrayList<Double> weights1 = new ArrayList<Double>();
         weights1.add(0.4);
         weights1.add(0.6);
         ArrayList<Double> weights2 = new ArrayList<Double>();
         weights2.add(0.3);
         weights2.add(0.7);
+        */
+        double [] weights1 = {0.4,0.6};
+        double [] weights2 = {0.3,0.7};
         Criteria criteria1 = new Criteria(weights1);
         Criteria criteria2 = new Criteria(weights2);
         ArrayList<Criteria> listCri = new ArrayList<Criteria>();
@@ -199,8 +203,8 @@ public class Grading_System {
         for(Student temp : listStudentRead) {
 
             System.out.println(temp.getFirstName());
-            System.out.println(temp.getSecondName());
-            System.out.println(temp.getThirdName());
+            System.out.println(temp.getMiddleInitial());
+            System.out.println(temp.getLastName());
             System.out.println(temp.getStudentId());
             System.out.println(temp.getEmailAddress());
             if (temp instanceof Undergraduate) {

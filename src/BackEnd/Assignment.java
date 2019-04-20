@@ -26,12 +26,6 @@ public class Assignment implements Reportable{
         this.scoring_method = scoring_method;
     }
 
-    public Assignment(String n, double t, boolean s){
-        name = n;
-        total = t;
-        scoring_method = s;
-    }
-
     public void setName(String name) {
         this.name = name;
     }

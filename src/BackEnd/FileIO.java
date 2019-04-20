@@ -63,6 +63,7 @@ public class FileIO {
         //from JSON file name
         JSONParser parser1 = new JSONParser();
         ArrayList<Double> listWeights = new ArrayList<Double>();
+        //double [] listWeights;
         ArrayList<Criteria> listCriteria = new ArrayList<Criteria>();
         try (FileReader reader = new FileReader(filename+"Criteria.json"))
         {
@@ -79,6 +80,7 @@ public class FileIO {
             while(i < countRead){
                 JSONObject tempRead = (JSONObject) readListCriteria.get("jOut"+Integer.toString(i));
                 listWeights = (ArrayList<Double>) tempRead.get("Weights");
+                //listWeights = (double[]) tempRead.get("Weights");
                 Criteria c = new Criteria(listWeights);
                 listCriteria.add(c);
                 i = i + 1;
@@ -101,8 +103,8 @@ public class FileIO {
         for(Student stu : listStu){
             JSONObject obj1 = new JSONObject();
             obj1.put("firstName",stu.getFirstName());
-            obj1.put("secondName",stu.getSecondName());
-            obj1.put("thirdName",stu.getThirdName());
+            obj1.put("secondName",stu.getMiddleInitial());
+            obj1.put("thirdName",stu.getLastName());
             obj1.put("studentId",stu.getStudentId());
             obj1.put("emailAddress",stu.getEmailAddress());
             if(stu instanceof Undergraduate){
@@ -203,7 +205,7 @@ public class FileIO {
         ArrayList<Assignment> listAssign = new ArrayList<Assignment>();
         String name;
         double total;
-        boolean scoring_method;
+        String scoring_method;
         try (FileReader reader = new FileReader(filename+"Assignment.json"))
         {
             //Read JSON file
@@ -221,7 +223,7 @@ public class FileIO {
                 JSONObject tempRead = (JSONObject) readAssign.get("jOut"+Integer.toString(i));
                 name = (String) tempRead.get("name");
                 total = (double)tempRead.get("total");
-                scoring_method = (boolean) tempRead.get("scoring_method");
+                scoring_method = (String) tempRead.get("scoring_method");
                 Assignment assign = new Assignment(name, total, scoring_method);
                 listAssign.add(assign);
                 i = i + 1;
