@@ -24,6 +24,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
     JPanel pFunc2 = new JPanel();
     JTextField jt = new JTextField();
     DefaultTableModel mSheet;
+    JTable tSheet;
     Object[] columnNames = { "ID", "Name","HW1", "HW2", "Exam1", "Total"};
     //JLabel lSheet1 = new JLabel("Select Students Info：");
     //String[] listInfo = new String[]{"FirstName", "ID", "Email"};
@@ -49,7 +50,8 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
                 return (columnIndex != 0) & (columnIndex != 5);
             }
         };
-        JTable tSheet = new JTable(mSheet);
+
+        tSheet = new JTable(mSheet);
         // Set the size of scroll panel window
         tSheet.setPreferredScrollableViewportSize(new Dimension(400, 300));
         //spSheet = new JScrollPane(tSheet);
@@ -128,12 +130,14 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         }
         else if(e.getSource() == removeStudent){
             //??
-            int select = mSheet.getRowCount();
-            mSheet.removeRow(select-1);
+
+            int select = tSheet.getSelectedRow();
+            System.out.println(select);
+            mSheet.removeRow(select);
 
         }
     }
-    public static void main(String[] args){
-        new GradeSheet_UI();
-    }
+//    public static void main(String[] args){
+////        new GradeSheet_UI();
+////    }
 }
