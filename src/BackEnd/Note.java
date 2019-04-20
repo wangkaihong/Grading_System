@@ -10,14 +10,14 @@ import java.util.Calendar;
  */
 public class Note {
     private String information;
-    private Date time;
+    private String time;
 
     public Note() {
-        time = Calendar.getInstance().getTime();
+        time = Calendar.getInstance().getTime().toString();
         information = "";
     }
     public Note(String info) {
-        time = Calendar.getInstance().getTime();
+        time = Calendar.getInstance().getTime().toString();
         information = info;
     }
 
@@ -34,16 +34,11 @@ public class Note {
         this.information = information;
     }
 
-    public String[] getReadableTime() {
-        // return array of String consisting of day, month, date, time, time zone, year
-        return time.toString().split(" ");
-    }
-
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(String time) {
         this.time = time;
     }
 

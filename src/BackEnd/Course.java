@@ -29,7 +29,6 @@ public class Course implements Reportable {
         this.criterias = null;
         this.end = false;
     }
-
     public Course(String cN, String lN, String s, Sheet sh, ArrayList<Student> stu, ArrayList<Assignment> assign, ArrayList<Criteria> cri){
         courseName = cN;
         lecturerName = lN;
@@ -41,12 +40,12 @@ public class Course implements Reportable {
     }
 
 
-    public Course(String courseName, String lecturerName, String semester, String student_file_dir, Course previous) {
+    public Course(String courseName, String lecturerName, String semester, ArrayList<Student> student_list, Course previous) {
         this.courseName = courseName;
         this.lecturerName = lecturerName;
         this.semester = semester;
         this.sheet = null;
-        this.students = getStudentsFromFile(student_file_dir);
+        this.students = student_list;
         if(previous == null) {
             this.assignments = null;
             this.criterias = null;
@@ -56,28 +55,6 @@ public class Course implements Reportable {
             this.criterias = previous.criterias;
         }
         this.end = false;
-    }
-    public ArrayList<Student> getStudentsFromFile(String student_file_dir) {
-        ArrayList<Student> stduent_list = new ArrayList<>();
-        try {
-            Scanner scanner = new Scanner(new File(student_file_dir));
-            scanner.useDelimiter("\n");
-            while (scanner.hasNext()) {
-                String temp = scanner.next();
-                String[] arr = temp.split(",");
-                stduent_list.add(new Undergraduate(arr[0],arr[1],arr[2],arr[3],arr[4]));
-            }
-            scanner.close();
-        }
-        catch (FileNotFoundException e) {
-            System.out.print("File not found!");
-            return null;
-        }
-        catch (Exception e) {
-            System.out.print("Something went wrong in importing Student information!");
-            return null;
-        }
-        return stduent_list;
     }
 
 
@@ -145,7 +122,7 @@ public class Course implements Reportable {
         this.end = end;
     }
 
-    public int addStudent(String firstName, String middleInitial, String lastName, String studentId, String emailAddress, String stduentType) {
+    public int addStudent(String firstName, String middleInitial, String lastName, String studentId, String emailAddress, String studentType) {
         // parameter:
         // firstName: String: First name of student
         // middleInitial: String: middleInitial of student
@@ -155,7 +132,7 @@ public class Course implements Reportable {
         // studentType: String: Undergraduate or graduate
         //
         // return 1 if succeeded, return 2 if invalid firstName, return 3 if invalid middleInitial, return 4 if invalid lastName,
-        // return 5 if invalid studentId, return 6 if invalid emailAddress, return 7 if invalid stduentType, return 8 if unknown error
+        // return 5 if invalid studentId, return 6 if invalid emailAddress, return 7 if invalid studentType, return 8 if unknown error
         if(firstName == null || firstName.equals("")) {
             return 2;
         }
@@ -171,13 +148,24 @@ public class Course implements Reportable {
         if(emailAddress == null || emailAddress.equals("")) {
             return 6;
         }
-        if(stduentType == null || stduentType.equals("")) {
+        if(studentType == null || studentType.equals("")) {
             return 7;
         }
         try {
-            Student student = new Undergraduate(firstName, middleInitial, lastName, studentId, emailAddress);
-            students.add(student);
-            return 1;
+            if(studentType.equals("undergraduate")) {
+                Student student = new Undergraduate(firstName, middleInitial, lastName, studentId, emailAddress);
+                students.add(student);
+                return 1;
+            }
+            if(studentType.equals("graduate")) {
+                Student student = new Graduate(firstName, middleInitial, lastName, studentId, emailAddress);
+                students.add(student);
+                return 1;
+            }
+            else {
+                return 7;
+            }
+
         }
         catch (Exception e) {
             return 8;
@@ -324,5 +312,6 @@ public class Course implements Reportable {
         //return double score if succeeded , return -1 if unknown error
         return 1;
     }
-
+    public static void main(String[] args) {
+    }
 }
