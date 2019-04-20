@@ -27,6 +27,7 @@ public class Add_Student_single_UI extends JFrame implements ActionListener {
     JRadioButton under = new JRadioButton("Undergraduate");
     JButton confirm = new JButton("Confirm");
     JButton ret = new JButton("Cancel");
+    Course course;
 
     public Add_Student_single_UI(){
         Container contentPane = this.getContentPane();
@@ -84,8 +85,10 @@ public class Add_Student_single_UI extends JFrame implements ActionListener {
 
             if(studentType == "Graduate"){
                 Student s1 = new Graduate(studentFName, studentMName,studentLName,studentID,studentEmail);
+                course.addStudent(studentFName, studentMName,studentLName,studentID,studentEmail,studentType);
             }else{
                 Student s = new Undergraduate(studentFName, studentMName,studentLName,studentID,studentEmail);
+                course.addStudent(studentFName, studentMName,studentLName,studentID,studentEmail,studentType);
             }
             //GradeSheet_UI.addRows(studentID, studentFName, studentLName);
             dispose();

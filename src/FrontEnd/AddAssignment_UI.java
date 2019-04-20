@@ -1,5 +1,7 @@
 package FrontEnd;
 
+import BackEnd.Course;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -25,6 +27,7 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
     JButton ret = new JButton("Cancel");
     JCheckBox copy = new JCheckBox("Same Weights");
     String scoring = "" ;
+    Course course;
 
     public AddAssignment_UI(){
         Container contentPane = this.getContentPane();
@@ -82,9 +85,19 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
         else if(e.getSource() == confirm) {
             scoring = this.G1.getSelection().getActionCommand();
             String name = assignmentname.getText();
-            double total = Double.parseDouble(totalPoint.getText());
-            double weightU = Double.parseDouble(weightedU.getText());
-            double weightG = Double.parseDouble(weightedG.getText());
+            double weightU=0,weightG = 0,total = 0;
+            total = Double.parseDouble(totalPoint.getText());
+
+            if (weightedU.getText() == null && weightedG.getText() == null){
+                JOptionPane.showMessageDialog(null,"Please enter at least one weight");
+            }else if(weightedU.getText() != null &&weightedG.getText() == null){
+                weightU = Double.parseDouble(weightedU.getText());
+                weightG = weightU;
+            }else if (weightedU.getText() == null &&weightedG.getText() != null){
+                weightG = Double.parseDouble(weightedG.getText());
+                weightU = weightG;
+            }
+
             ModifyCol_UI.addRows(name, total, weightU, weightG, scoring);
             dispose();
             System.out.print("scoring way is :" + scoring);
