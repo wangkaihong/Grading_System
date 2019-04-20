@@ -12,4 +12,7 @@ public class Undergraduate extends Student {
         studentId = id;
         emailAddress = email;
     }
+    public Undergraduate(String firstName, String middleInitial, String lastName, String studentId, String emailAddress) {
+        super(firstName, middleInitial, lastName, studentId, emailAddress);
+    }
 }

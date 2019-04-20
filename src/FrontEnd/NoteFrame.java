@@ -65,7 +65,7 @@ public class NoteFrame extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == back){
             dispose();
-            new GradeSheet();
+            new GradeSheet_UI();
         }
     }
 }

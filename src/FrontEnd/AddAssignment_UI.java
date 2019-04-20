@@ -15,7 +15,6 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
     JTextField totalPoint = new JTextField(20);
     JLabel weight = new JLabel("Weight: ");
     JTextField weighted = new JTextField(20);
-    JLabel score = new JLabel("Scoring Method");
     JRadioButton deduction = new JRadioButton("Deduction");
     JRadioButton percentage = new JRadioButton("Percentage");
     JRadioButton raw = new JRadioButton("Raw Point");
@@ -76,14 +75,12 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
             String name = assignmentname.getText();
             double total = Double.parseDouble(totalPoint.getText());
             double weight = Double.parseDouble(weighted.getText());
-            ModifyCol.addRows(name, total, weight, scoring);
+            ModifyCol_UI.addRows(name, total, weight, scoring);
             dispose();
             System.out.print("scoring way is :" + scoring);
             // add course info to course
         }
     }
-    public static void main(String[] args){
-        new AddAssignment_UI();
-    }
+
 
 }

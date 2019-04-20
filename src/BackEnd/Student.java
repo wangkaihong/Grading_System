@@ -4,11 +4,26 @@ package BackEnd;
  * Created by wangkaihong on 2019/4/9.
  */
 public abstract class Student implements Reportable{
+
+
+
     protected String firstName;
-    protected String secondName;
-    protected String thirdName;
+    protected String middleInitial;
+    protected String lastName;
     protected String studentId;
     protected String emailAddress;
+    
+    public Student() {
+        
+    }
+    
+    public Student(String firstName, String middleInitial, String lastName, String studentId, String emailAddress) {
+        this.firstName = firstName;
+        this.middleInitial = middleInitial;
+        this.lastName = lastName;
+        this.studentId = studentId;
+        this.emailAddress = emailAddress;
+    }
 
 
     public String getFirstName() {
@@ -19,20 +34,20 @@ public abstract class Student implements Reportable{
         this.firstName = firstName;
     }
 
-    public String getSecondName() {
-        return secondName;
+    public String getMiddleInitial() {
+        return middleInitial;
     }
 
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
+    public void setMiddleInitial(String middleInitial) {
+        this.middleInitial = middleInitial;
     }
 
-    public String getThirdName() {
-        return thirdName;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setThirdName(String thirdName) {
-        this.thirdName = thirdName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getStudentId() {
