@@ -337,7 +337,7 @@ public class FileIO {
             writeCell(course.getSheet().getAllCell(), course.getCourseName());
             writeStudentInfo(course.getStudents(), course.getCourseName());
             writeAssignment(course.getAssignments(), course.getCourseName());
-            writeCriteria(course.getCriteria(), course.getCourseName());
+            writeCriteria(course.getCriteria_UG(), course.getCourseName());
 
             out1.put("jOut"+Integer.toString(count1),obj1);
 
