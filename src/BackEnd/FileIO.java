@@ -252,7 +252,7 @@ public class FileIO {
                 JSONObject obj1 = new JSONObject();
                 obj1.put("noteInfo",c.getNote().getInformation());
                 //obj1.put("noteDate",c.getNote().getTime());
-                obj1.put("noteDate","");//fix it later with real time
+                obj1.put("noteDate",c.getNote().getTime());//fix it later with real time
                 obj1.put("score",c.getScore());
 
                 out1.put("jOut1"+Integer.toString(count2),obj1);
@@ -274,7 +274,7 @@ public class FileIO {
         //ArrayList<Cell> listCell = new ArrayList<Cell>();
         ArrayList<ArrayList<Cell>> matrixCell = new ArrayList<ArrayList<Cell>>();
         String noteInfo;
-        Date noteDate = new Date(); //noteDate should be initialized, inappropriate?
+        String noteDate;
         double score;
 
         try (FileReader reader = new FileReader(filename+"Cell.json")){
@@ -296,7 +296,7 @@ public class FileIO {
                     String sKeyRow = (String) iteRow.next();
                     JSONObject tempRead = (JSONObject) readCellRow.get(sKeyRow);
                     noteInfo = (String) tempRead.get("noteInfo");
-                    String strDate = (String) tempRead.get("noteDate");
+                    noteDate = (String) tempRead.get("noteDate");
                     /*
                     try{DateFormat dateFmt = new SimpleDateFormat("dd/MM/yyyy");
                             noteDate = dateFmt.parse(strDate);}
@@ -304,7 +304,6 @@ public class FileIO {
                         e.printStackTrace();
                     }
                     */
-                    noteDate = new Date();//fix it later with real time
                     //score = Double.valueOf((String)tempRead.get("score"));
                     score = (double) tempRead.get("score");
                     Note tempNote = new Note(noteInfo, noteDate);

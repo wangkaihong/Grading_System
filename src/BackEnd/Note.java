@@ -21,7 +21,7 @@ public class Note {
         information = info;
     }
 
-    public Note(String info, Date d){
+    public Note(String info, String d){
         information = info;
         time = d;
     }

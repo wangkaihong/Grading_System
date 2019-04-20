@@ -189,10 +189,9 @@ public class Grading_System {
         catch (java.text.ParseException e){
             e.printStackTrace();
         }
-        time1 = new Date();//fix it later
-        Note note1 = new Note("Good",time1);
-        Note note2 = new Note("Well done",time1);
-        Note noteBlank = new Note("",time1);
+        Note note1 = new Note("Good");
+        Note note2 = new Note("Well done");
+        Note noteBlank = new Note("");
         //set Cells
         Cell cell1 = new Cell(note1,-10);
         Cell cell2 = new Cell(noteBlank,0.8);
