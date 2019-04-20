@@ -54,7 +54,17 @@ public class Course implements Reportable {
             while (scanner.hasNext()) {
                 String temp = scanner.next();
                 String[] arr = temp.split(",");
-                stduent_list.add(new Undergraduate(arr[0],arr[1],arr[2],arr[3],arr[4]));
+                if(arr[5].equals("U")) {
+                    stduent_list.add(new Undergraduate(arr[0], arr[1], arr[2], arr[3], arr[4]));
+                }
+                else {
+                    if(arr[5].equals("G")) {
+                        stduent_list.add(new Graduate(arr[0], arr[1], arr[2], arr[3], arr[4]));
+                    }
+                    else {
+                        throw new Exception();
+                    }
+                }
             }
             scanner.close();
         }
@@ -133,7 +143,7 @@ public class Course implements Reportable {
         this.end = end;
     }
 
-    public int addStudent(String firstName, String middleInitial, String lastName, String studentId, String emailAddress, String stduentType) {
+    public int addStudent(String firstName, String middleInitial, String lastName, String studentId, String emailAddress, String studentType) {
         // parameter:
         // firstName: String: First name of student
         // middleInitial: String: middleInitial of student
@@ -143,7 +153,7 @@ public class Course implements Reportable {
         // studentType: String: Undergraduate or graduate
         //
         // return 1 if succeeded, return 2 if invalid firstName, return 3 if invalid middleInitial, return 4 if invalid lastName,
-        // return 5 if invalid studentId, return 6 if invalid emailAddress, return 7 if invalid stduentType, return 8 if unknown error
+        // return 5 if invalid studentId, return 6 if invalid emailAddress, return 7 if invalid studentType, return 8 if unknown error
         if(firstName == null || firstName.equals("")) {
             return 2;
         }
@@ -159,13 +169,24 @@ public class Course implements Reportable {
         if(emailAddress == null || emailAddress.equals("")) {
             return 6;
         }
-        if(stduentType == null || stduentType.equals("")) {
+        if(studentType == null || studentType.equals("")) {
             return 7;
         }
         try {
-            Student student = new Undergraduate(firstName, middleInitial, lastName, studentId, emailAddress);
-            students.add(student);
-            return 1;
+            if(studentType.equals("undergraduate")) {
+                Student student = new Undergraduate(firstName, middleInitial, lastName, studentId, emailAddress);
+                students.add(student);
+                return 1;
+            }
+            if(studentType.equals("graduate")) {
+                Student student = new Graduate(firstName, middleInitial, lastName, studentId, emailAddress);
+                students.add(student);
+                return 1;
+            }
+            else {
+                return 7;
+            }
+
         }
         catch (Exception e) {
             return 8;
