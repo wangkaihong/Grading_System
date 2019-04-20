@@ -28,6 +28,13 @@ public class Grading_System {
         this.courses = courses;
     }
 
+    public String[] getCourseList() {
+        String[] list = new String[courses.size()];
+        for(int i = 0; i < list.length;i++) {
+            list[i] = courses.get(i).getCourseName();
+        }
+        return list;
+    }
 
     public int addCourse(String courseName, String lecturerName, String semester, String student_file_dir, int previous_Course_ind) {
         // parameters:

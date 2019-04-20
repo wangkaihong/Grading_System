@@ -460,9 +460,13 @@ public class Course implements Reportable {
             return 3;
         }
     }
-    public double calTotal() {
+    public String[] calTotal() {
         //return double score if succeeded , return -1 if unknown error
-        return 1;
+//        String[] res = new String[students.size()];
+//        for(int i = 0; i < res.length;i++) {
+//            if(students.get(i))
+//        }
+        return null;
     }
     public static void main(String[] args) {
         String a = "1a";
