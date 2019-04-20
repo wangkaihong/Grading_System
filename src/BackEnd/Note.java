@@ -13,7 +13,12 @@ public class Note {
     private Date time;
 
     public Note() {
-
+        time = Calendar.getInstance().getTime();
+        information = "";
+    }
+    public Note(String info) {
+        time = Calendar.getInstance().getTime();
+        information = info;
     }
 
     public Note(String info, Date d){
@@ -29,6 +34,11 @@ public class Note {
         this.information = information;
     }
 
+    public String[] getReadableTime() {
+        // return array of String consisting of day, month, date, time, time zone, year
+        return time.toString().split(" ");
+    }
+
     public Date getTime() {
         return time;
     }
@@ -37,10 +47,4 @@ public class Note {
         this.time = time;
     }
 
-    public static void main(String[] args) {
-        Date date = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-        String strDate = dateFormat.format(date);
-        System.out.print(strDate);
-    }
 }
