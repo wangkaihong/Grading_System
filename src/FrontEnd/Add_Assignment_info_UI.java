@@ -5,9 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * Created by wangkaihong on 2019/3/30.
- */
+
 public class Add_Assignment_info_UI extends JFrame implements ActionListener {
     JPanel importFrom = new JPanel();
     JPanel addAssignment = new JPanel();
@@ -18,6 +16,7 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
     JTextField assignmentName = new JTextField();
     JTextField weight = new JTextField();
     JButton next = new JButton("Next");
+    JButton returnBack = new JButton("Return");
     JButton cancel = new JButton("Cancel");
 
 
@@ -47,11 +46,13 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
 
 
         next.addActionListener(this);
+        returnBack.addActionListener(this);
         cancel.addActionListener(this);
-        buttons.setLayout(new GridLayout(2,1));
+        buttons.setLayout(new GridLayout(1,3));
         buttons.add(next);
+        buttons.add(returnBack);
         buttons.add(cancel);
-        buttons.setBounds(420,250,120,60);
+        buttons.setBounds(300,250,300,30);
         contentPane.add(buttons);
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -68,6 +69,9 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
         } else if (e.getSource() == cancel){
             dispose();
             new Select_Course_UI();
+        } else if (e.getSource() == returnBack){
+            dispose();
+            new Add_Class_UI();
         }
 
     }
