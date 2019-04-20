@@ -9,6 +9,7 @@ import java.awt.event.ItemListener;
 
 
 public class Select_Course_UI extends JFrame implements ActionListener {
+    JPanel label = new JPanel();
     JPanel courseList = new JPanel();
     JPanel buttons = new JPanel();
 
@@ -39,11 +40,12 @@ public class Select_Course_UI extends JFrame implements ActionListener {
             }
         });
 
+        label.add(courseLabel);
+        label.setBounds(50,100,50,30);
+        contentPane.add(label);
 
-        courseList.setLayout(new GridLayout(1, 2));
-        courseList.add(courseLabel);
         courseList.add(courses);
-        courseList.setBounds(50, 100, 500, 30);
+        courseList.setBounds(0, 95, 600, 30);
         contentPane.add(courseList);
 
         add.addActionListener(this);
