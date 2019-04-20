@@ -67,7 +67,6 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
 
                 //Object value = mSheet.getValueAt(row,col);
                 String value = (String)  mSheet.getValueAt(row,col);
-                S
                 System.out.println(value);
             }
         });
