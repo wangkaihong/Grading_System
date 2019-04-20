@@ -292,9 +292,23 @@ public class Course implements Reportable {
         }
     }
     public String[][] getTable() { // todo
-//        String[][] table = new String[][]();
-//        Cell = sheet.getAllCell()
-        return null;
+        // parameters:
+        // None
+        // return String[][] of content of sheet, null of unknown error
+        try {
+            int height = sheet.getHeight();
+            int width = sheet.getWidth();
+            String[][] table = new String[height][width];
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width; j++) {
+                    table[i][j] = String.valueOf(sheet.getCell(i, j).getScore());
+                }
+            }
+            return table;
+        }
+        catch (Exception e) {
+            return null;
+        }
     }
     public int setScore(int cor1,int cor2, String score) { // todo
         double input = Double.valueOf(score);

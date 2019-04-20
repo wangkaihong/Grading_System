@@ -21,7 +21,15 @@ public class Sheet {
     public Cell getCell(int cor1, int cor2) {
         return cells.get(cor1).get(cor2);
     }
-
+    public int getHeight() {
+        return cells.size();
+    }
+    public int getWidth() {
+        if(cells.size() > 0) {
+            return cells.get(0).size();
+        }
+        return 0;
+    }
 
     public void setCell(ArrayList<ArrayList<Cell>> cell) {
         this.cells = cell;
