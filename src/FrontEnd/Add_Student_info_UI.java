@@ -5,9 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * Created by wangkaihong on 2019/3/30.
- */
+
 public class Add_Student_info_UI extends JFrame implements ActionListener {
     JPanel p = new JPanel();
     JLabel lCheck = new JLabel("Directory to file: ");
