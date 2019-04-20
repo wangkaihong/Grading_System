@@ -30,12 +30,12 @@ public class Course implements Reportable {
         this.criterias = null;
         this.end = false;
     }
-    public Course(String courseName, String lecturerName, String semester, String student_file_dir, Course previous) {
+    public Course(String courseName, String lecturerName, String semester, ArrayList<Student> student_list, Course previous) {
         this.courseName = courseName;
         this.lecturerName = lecturerName;
         this.semester = semester;
         this.sheet = null;
-        this.students = getStudentsFromFile(student_file_dir);
+        this.students = student_list;
         if(previous == null) {
             this.assignments = null;
             this.criterias = null;
@@ -45,38 +45,6 @@ public class Course implements Reportable {
             this.criterias = previous.criterias;
         }
         this.end = false;
-    }
-    public ArrayList<Student> getStudentsFromFile(String student_file_dir) {
-        ArrayList<Student> stduent_list = new ArrayList<>();
-        try {
-            Scanner scanner = new Scanner(new File(student_file_dir));
-            scanner.useDelimiter("\n");
-            while (scanner.hasNext()) {
-                String temp = scanner.next();
-                String[] arr = temp.split(",");
-                if(arr[5].equals("U")) {
-                    stduent_list.add(new Undergraduate(arr[0], arr[1], arr[2], arr[3], arr[4]));
-                }
-                else {
-                    if(arr[5].equals("G")) {
-                        stduent_list.add(new Graduate(arr[0], arr[1], arr[2], arr[3], arr[4]));
-                    }
-                    else {
-                        throw new Exception();
-                    }
-                }
-            }
-            scanner.close();
-        }
-        catch (FileNotFoundException e) {
-            System.out.print("File not found!");
-            return null;
-        }
-        catch (Exception e) {
-            System.out.print("Something went wrong in importing Student information!");
-            return null;
-        }
-        return stduent_list;
     }
 
     public String getCourseName() {
@@ -334,6 +302,5 @@ public class Course implements Reportable {
         return 1;
     }
     public static void main(String[] args) {
-        Course c = new Course("a","b","c","students.csv",null);
     }
 }
