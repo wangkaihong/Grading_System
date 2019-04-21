@@ -372,7 +372,7 @@ public class Course implements Reportable {
             return 4;
         }
     }
-    public String[][] getTable() { //
+    public String[][] getTable() { // todo calculate portion to the total point
         // parameters:
         // None
         // return String[][] of content of sheet, null of unknown error
@@ -402,7 +402,7 @@ public class Course implements Reportable {
             return 3;
         }
         try {
-            double input = Double.valueOf(score);
+            double input = Double.valueOf(score); // todo calculate portion to the total point
             sheet.setScore(cor1, cor2, input);
             return 1;
         }
@@ -464,12 +464,34 @@ public class Course implements Reportable {
         }
     }
     public String[] calTotal() {
-        //return double score if succeeded , return -1 if unknown error
-//        String[] res = new String[students.size()];
-//        for(int i = 0; i < res.length;i++) {
-//            if(students.get(i))
-//        }
-        return null;
+        //
+        //return array of double score if succeeded , return null if unknown error
+        String[] res = new String[students.size()];
+        for(int i = 0; i < res.length;i++) {
+            if(students.get(i) instanceof Undergraduate) {
+                ArrayList<Double> row = sheet.getScoreRow(i);
+                if(row.size() != criteria_UG.getWeight().size()) {
+                    return null;
+                }
+                double score = 0;
+                for(int j = 0; j < row.size(); j++) {
+                    score += row.get(j) * criteria_UG.getWeight().get(j);
+                }
+                res[i] = String.valueOf(score);
+            }
+            else {
+                ArrayList<Double> row = sheet.getScoreRow(i);
+                if(row.size() != criteria_G.getWeight().size()) {
+                    return null;
+                }
+                double score = 0;
+                for(int j = 0; j < row.size(); j++) {
+                    score += row.get(j) * criteria_G.getWeight().get(j);
+                }
+                res[i] = String.valueOf(score);
+            }
+        }
+        return res;
     }
     public static void main(String[] args) {
         String a = "1a";

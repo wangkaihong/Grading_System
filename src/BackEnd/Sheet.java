@@ -33,6 +33,21 @@ public class Sheet {
         }
         return 0;
     }
+    public ArrayList<Double> getScoreRow(int index) {
+        ArrayList<Double> ret = new ArrayList<>();
+        for(int i = 0; i < cells.get(index).size(); i++) {
+            ret.add(cells.get(index).get(i).getScore());
+        }
+        return ret;
+    }
+
+    public ArrayList<Double> getScoreColumn(int index) {
+        ArrayList<Double> ret = new ArrayList<>();
+        for(int i = 0; i < cells.size(); i++) {
+            ret.add(cells.get(i).get(index).getScore());
+        }
+        return ret;
+    }
 
     public void setCell(ArrayList<ArrayList<Cell>> cell) {
         this.cells = cell;
