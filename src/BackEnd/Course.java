@@ -19,6 +19,7 @@ public class Course implements Reportable {
     private Criteria criteria_UG;
     private Criteria criteria_G;
     private boolean end;
+    private ArrayList<Double> extra_credits;
 
     public Course() {
         this.courseName = "";
@@ -30,8 +31,9 @@ public class Course implements Reportable {
         this.criteria_UG = null;
         this.criteria_G = null;
         this.end = false;
+        this.extra_credits = null;
     }
-    public Course(String cN, String lN, String s, Sheet sh, ArrayList<Student> stu, ArrayList<Assignment> assign, Criteria c_ug, Criteria c_g){
+    public Course(String cN, String lN, String s, Sheet sh, ArrayList<Student> stu, ArrayList<Assignment> assign, Criteria c_ug, Criteria c_g, boolean end, ArrayList<Double> extra){
         courseName = cN;
         lecturerName = lN;
         semester = s;
@@ -40,6 +42,8 @@ public class Course implements Reportable {
         assignments = assign;
         criteria_UG = c_ug;
         criteria_G = c_g;
+        this.end = end;
+        this.extra_credits = extra;
     }
 
 
@@ -60,6 +64,7 @@ public class Course implements Reportable {
             this.criteria_G = previous.criteria_G;
         }
         this.end = false;
+        this.extra_credits = null;
     }
 
 
@@ -174,12 +179,17 @@ public class Course implements Reportable {
                 //System.out.println(student.toString());
                 students.add(student);
                 //System.out.println(student.toString()+"2");
-
+                if(extra_credits != null) {
+                    extra_credits.add(0.0);
+                }
                 return 1;
             }
             if(studentType.equals("graduate")) {
                 Student student = new Graduate(firstName, middleInitial, lastName, studentId, emailAddress);
                 students.add(student);
+                if(extra_credits != null) {
+                    extra_credits.add(0.0);
+                }
                 return 1;
             }
             else {
@@ -204,6 +214,9 @@ public class Course implements Reportable {
                 return 2;
             } else {
                 students.remove(index);
+                if(extra_credits != null) {
+                    extra_credits.remove(index);
+                }
                 return 1;
             }
         }
@@ -377,18 +390,35 @@ public class Course implements Reportable {
         // None
         // return String[][] of content of sheet, first two columns: ID, Name, null of unknown error
         try {
-            int column = 2;
-            int height = sheet.getHeight();
-            int width = sheet.getWidth();
-            String[][] table = new String[height][width + column];
-            for (int i = 0; i < height; i++) {
-                table[i][0] = students.get(i).getStudentId();
-                table[i][1] = students.get(i).getFirstName() + " " + students.get(i).getLastName();
-                for (int j = column; j < width + column; j++) {
-                    table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j).getTotal());
+            if(extra_credits != null) {
+                int column = 2;
+                int height = sheet.getHeight();
+                int width = sheet.getWidth();
+                String[][] table = new String[height][width + column + 1];
+                for (int i = 0; i < height; i++) {
+                    table[i][0] = students.get(i).getStudentId();
+                    table[i][1] = students.get(i).getFirstName() + " " + students.get(i).getLastName();
+                    for (int j = column; j < width + column; j++) {
+                        table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j).getTotal());
+                    }
+                    table[i][width + column] = "";
                 }
+                return table;
             }
-            return table;
+            else {
+                int column = 2;
+                int height = sheet.getHeight();
+                int width = sheet.getWidth();
+                String[][] table = new String[height][width + column];
+                for (int i = 0; i < height; i++) {
+                    table[i][0] = students.get(i).getStudentId();
+                    table[i][1] = students.get(i).getFirstName() + " " + students.get(i).getLastName();
+                    for (int j = column; j < width + column; j++) {
+                        table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j).getTotal());
+                    }
+                }
+                return table;
+            }
         }
         catch (Exception e) {
             return null;
@@ -450,6 +480,42 @@ public class Course implements Reportable {
         }
     }
 
+    public String[][] getAssignmentInformation() {
+        // parameters:
+        // none
+        //
+        // return: 2d String array of information about name, total score, weight for UG, weight for G, scoring method
+        String[][] table = new String[assignments.size()][5];
+        for(int i = 0; i < assignments.size();i++) {
+            table[i][0] = assignments.get(i).getName();
+            table[i][1] = String.valueOf(assignments.get(i).getTotal());
+            table[i][2] = String.valueOf(criteria_UG.getWeight());
+            table[i][3] = String.valueOf(criteria_G.getWeight());
+            table[i][4] = assignments.get(i).getScoring_method();
+        }
+        return table;
+    }
+    public int changeTotal(int index, double new_total) {
+        // parameters:
+        // index: int: index of assignment about to change
+        // new_total: double: new total score to change
+        //
+        // return: 1 if succeeded, return 2 if assignment not found, return 3 if course is ended, return 4 if unknown error
+        if(end) {
+            return 3;
+        }
+        try {
+            if (index >= assignments.size() || index < 0) {
+                return 2;
+            } else {
+                assignments.get(index).setTotal(new_total);
+                return 1;
+            }
+        }
+        catch (Exception e) {
+            return 4;
+        }
+    }
     public Report getReport() {
         // tbd
         return null;
@@ -467,6 +533,23 @@ public class Course implements Reportable {
             return 3;
         }
     }
+    public int extra() {
+        //return 1 if succeeded , return 2 if extra credit is already added, return 3 if unknown error
+        try {
+            if (extra_credits != null) {
+                return 2;
+            }
+            extra_credits = new ArrayList<Double>();
+            for(int i = 0; i < students.size();i++) {
+                extra_credits.add(0.0);
+            }
+            return 1;
+        }
+        catch (Exception e) {
+            return 3;
+        }
+    }
+
     public String[] calTotal() {
         //
         //return array of double score if succeeded , return null if unknown error
