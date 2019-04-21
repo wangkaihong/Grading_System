@@ -372,14 +372,17 @@ public class Course implements Reportable {
     public String[][] getTable() { // todo calculate portion to the total point
         // parameters:
         // None
-        // return String[][] of content of sheet, null of unknown error
+        // return String[][] of content of sheet, first two columns: ID, Name, null of unknown error
         try {
+            int column = 2;
             int height = sheet.getHeight();
             int width = sheet.getWidth();
-            String[][] table = new String[height][width];
+            String[][] table = new String[height][width + column];
             for (int i = 0; i < height; i++) {
-                for (int j = 0; j < width; j++) {
-                    table[i][j] = String.valueOf(sheet.getCellScore(i, j));
+                table[i][0] = students.get(i).getStudentId();
+                table[i][1] = students.get(i).getFirstName() + " " + students.get(i).getLastName();
+                for (int j = column; j < width + column; j++) {
+                    table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j).getTotal());
                 }
             }
             return table;
@@ -399,7 +402,8 @@ public class Course implements Reportable {
             return 3;
         }
         try {
-            double input = Double.valueOf(score); // todo calculate portion to the total point
+            int real_cor2 = cor2 - 2; // offset first two columns
+            double input = Double.valueOf(score)/assignments.get(real_cor2).getTotal(); // todo calculate portion to the total point
             sheet.setScore(cor1, cor2, input);
             return 1;
         }
