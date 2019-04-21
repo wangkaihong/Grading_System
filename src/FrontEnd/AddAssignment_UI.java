@@ -25,9 +25,10 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
     ButtonGroup G1 = new ButtonGroup();
     JButton confirm = new JButton("Confirm");
     JButton ret = new JButton("Cancel");
-    JCheckBox copy = new JCheckBox("Same Weights");
+    JLabel sameWeight = new JLabel("Please check if Weights are indifferent: ");
+    JCheckBox copy = new JCheckBox();
     String scoring = "" ;
-    Course course;
+    Course course = new Course();
 
     public AddAssignment_UI(){
         Container contentPane = this.getContentPane();
@@ -53,11 +54,12 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
         p.add(weightedU);
         p.add(weightG);
         p.add(weightedG);
+        p.add(sameWeight);
         p.add(copy);
         func.add(confirm);
         copy.addActionListener(this);
-        this.deduction.setActionCommand("Deduction");
-        this.percentage.setActionCommand("Percentage");
+        this.deduction.setActionCommand("deduction");
+        this.percentage.setActionCommand("percentage");
         this.raw.setActionCommand("raw");
         confirm.addActionListener(this);
         func.add(ret);
@@ -77,6 +79,13 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
+        if(copy.isSelected()){
+            if(weightedU.getText().equals("")){
+                weightedU.setText(weightedG.getText());
+            }else if(weightedG.getText().equals("")){
+                weightedG.setText(weightedU.getText());
+            }
+        }
         //if(e.getSource() == copy)
         if(e.getSource() == ret) {
             dispose();
@@ -93,15 +102,19 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
             }else if(weightedU.getText() != null &&weightedG.getText() == null){
                 weightU = Double.parseDouble(weightedU.getText());
                 weightG = weightU;
-            }else if (weightedU.getText() == null &&weightedG.getText() != null){
+            }else if (weightedU.getText() == null && weightedG.getText() != null){
                 weightG = Double.parseDouble(weightedG.getText());
                 weightU = weightG;
+            }else{
+                weightU = Double.parseDouble(weightedU.getText());
+                weightG = Double.parseDouble(weightedG.getText());
             }
-
-            ModifyCol_UI.addRows(name, total, weightU, weightG, scoring);
+            //System.out.println(name + total+ weightU +weightG+scoring);
+            System.out.println(course.addAssignment(name, total,scoring));
+            /*add criteria??? */
+            //ModifyCol_UI.addRows(name, total, weightU, weightG, scoring);
             dispose();
             System.out.print("scoring way is :" + scoring);
-            // add course info to course
         }
     }
 

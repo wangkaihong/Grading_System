@@ -3,10 +3,12 @@ package FrontEnd;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import BackEnd.Course;
+import BackEnd.*;
+
 
 
 public class GradeSheet_UI extends JFrame implements ActionListener{
@@ -29,7 +31,9 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
     JTextField jt = new JTextField();
     static DefaultTableModel mSheet;
     JTable tSheet;
-    String[] columnNames = { "ID", "FirstName","LastName","HW1", "HW2", "Exam1", "Total"};
+    //ArrayList<String> starter = new ArrayList<>();
+
+    String[] columnNames = { "ID", "FirstName","LastName"};
     //
     //JLabel lSheet1 = new JLabel("Select Students Info：");
     //String[] listInfo = new String[]{"FirstName", "ID", "Email"};
@@ -39,17 +43,30 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
 
+        ArrayList<Assignment> ass= course.getAssignments();
+        int length = ass.size() + 3;
+        String[] columnNames = new String[length];
+        columnNames[0] = "ID";
+        columnNames[1] = "Name";
+        columnNames[2] = "Name";
+        int i = 3;
+        for(Assignment a: ass){
+            columnNames[i] = a.getName();
+            i++;
+        }
+
+
         // student data
-        String[][] rowData = //course.getTable();
-                {
-                {"Weights_UG","", "80", "80", "80", ""},
-                {"Weights_Graduate","", "80", "80", "80", ""},
-                {"Full Points","", "80", "80", "80", ""},
-                {},
-                {"U12345","Jack", "LJack","80", "80", "80", ""},
-                {"U1245","Jack","LJack", "80", "80", "80",  ""},
-                {"U1345","Jack","LJack", "80", "80", "80",  ""}
-        };
+        String[][] rowData = course.getTable();
+//                {
+//                {"Weights_UG","", "80", "80", "80", ""},
+//                {"Weights_Graduate","", "80", "80", "80", ""},
+//                {"Full Points","", "80", "80", "80", ""},
+//                {},
+//                {"U12345","Jack", "LJack","80", "80", "80", ""},
+//                {"U1245","Jack","LJack", "80", "80", "80",  ""},
+//                {"U1345","Jack","LJack", "80", "80", "80",  ""}
+//        };
         //JTable tSheet = new JTable(rowData, columnNames);
         mSheet = new DefaultTableModel(rowData, columnNames) {
             @Override
@@ -167,9 +184,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
             System.out.println(mSheet.getValueAt(selectR,selectC));
         }
     }
-//    public static void main(String[] args){
-////        new GradeSheet_UI();
-////    }
+
     public static void addRows(String id, String first, String last){
         mSheet.addRow(new Object[]{id,first,last});
 
