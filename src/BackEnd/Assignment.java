@@ -46,7 +46,7 @@ public class Assignment {
         return total;
     }
 
-    public String isScoring_method() {
+    public String getScoring_method() {
         return scoring_method;
     }
 }
