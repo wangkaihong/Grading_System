@@ -3,12 +3,16 @@ package FrontEnd;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import BackEnd.*;
+
 
 
 public class GradeSheet_UI extends JFrame implements ActionListener{
+    Course course = new Course();
     JPanel pSheet = new JPanel();
     //JScrollPane spSheet;
     JButton addStudent = new JButton("+ Add Student");
@@ -24,10 +28,14 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
     JPanel pB2 = new JPanel();
     JPanel pFunc6 = new JPanel();
     JPanel pFunc2 = new JPanel();
-    JTextField jt = new JTextField();
-    DefaultTableModel mSheet;
+    JTextField noteText = new JTextField();
+    static DefaultTableModel mSheet;
     JTable tSheet;
-    String[] columnNames = { "ID", "Name","HW1", "HW2", "Exam1", "Total"};
+    static DefaultTableModel wSheet;
+    JTable titleSheet;
+    //ArrayList<String> starter = new ArrayList<>();
+
+    //String[] columnNames = { "ID", "FirstName","LastName"};
     //
     //JLabel lSheet1 = new JLabel("Select Students Info：");
     //String[] listInfo = new String[]{"FirstName", "ID", "Email"};
@@ -37,27 +45,65 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
 
+        ArrayList<Assignment> ass= course.getAssignments();
+        int length = ass.size() + 2;
+        String[] columnNamesW = new String[length];
+        columnNamesW[0] = "ID";
+        columnNamesW[1] = "Name";
+        int i = 2;
+        for(Assignment a: ass){
+            columnNamesW[i] = a.getName();
+            i++;
+        }
+        String[][] rowDataW = course.getTable();
+
+        String[] columnNames = new String[length];
+        columnNames[0] = "ID";
+        columnNames[1] = "Name";
+        int j = 2;
+        for(Assignment a: ass){
+            columnNames[i] = a.getName();
+            j++;
+        }
         // student data
-        String[][] rowData = {
-                {"Weights_UG","", "80", "80", "80", ""},
-                {"Weights_Graduate","", "80", "80", "80", ""},
-                {"Full Points","", "80", "80", "80", ""},
-                {},
-                {"U12345","Jack", "80", "80", "80", ""},
-                {"U12345","Jack", "80", "80", "80",  ""},
-                {"U12345","Jack", "80", "80", "80",  ""}
+        String[][] rowData = course.getTable();
+//                {
+//                {"Weights_UG","", "80", "80", "80", ""},
+//                {"Weights_Graduate","", "80", "80", "80", ""},
+//                {"Full Points","", "80", "80", "80", ""},
+//                {},
+//                {"U12345","Jack", "LJack","80", "80", "80", ""},
+//                {"U1245","Jack","LJack", "80", "80", "80",  ""},
+//                {"U1345","Jack","LJack", "80", "80", "80",  ""}
+//        };
+        wSheet = new DefaultTableModel(rowDataW, columnNamesW) {
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return (columnIndex != 0) & (columnIndex != 1);
+            }
         };
-        //JTable tSheet = new JTable(rowData, columnNames);
+        wSheet.addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                int row = e.getFirstRow();
+                int col = e.getColumn();
+
+                //Object value = mSheet.getValueAt(row,col);
+                String value = (String)  wSheet.getValueAt(row,col);
+                System.out.println(value);
+            }
+        });
+
+        titleSheet = new JTable(wSheet);
+        // Set the size of scroll panel window
+        titleSheet.setPreferredScrollableViewportSize(new Dimension(400, 300));
+        //spSheet = new JScrollPane(tSheet);
+        JScrollPane wp = new JScrollPane(titleSheet);
         mSheet = new DefaultTableModel(rowData, columnNames) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return (columnIndex != 0) & (columnIndex != 1);
             }
-//            @Override
-//            public String getValueAt(int rowIndex, int columnIndex) {
-//                return rowData[rowIndex][columnIndex];
-//            }
-
         };
         mSheet.addTableModelListener(new TableModelListener() {
             @Override
@@ -76,10 +122,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         tSheet.setPreferredScrollableViewportSize(new Dimension(400, 300));
         //spSheet = new JScrollPane(tSheet);
         JScrollPane jp = new JScrollPane(tSheet);
-        jp.setBounds(50,50,600,400);
-        contentPane.add(jp);
-        note.setBounds(700,50,200,50);
-        jt.setBounds(670,100,280,350);
+
         pFunc6.setLayout(new FlowLayout());
         pFunc2.setLayout(new FlowLayout());
         pB6.setLayout(new GridLayout(3,2));
@@ -87,10 +130,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         //set color of button
         complete.setForeground(Color.RED);
         grade.setForeground(Color.BLUE);
-//        complete.setOpaque(true);
-//        complete.setBorderPainted(false);
-//        grade.setOpaque(true);
-//        grade.setBorderPainted(false);
+
         pB6.add(addStudent);
         pB6.add(removeStudent);
         pB6.add(addColumn);
@@ -102,9 +142,16 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
 
         pFunc6.add(pB6);
         pFunc2.add(pB2);
-        pFunc6.setBounds(100,500,400,100);
-        pFunc2.setBounds(700,500,200, 100);
-        contentPane.add(jt);
+        wp.setBounds(50,50,600,75);
+        jp.setBounds(50,125,600,400);
+        note.setBounds(700,125,200,50);
+        noteText.setBounds(670,175,280,350);
+        pFunc6.setBounds(100,550,400,100);
+        pFunc2.setBounds(700,550,200, 100);
+
+        contentPane.add(jp);
+        contentPane.add(wp);
+        contentPane.add(noteText);
         contentPane.add(note);
         contentPane.add(pFunc6);
         contentPane.add(pFunc2);
@@ -164,7 +211,13 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
             System.out.println(mSheet.getValueAt(selectR,selectC));
         }
     }
-//    public static void main(String[] args){
-////        new GradeSheet_UI();
-////    }
+
+    public static void addRows(String id, String first, String last){
+        mSheet.addRow(new Object[]{id,first,last});
+
+    }
+
+    public static void main(String[] args) {
+        new GradeSheet_UI();
+    }
 }

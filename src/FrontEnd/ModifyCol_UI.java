@@ -1,6 +1,8 @@
 package FrontEnd;
 
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -34,6 +36,16 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
                 return (columnIndex != 5);
             }
         };
+        table.addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                int row = e.getFirstRow();
+                int col = e.getColumn();
+                //Object value = mSheet.getValueAt(row,col);
+                String value = (String)  table.getValueAt(row,col);
+                System.out.println(value);
+            }
+        });
         JTable tSheet = new JTable(table);
         JScrollPane scrollPane = new JScrollPane(tSheet);
         pTable.add(scrollPane);
@@ -46,7 +58,7 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
         confirm.addActionListener(this);
         addRow.addActionListener(this);
         pTable.setBounds(50,50,600,500);
-        pFuncs.setBounds(650,400,300,50);
+        pFuncs.setBounds(675,400,300,50);
         pWaring.setBounds(650,200,300,200);
         if(totalWeight > 1){
             pWaring.setVisible(true);

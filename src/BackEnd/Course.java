@@ -21,12 +21,12 @@ public class Course implements Reportable {
     private boolean end;
 
     public Course() {
-        this.courseName = null;
-        this.lecturerName = null;
-        this.semester = null;
+        this.courseName = "";
+        this.lecturerName = "";
+        this.semester = "";
         this.sheet = null;
-        this.students = null;
-        this.assignments = null;
+        this.students = new ArrayList<>();
+        this.assignments = new ArrayList<>();
         this.criteria_UG = null;
         this.criteria_G = null;
         this.end = false;
@@ -171,7 +171,10 @@ public class Course implements Reportable {
         try {
             if(studentType.equals("undergraduate")) {
                 Student student = new Undergraduate(firstName, middleInitial, lastName, studentId, emailAddress);
+                //System.out.println(student.toString());
                 students.add(student);
+                //System.out.println(student.toString()+"2");
+
                 return 1;
             }
             if(studentType.equals("graduate")) {

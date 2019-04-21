@@ -1,5 +1,7 @@
 package FrontEnd;
 
+import BackEnd.Course;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -23,7 +25,10 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
     ButtonGroup G1 = new ButtonGroup();
     JButton confirm = new JButton("Confirm");
     JButton ret = new JButton("Cancel");
+    JLabel sameWeight = new JLabel("Please check if Weights are indifferent: ");
+    JCheckBox copy = new JCheckBox();
     String scoring = "" ;
+    Course course = new Course();
 
     public AddAssignment_UI(){
         Container contentPane = this.getContentPane();
@@ -31,7 +36,7 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
         layout.setHgap(100);
         layout.setVgap(30);
         contentPane.setLayout(layout);
-        p.setLayout(new GridLayout(4,2));
+        p.setLayout(new GridLayout(5,2));
         radioPanel.setLayout(new GridLayout(1, 3));
         radioPanel.add(raw);
         radioPanel.add(deduction);
@@ -49,9 +54,12 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
         p.add(weightedU);
         p.add(weightG);
         p.add(weightedG);
+        p.add(sameWeight);
+        p.add(copy);
         func.add(confirm);
-        this.deduction.setActionCommand("Deduction");
-        this.percentage.setActionCommand("Percentage");
+        copy.addActionListener(this);
+        this.deduction.setActionCommand("deduction");
+        this.percentage.setActionCommand("percentage");
         this.raw.setActionCommand("raw");
         confirm.addActionListener(this);
         func.add(ret);
@@ -59,6 +67,7 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
         p.setBounds(100,100, 475,100);
         //contentPane.setSize(450,160);
         contentPane.add(p);
+        //contentPane.add(copy);
         contentPane.add(radioPanel);
         contentPane.add(func);
         //contentPane.add(p);
@@ -70,20 +79,42 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
+        if(copy.isSelected()){
+            if(weightedU.getText().equals("")){
+                weightedU.setText(weightedG.getText());
+            }else if(weightedG.getText().equals("")){
+                weightedG.setText(weightedU.getText());
+            }
+        }
+        //if(e.getSource() == copy)
         if(e.getSource() == ret) {
             dispose();
             //new ModifyCol();
         }
-        if(e.getSource() == confirm) {
+        else if(e.getSource() == confirm) {
             scoring = this.G1.getSelection().getActionCommand();
             String name = assignmentname.getText();
-            double total = Double.parseDouble(totalPoint.getText());
-            double weightU = Double.parseDouble(weightedU.getText());
-            double weightG = Double.parseDouble(weightedG.getText());
-            ModifyCol_UI.addRows(name, total, weightU, weightG, scoring);
+            double weightU=0,weightG = 0,total = 0;
+            total = Double.parseDouble(totalPoint.getText());
+
+            if (weightedU.getText() == null && weightedG.getText() == null){
+                JOptionPane.showMessageDialog(null,"Please enter at least one weight");
+            }else if(weightedU.getText() != null &&weightedG.getText() == null){
+                weightU = Double.parseDouble(weightedU.getText());
+                weightG = weightU;
+            }else if (weightedU.getText() == null && weightedG.getText() != null){
+                weightG = Double.parseDouble(weightedG.getText());
+                weightU = weightG;
+            }else{
+                weightU = Double.parseDouble(weightedU.getText());
+                weightG = Double.parseDouble(weightedG.getText());
+            }
+            //System.out.println(name + total+ weightU +weightG+scoring);
+            System.out.println(course.addAssignment(name, total,scoring));
+            /*add criteria??? */
+            //ModifyCol_UI.addRows(name, total, weightU, weightG, scoring);
             dispose();
             System.out.print("scoring way is :" + scoring);
-            // add course info to course
         }
     }
 
