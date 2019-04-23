@@ -17,7 +17,8 @@ public class Grading_System {
 
     public Grading_System() {
         // Constructor: read from IO and construct system instance
-        courses = new ArrayList<>();
+        FileIO fileIO = new FileIO();
+        this.courses = fileIO.readCourse("Test");
     }
 
     public ArrayList<Course> getCourses() {
