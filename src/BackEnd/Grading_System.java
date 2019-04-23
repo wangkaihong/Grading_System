@@ -217,7 +217,7 @@ public class Grading_System {
         //set Sheet
         Sheet sheet1 = new Sheet(matrixCell);
         //set Course
-        Course course1 = new Course("CS591","Christine","Spring2019",sheet1,listStu,listAssign,criteria1,criteria2);
+        Course course1 = new Course("CS591","Christine","Spring2019",sheet1,listStu,listAssign,criteria1,criteria2,false,weights1);
         //set Grading_System
         Grading_System gradSys = new Grading_System();
         ArrayList<Course> listCourse = new ArrayList<Course>();
@@ -241,7 +241,8 @@ public class Grading_System {
             System.out.println(tempc.getCourseName());
             System.out.println(tempc.getLecturerName());
             System.out.println(tempc.getSemester());
-
+            System.out.println(tempc.isEnd());
+            System.out.println(tempc.getExtra_credits());
             //listCriRead = tempc.getCriteria();
             criG = tempc.getCriteria_G();
             criUG = tempc.getCriteria_UG();
@@ -287,7 +288,7 @@ public class Grading_System {
 
             System.out.println(temp.getName());
             System.out.println(temp.getTotal());
-            System.out.println(temp.isScoring_method());
+            System.out.println(temp.getScoring_method());
 
         }
         //read Cell

@@ -131,6 +131,10 @@ public class Course implements Reportable {
     public void setCriteria_G(Criteria criteria_G) {
         this.criteria_G = criteria_G;
     }
+    //Add get extra_credit
+    public ArrayList<Double> getExtra_credits() {
+        return extra_credits;
+    }
 
     public boolean isEnd() {
         return end;
