@@ -20,11 +20,11 @@ public class Grading_System_UI extends JFrame implements ActionListener{
     JPasswordField inputPassWord = new JPasswordField();
 
     String[] courseList;
+    Grading_System grading_system;
 
-
-    public Grading_System gradingSystem = new Grading_System();
 
     public Grading_System_UI(Grading_System gradingSystem){
+        grading_system = gradingSystem;
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
 
@@ -61,14 +61,14 @@ public class Grading_System_UI extends JFrame implements ActionListener{
     }
 
     public Grading_System getGradingSystem(){
-        return this.gradingSystem;
+        return this.grading_system;
     }
 
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == login){
             dispose();
 
-            new Select_Course_UI(courseList);
+            new Select_Course_UI(grading_system,courseList);
         }
     }
     public static void main(String[] args) {
