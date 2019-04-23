@@ -1,6 +1,8 @@
 package FrontEnd;
 
 
+import BackEnd.Grading_System;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -17,7 +19,12 @@ public class Grading_System_UI extends JFrame implements ActionListener{
     JTextField inputUserName = new JTextField();
     JPasswordField inputPassWord = new JPasswordField();
 
-    public Grading_System_UI(){
+    String[] courseList;
+
+
+    public Grading_System gradingSystem = new Grading_System();
+
+    public Grading_System_UI(Grading_System gradingSystem){
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
 
@@ -44,6 +51,8 @@ public class Grading_System_UI extends JFrame implements ActionListener{
         inputArea.setBounds(170,120,300,100);
         contentPane.add(inputArea);
 
+        courseList = gradingSystem.getCourseList();
+
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(640, 360);
         setTitle("Welcome");
@@ -51,13 +60,18 @@ public class Grading_System_UI extends JFrame implements ActionListener{
         setVisible(true);
     }
 
+    public Grading_System getGradingSystem(){
+        return this.gradingSystem;
+    }
+
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == login){
             dispose();
-            new Select_Course_UI();
+
+            new Select_Course_UI(courseList);
         }
     }
     public static void main(String[] args) {
-        new Grading_System_UI();
+        Grading_System_UI gradingSystemUI = new Grading_System_UI(new Grading_System());
     }
 }

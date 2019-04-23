@@ -1,9 +1,12 @@
 package FrontEnd;
 
+import BackEnd.Student;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 
 public class Add_Student_info_UI extends JFrame implements ActionListener {
@@ -15,6 +18,8 @@ public class Add_Student_info_UI extends JFrame implements ActionListener {
     JButton ok = new JButton("OK");
     JButton returnBack = new JButton("Return");
     JButton cancel = new JButton("Cancel");
+
+    public static ArrayList<Student> student_list;
 
     public Add_Student_info_UI(){
         Container contentPane = this.getContentPane();
@@ -44,13 +49,13 @@ public class Add_Student_info_UI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == cancel){
             dispose();
-            new Select_Course_UI();
+            new Select_Course_UI(courseList);
         } else if(e.getSource() == ok){
             dispose();
-            new Select_Course_UI();
+            new Select_Course_UI(courseList);
         } else if(e.getSource() == returnBack){
             dispose();
-            new Add_Assignment_info_UI();
+//            new Add_Assignment_info_UI(name, lecturerName, semesterName);
         }
     }
 

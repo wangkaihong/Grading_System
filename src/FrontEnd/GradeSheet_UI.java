@@ -172,7 +172,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == back){
             dispose();
-            new Select_Course_UI();
+            new Select_Course_UI(courseList);
         }
         else if(e.getSource() == addColumn){
 //            mSheet.addColumn("New Column");
