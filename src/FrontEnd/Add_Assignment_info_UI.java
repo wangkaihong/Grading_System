@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 
@@ -31,11 +33,28 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
 
     private Course course = new Course();
     public Grading_System grading_system;
+    public String name;
+    public String lecturerName;
+    public String semesterName;
+
+    public static int selectNum = -1;
+
     public Add_Assignment_info_UI(Grading_System grading_system, String name, String lecturerName, String semesterName){
         this.grading_system = grading_system;
+        this.name = name;
+        this.lecturerName = lecturerName;
+        this.semesterName = semesterName;
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
 
+        courses.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED){
+                    selectNum = courses.getSelectedIndex();
+                }
+            }
+        });
         importFrom.setLayout(new GridLayout(2,2));
         importFrom.add(new JLabel("Import From"));
         importFrom.add(courses);
@@ -105,9 +124,7 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
             dispose();
             name_fields.add(assignmentName);
             weight_fields.add(weight);
-
-
-            new Add_Student_info_UI(grading_system);
+            new Add_Student_info_UI(grading_system,this.name,this.lecturerName,this.semesterName,selectNum);
         } else if (e.getSource() == cancel){
             dispose();
             new Select_Course_UI(grading_system);

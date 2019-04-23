@@ -22,8 +22,20 @@ public class Add_Student_info_UI extends JFrame implements ActionListener {
 
     public static ArrayList<Student> student_list;
     public Grading_System grading_system;
-    public Add_Student_info_UI(Grading_System grading_system){
+    public String name;
+    public String lecturerName;
+    public String semesterName;
+    public int course_ind;
+
+    public String filePath = null;
+
+    public Add_Student_info_UI(Grading_System grading_system, String name, String lecturerName, String semesterName, int course_ind){
         this.grading_system = grading_system;
+        this.name = name;
+        this.lecturerName = lecturerName;
+        this.semesterName = semesterName;
+        this.course_ind = course_ind;
+
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
         p.add(lCheck);
@@ -54,10 +66,12 @@ public class Add_Student_info_UI extends JFrame implements ActionListener {
             new Select_Course_UI(grading_system);
         } else if(e.getSource() == ok){
             dispose();
+            filePath = file_path.getText();
+            grading_system.addCourse(name,lecturerName,semesterName,filePath,course_ind);
             new Select_Course_UI(grading_system);
         } else if(e.getSource() == returnBack){
             dispose();
-//            new Add_Assignment_info_UI(name, lecturerName, semesterName);
+            new Add_Assignment_info_UI(grading_system,name, lecturerName, semesterName);
         }
     }
 
