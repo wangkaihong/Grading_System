@@ -78,7 +78,7 @@ public class Add_Class_UI extends JFrame implements ActionListener {
             new Add_Assignment_info_UI(name, lecturerName, semesterName);
         } else if(e.getSource() == cancel){
             dispose();
-            new Select_Course_UI(courseList);
+            new Select_Course_UI(gradingSystem, courseList);
         }
     }
 

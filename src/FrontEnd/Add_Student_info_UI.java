@@ -49,10 +49,10 @@ public class Add_Student_info_UI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == cancel){
             dispose();
-            new Select_Course_UI(courseList);
+            new Select_Course_UI(gradingSystem, courseList);
         } else if(e.getSource() == ok){
             dispose();
-            new Select_Course_UI(courseList);
+            new Select_Course_UI(gradingSystem, courseList);
         } else if(e.getSource() == returnBack){
             dispose();
 //            new Add_Assignment_info_UI(name, lecturerName, semesterName);

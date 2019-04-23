@@ -1,5 +1,7 @@
 package FrontEnd;
 
+import BackEnd.Grading_System;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -23,8 +25,8 @@ public class Select_Course_UI extends JFrame implements ActionListener {
 
     static String getSelect;
 
-    public Select_Course_UI(String[] courseList) {
-        course[0] = "CS 591 P1: Object Oriented Design";
+    public Select_Course_UI(Grading_System gradingSystem, String[] courseList) {
+        course = courseList;
         JComboBox courses = new JComboBox(course);
         Container contentPane = this.getContentPane();
         getSelect = "CS 591 P1: Object Oriented Design";
