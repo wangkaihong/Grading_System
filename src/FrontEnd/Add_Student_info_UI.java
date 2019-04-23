@@ -1,5 +1,6 @@
 package FrontEnd;
 
+import BackEnd.Grading_System;
 import BackEnd.Student;
 
 import javax.swing.*;
@@ -20,8 +21,9 @@ public class Add_Student_info_UI extends JFrame implements ActionListener {
     JButton cancel = new JButton("Cancel");
 
     public static ArrayList<Student> student_list;
-
-    public Add_Student_info_UI(){
+    public Grading_System grading_system;
+    public Add_Student_info_UI(Grading_System grading_system){
+        this.grading_system = grading_system;
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
         p.add(lCheck);
@@ -49,10 +51,10 @@ public class Add_Student_info_UI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == cancel){
             dispose();
-            new Select_Course_UI(gradingSystem, courseList);
+            new Select_Course_UI(grading_system);
         } else if(e.getSource() == ok){
             dispose();
-            new Select_Course_UI(gradingSystem, courseList);
+            new Select_Course_UI(grading_system);
         } else if(e.getSource() == returnBack){
             dispose();
 //            new Add_Assignment_info_UI(name, lecturerName, semesterName);

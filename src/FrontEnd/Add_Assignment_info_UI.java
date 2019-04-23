@@ -1,6 +1,7 @@
 package FrontEnd;
 
 import BackEnd.Course;
+import BackEnd.Grading_System;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,8 +30,9 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
     public static ArrayList<JTextField> weight_fields = new ArrayList<>();
 
     private Course course = new Course();
-
-    public Add_Assignment_info_UI(String name, String lecturerName, String semesterName){
+    public Grading_System grading_system;
+    public Add_Assignment_info_UI(Grading_System grading_system, String name, String lecturerName, String semesterName){
+        this.grading_system = grading_system;
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
 
@@ -105,16 +107,17 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
             weight_fields.add(weight);
 
 
-            new Add_Student_info_UI();
+            new Add_Student_info_UI(grading_system);
         } else if (e.getSource() == cancel){
             dispose();
-            new Select_Course_UI(gradingSystem, courseList);
+            new Select_Course_UI(grading_system);
         } else if (e.getSource() == returnBack){
             dispose();
-            new Add_Class_UI();
-        } else if (e.getSource() == addSection){
-//            add_section();
+            new Add_Class_UI(grading_system);
         }
+// else if (e.getSource() == addSection){
+////            add_section();
+//        }
 
     }
 
