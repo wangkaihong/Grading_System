@@ -22,6 +22,10 @@ public class Add_Class_UI extends JFrame implements ActionListener {
     JButton next = new JButton("Next");
     JButton cancel = new JButton("Cancel");
 
+    public static String name;
+    public static String lecturerName;
+    public static String semesterName;
+
     public Add_Class_UI(){
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
@@ -62,17 +66,19 @@ public class Add_Class_UI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == next){
             dispose();
-            String name = nameInput.getText();
+            name = nameInput.getText();
+            lecturerName = lecturerInput.getText();
+            semesterName = semesterInput.getText();
             for (int i = 0; i < Select_Course_UI.course.length; i++){
                 if (Select_Course_UI.course[i] == null){
                     Select_Course_UI.course[i] = name;
                     break;
                 }
             }
-            new Add_Assignment_info_UI();
+            new Add_Assignment_info_UI(name, lecturerName, semesterName);
         } else if(e.getSource() == cancel){
             dispose();
-            new Select_Course_UI();
+            new Select_Course_UI(courseList);
         }
     }
 

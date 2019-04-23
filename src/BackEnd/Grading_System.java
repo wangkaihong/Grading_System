@@ -45,14 +45,17 @@ public class Grading_System {
         // student_file_dir: String :directory to student file
         // previous_Course_ind: int :index of the course, -1 means not coping from previous courses.
         //
-        // return 1 if succeeded, return 2 if have course name conflict, return 3 if have course out of index,
+        // return 1 if succeeded, return 2 if have course name conflict, return 3 if invalid index,
         // return 4 if invalid course name, return 5 if invalid lecturer name, return 6 if invalid semester name,
         // return 7 if invalid path to student info file, return 8 if invalid format of student info file,
         // return 9 if file not found, return 10 if unknown error
-        if (previous_Course_ind >= courses.size()) {
-            return 3;
+        Course previous = null;
+        if(previous_Course_ind != -1) {
+            if (previous_Course_ind >= courses.size() || previous_Course_ind < 0) {
+                return 3;
+            }
+             previous = courses.get(previous_Course_ind);
         }
-        Course previous = courses.get(previous_Course_ind);
         for(int i = 0;i < courses.size();i++) {
             if(courseName.equals(courses.get(i).getCourseName())) {
                 System.out.println("Course name conflict!");
