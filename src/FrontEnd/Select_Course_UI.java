@@ -1,5 +1,7 @@
 package FrontEnd;
 
+import BackEnd.Grading_System;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -22,8 +24,10 @@ public class Select_Course_UI extends JFrame implements ActionListener {
     JButton logout = new JButton("Log out");
 
     static String getSelect;
+    Grading_System grading_system;
 
-    public Select_Course_UI() {
+    public Select_Course_UI(Grading_System grading_system) {
+        this.grading_system = grading_system;
         course[0] = "CS 591 P1: Object Oriented Design";
         JComboBox courses = new JComboBox(course);
         Container contentPane = this.getContentPane();
@@ -44,9 +48,9 @@ public class Select_Course_UI extends JFrame implements ActionListener {
         label.setBounds(50,100,50,30);
         contentPane.add(label);
 
-        courseList.add(courses);
-        courseList.setBounds(0, 95, 600, 30);
-        contentPane.add(courseList);
+        this.courseList.add(courses);
+        this.courseList.setBounds(0, 95, 600, 30);
+        contentPane.add(this.courseList);
 
         add.addActionListener(this);
         enter.addActionListener(this);
@@ -68,7 +72,7 @@ public class Select_Course_UI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == add) {
             dispose();
-            new Add_Class_UI();
+            new Add_Class_UI(grading_system);
         } else if (e.getSource() == enter) {
             for (int i = 0; i < course.length; i++) {
                 if (getSelect.equals(course[i])) {
@@ -78,7 +82,7 @@ public class Select_Course_UI extends JFrame implements ActionListener {
             }
         } else if (e.getSource() == logout) {
             dispose();
-            new Grading_System_UI();
+            new Grading_System_UI(grading_system);
         }
     }
 }

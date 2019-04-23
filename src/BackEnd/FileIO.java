@@ -161,7 +161,7 @@ public class FileIO {
             JSONObject obj1 = new JSONObject();
             obj1.put("name",assign.getName());
             obj1.put("total",assign.getTotal());
-            obj1.put("scoring_method",assign.isScoring_method());
+            obj1.put("scoring_method",assign.getScoring_method());
 
             out1.put("jOut"+Integer.toString(count1),obj1);
 
@@ -309,6 +309,8 @@ public class FileIO {
             obj1.put("courseName",course.getCourseName());
             obj1.put("lecturerName",course.getLecturerName());
             obj1.put("semester",course.getSemester());
+            obj1.put("end",course.isEnd());
+            obj1.put("extra_credits",course.getExtra_credits());
             //write cell matrix instead of sheet
             writeCell(course.getSheet().getAllCell(), course.getCourseName());
             writeStudentInfo(course.getStudents(), course.getCourseName());
@@ -338,6 +340,8 @@ public class FileIO {
         Sheet sheet;
         ArrayList<Student> students;
         ArrayList<Assignment> assignments;
+        boolean end;
+        ArrayList<Double> extra_credit;
         //ArrayList<Criteria> criteria;
         Criteria criUG;
         Criteria criG;
@@ -357,13 +361,15 @@ public class FileIO {
                 courseName = (String) tempRead.get("courseName");
                 lecturerName = (String) tempRead.get("lecturerName");
                 semester = (String) tempRead.get("semester");
+                end = (boolean) tempRead.get("end");
+                extra_credit = (ArrayList<Double>) tempRead.get("extra_credits");
                 //read cell matrix and use it to construct a sheet
                 sheet = new Sheet(readCell(courseName));
                 students = readStudentInfo(courseName);
                 assignments = readAssignment(courseName);
                 criUG = readCriteria(courseName+"UG");
                 criG = readCriteria(courseName+"G");
-                Course course = new Course(courseName,lecturerName,semester,sheet,students,assignments,criUG,criG);
+                Course course = new Course(courseName,lecturerName,semester,sheet,students,assignments,criUG,criG,end,extra_credit);
                 listCourse.add(course);
                 i = i + 1;
             }

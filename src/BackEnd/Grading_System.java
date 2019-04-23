@@ -17,7 +17,8 @@ public class Grading_System {
 
     public Grading_System() {
         // Constructor: read from IO and construct system instance
-        courses = new ArrayList<>();
+        FileIO fileIO = new FileIO();
+        this.courses = fileIO.readCourse("Test");
     }
 
     public ArrayList<Course> getCourses() {
@@ -42,16 +43,19 @@ public class Grading_System {
         // lecturerName: String :name of the lecturer
         // semester: String :name of the semester
         // student_file_dir: String :directory to student file
-        // previous_Course_ind: int :index of the course
+        // previous_Course_ind: int :index of the course, -1 means not coping from previous courses.
         //
-        // return 1 if succeeded, return 2 if have course name conflict, return 3 if have course out of index,
+        // return 1 if succeeded, return 2 if have course name conflict, return 3 if invalid index,
         // return 4 if invalid course name, return 5 if invalid lecturer name, return 6 if invalid semester name,
         // return 7 if invalid path to student info file, return 8 if invalid format of student info file,
         // return 9 if file not found, return 10 if unknown error
-        if(previous_Course_ind >= courses.size()) {
-            return 3;
+        Course previous = null;
+        if(previous_Course_ind != -1) {
+            if (previous_Course_ind >= courses.size() || previous_Course_ind < 0) {
+                return 3;
+            }
+             previous = courses.get(previous_Course_ind);
         }
-        Course previous = courses.get(previous_Course_ind);
         for(int i = 0;i < courses.size();i++) {
             if(courseName.equals(courses.get(i).getCourseName())) {
                 System.out.println("Course name conflict!");
@@ -217,7 +221,7 @@ public class Grading_System {
         //set Sheet
         Sheet sheet1 = new Sheet(matrixCell);
         //set Course
-        Course course1 = new Course("CS591","Christine","Spring2019",sheet1,listStu,listAssign,criteria1,criteria2);
+        Course course1 = new Course("CS591","Christine","Spring2019",sheet1,listStu,listAssign,criteria1,criteria2,false,weights1);
         //set Grading_System
         Grading_System gradSys = new Grading_System();
         ArrayList<Course> listCourse = new ArrayList<Course>();
@@ -241,7 +245,8 @@ public class Grading_System {
             System.out.println(tempc.getCourseName());
             System.out.println(tempc.getLecturerName());
             System.out.println(tempc.getSemester());
-
+            System.out.println(tempc.isEnd());
+            System.out.println(tempc.getExtra_credits());
             //listCriRead = tempc.getCriteria();
             criG = tempc.getCriteria_G();
             criUG = tempc.getCriteria_UG();
@@ -287,7 +292,7 @@ public class Grading_System {
 
             System.out.println(temp.getName());
             System.out.println(temp.getTotal());
-            System.out.println(temp.isScoring_method());
+            System.out.println(temp.getScoring_method());
 
         }
         //read Cell

@@ -54,9 +54,9 @@ public class Course implements Reportable {
         this.sheet = null;
         this.students = student_list;
         if(previous == null) {
-            this.assignments = null;
-            this.criteria_UG = null;
-            this.criteria_G = null;
+            this.assignments = new ArrayList<Assignment>();
+            this.criteria_UG = new Criteria();
+            this.criteria_G = new Criteria();
         }
         else {
             this.assignments = previous.assignments;
@@ -130,6 +130,10 @@ public class Course implements Reportable {
 
     public void setCriteria_G(Criteria criteria_G) {
         this.criteria_G = criteria_G;
+    }
+    //Add get extra_credit
+    public ArrayList<Double> getExtra_credits() {
+        return extra_credits;
     }
 
     public boolean isEnd() {

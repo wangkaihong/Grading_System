@@ -1,9 +1,13 @@
 package FrontEnd;
 
+import BackEnd.Course;
+import BackEnd.Grading_System;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 
 public class Add_Assignment_info_UI extends JFrame implements ActionListener {
@@ -11,6 +15,7 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
     JPanel addAssignment = new JPanel();
     JPanel buttons = new JPanel();
     JPanel weights = new JPanel();
+    JPanel addButton = new JPanel();
 
     JComboBox courses = new JComboBox(Select_Course_UI.course);
     JTextField assignmentName = new JTextField();
@@ -19,8 +24,15 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
     JButton returnBack = new JButton("Return");
     JButton cancel = new JButton("Cancel");
 
+    JButton addSection = new JButton("Add more");
 
-    public Add_Assignment_info_UI(){
+    public static ArrayList<JTextField> name_fields = new ArrayList<>();
+    public static ArrayList<JTextField> weight_fields = new ArrayList<>();
+
+    private Course course = new Course();
+    public Grading_System grading_system;
+    public Add_Assignment_info_UI(Grading_System grading_system, String name, String lecturerName, String semesterName){
+        this.grading_system = grading_system;
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
 
@@ -34,7 +46,7 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
 
         addAssignment.setLayout(new GridLayout(1,2));
         weights.setLayout(new GridLayout(1,2));
-        addAssignment.add(new JLabel("One initial Assignment name: "));
+        addAssignment.add(new JLabel("Input Assignment name: "));
         addAssignment.add(assignmentName);
         weights.add(new JLabel("Weight"));
         weights.add(weight);
@@ -43,6 +55,10 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
         contentPane.add(addAssignment);
         contentPane.add(weights);
 
+        addButton.setBounds(500,200,50,30);
+        addSection.addActionListener(this);
+        addButton.add(addSection);
+        contentPane.add(addButton);
 
 
         next.addActionListener(this);
@@ -62,17 +78,46 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    public void add_section() {
+        setVisible(false);
+        JPanel p2 = new JPanel();
+
+        JLabel name_label = new JLabel("Name of the section:");
+        JTextField name = new JTextField(20);
+        p2.add(name_label);
+        name_fields.add(name);
+        p2.add(name);
+
+        JLabel weight_label = new JLabel("Weight:");
+        JTextField weight = new JTextField(20);
+        weight_fields.add(weight);
+        p2.add(weight_label);
+        p2.add(weight);
+        Container contentPane = this.getContentPane();
+        contentPane.add(p2);
+
+        setVisible(true);
+
+    }
+
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == next){
             dispose();
-            new Add_Student_info_UI();
+            name_fields.add(assignmentName);
+            weight_fields.add(weight);
+
+
+            new Add_Student_info_UI(grading_system);
         } else if (e.getSource() == cancel){
             dispose();
-            new Select_Course_UI();
+            new Select_Course_UI(grading_system);
         } else if (e.getSource() == returnBack){
             dispose();
-            new Add_Class_UI();
+            new Add_Class_UI(grading_system);
         }
+// else if (e.getSource() == addSection){
+////            add_section();
+//        }
 
     }
 
