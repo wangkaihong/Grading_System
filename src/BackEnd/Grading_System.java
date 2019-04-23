@@ -42,13 +42,13 @@ public class Grading_System {
         // lecturerName: String :name of the lecturer
         // semester: String :name of the semester
         // student_file_dir: String :directory to student file
-        // previous_Course_ind: int :index of the course
+        // previous_Course_ind: int :index of the course, -1 means not coping from previous courses.
         //
         // return 1 if succeeded, return 2 if have course name conflict, return 3 if have course out of index,
         // return 4 if invalid course name, return 5 if invalid lecturer name, return 6 if invalid semester name,
         // return 7 if invalid path to student info file, return 8 if invalid format of student info file,
         // return 9 if file not found, return 10 if unknown error
-        if(previous_Course_ind >= courses.size()) {
+        if (previous_Course_ind >= courses.size()) {
             return 3;
         }
         Course previous = courses.get(previous_Course_ind);
