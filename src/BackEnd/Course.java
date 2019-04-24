@@ -53,6 +53,7 @@ public class Course implements Reportable {
         this.semester = semester;
         this.sheet = new Sheet();
         this.students = student_list;
+        this.sheet.addRows(student_list.size());
         if(previous == null) {
             this.assignments = new ArrayList<Assignment>();
             this.criteria_UG = new Criteria();
@@ -186,7 +187,7 @@ public class Course implements Reportable {
                 if(extra_credits != null) {
                     extra_credits.add(0.0);
                 }
-//                sheet.setRow();
+                sheet.addRows(1);
                 // todo: update sheet when adding student
 
                 return 1;
@@ -256,6 +257,7 @@ public class Course implements Reportable {
             }
             Assignment assignment = new Assignment(name, total, scoring_method);
             assignments.add(assignment);
+            sheet.addColumns(1);
             // todo: update sheet when adding assignments
             return 1;
         }
@@ -499,7 +501,7 @@ public class Course implements Reportable {
             table[i][0] = assignments.get(i).getName();
             table[i][1] = String.valueOf(assignments.get(i).getTotal());
             table[i][2] = String.valueOf(criteria_UG.getWeight());
-            table[i][3] = String.valueOf(criteria_G.getWeight());
+            table[i][3] = String.valueOf(criteria_G.getWeight()); //todo
             table[i][4] = assignments.get(i).getScoring_method();
         }
         return table;
