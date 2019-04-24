@@ -119,11 +119,11 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         mSheet.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
-                if(e.getColumn() >  columnNames.length && e.getFirstRow() != 0 ){
+                if(e.getColumn() <  columnNames.length && e.getFirstRow() != 0 ){
                     int row = e.getFirstRow();
                     int col = e.getColumn();
                     //Object value = mSheet.getValueAt(row,col);
-                    double value = (double)  mSheet.getValueAt(row,col);
+                    double value = Double.parseDouble((String)mSheet.getValueAt(row,col));
                     //save changed score to sheet
                     course.getSheet().setScore(row, col,value);
                     System.out.println(value +" ----change or add score");
@@ -187,7 +187,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         tSheet.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                noteText.setText("");
+                noteText.setText(" ");
                 int row = tSheet.getSelectedRow();
                 int col = tSheet.getSelectedColumn();
                 String pullNote = course.getNote(row, col).toString();

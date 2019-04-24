@@ -84,13 +84,6 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
         this.setSize(1000, 600);
         this.setTitle("Modify Column");
         this.setVisible(true);
-
-
-
-
-    }
-    public void actionPerformed(ActionEvent e) {
-
         tSheet.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -112,6 +105,11 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
                 }
             }
         });
+
+    }
+    public void actionPerformed(ActionEvent e) {
+
+
         if (e.getSource() == back) {
             dispose();
             new GradeSheet_UI(grading_system,course);
