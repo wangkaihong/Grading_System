@@ -137,8 +137,6 @@ public class FileIO {
                     Graduate s = new Graduate(fName,sName,tName,id,email);
                     listStudent.add(s);
                 } else {
-                    System.out.println(stuType);
-                    System.out.println("Student Type Error");
                 }
                 i = i + 1;
             }
@@ -304,8 +302,6 @@ public class FileIO {
         JSONObject out1 = new JSONObject();
         int count1 = 0;
         //testtest
-        System.out.println("HEre");
-        System.out.println(listCourse);
 
         for( Course course : listCourse){
             JSONObject obj1 = new JSONObject();
@@ -315,11 +311,6 @@ public class FileIO {
             obj1.put("end",course.isEnd());
             obj1.put("extra_credits",course.getExtra_credits());
             //testtest
-            System.out.println(course.getCourseName());
-            System.out.println(course.getLecturerName());
-            System.out.println(course.getSemester());
-            System.out.println(course.isEnd());
-            System.out.println(course.getExtra_credits());
             //write cell matrix instead of sheet
             writeCell(course.getSheet().getAllCell(), course.getCourseName()+course.getSemester());
             writeStudentInfo(course.getStudents(), course.getCourseName()+course.getSemester());
@@ -335,7 +326,6 @@ public class FileIO {
         try(FileWriter fw1 = new FileWriter("CourseList.json")){
             fw1.write(out1.toJSONString());
             fw1.flush();
-            System.out.print("Write CourseList JSON");//testtest
         } catch (IOException e) {
             e.printStackTrace();
         }
