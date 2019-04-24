@@ -300,7 +300,7 @@ public class FileIO {
         return matrixCell;
     }
 
-    public void writeCourse(ArrayList<Course> listCourse, String filename){
+    public void writeCourse(ArrayList<Course> listCourse){
         JSONObject out1 = new JSONObject();
         int count1 = 0;
 
@@ -312,18 +312,18 @@ public class FileIO {
             obj1.put("end",course.isEnd());
             obj1.put("extra_credits",course.getExtra_credits());
             //write cell matrix instead of sheet
-            writeCell(course.getSheet().getAllCell(), course.getCourseName());
-            writeStudentInfo(course.getStudents(), course.getCourseName());
-            writeAssignment(course.getAssignments(), course.getCourseName());
-            writeCriteria(course.getCriteria_UG(), course.getCourseName()+"UG");
-            writeCriteria(course.getCriteria_G(), course.getCourseName()+"G");
+            writeCell(course.getSheet().getAllCell(), course.getCourseName()+course.getSemester());
+            writeStudentInfo(course.getStudents(), course.getCourseName()+course.getSemester());
+            writeAssignment(course.getAssignments(), course.getCourseName()+course.getSemester());
+            writeCriteria(course.getCriteria_UG(), course.getCourseName()+course.getSemester()+"UG");
+            writeCriteria(course.getCriteria_G(), course.getCourseName()+course.getSemester()+"G");
 
             out1.put("jOut"+Integer.toString(count1),obj1);
 
             count1 = count1 + 1;
         }
 
-        try(FileWriter fw1 = new FileWriter(filename+"Course.json")){
+        try(FileWriter fw1 = new FileWriter("CourseList.json")){
             fw1.write(out1.toJSONString());
             fw1.flush();
         } catch (IOException e) {
@@ -345,7 +345,7 @@ public class FileIO {
         //ArrayList<Criteria> criteria;
         Criteria criUG;
         Criteria criG;
-        try (FileReader reader = new FileReader(filename+"Course.json")){
+        try (FileReader reader = new FileReader("CourseList.json")){
             //Read JSON file
             Object obj = parser1.parse(reader);
             JSONObject readCourse = (JSONObject) obj;
@@ -374,7 +374,13 @@ public class FileIO {
                 i = i + 1;
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            try(FileWriter fw1 = new FileWriter(filename+"CourseList.json")){
+                //fw1.write(out1.toJSONString());
+                fw1.flush();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
