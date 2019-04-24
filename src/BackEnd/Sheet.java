@@ -11,7 +11,7 @@ public class Sheet {
 
     public Sheet() {
         ArrayList<Cell> temp = new ArrayList<>();
-        for(int i = 1; i < 2; i++) {
+        for(int i = 0; i < 2; i++) {
             temp.add(new Cell());
         }
         cells = new ArrayList<ArrayList<Cell>>();
