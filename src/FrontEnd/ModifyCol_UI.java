@@ -120,7 +120,6 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
             //addRows(selection);
             new AddAssignment_UI(grading_system,course);
         }else if(e.getSource() ==confirm){
-            dispose();
             int size = table.getRowCount();
             double[] weightGpush= new double[size];
             double[] weightUpush= new double[size];
@@ -142,6 +141,7 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
             }
             System.out.println(course.changeCriteria_G(weightGpush) + "add Gweight");
             System.out.println(course.changeCriteria_UG(weightUpush)+ "add Uweight");
+            dispose();
             new GradeSheet_UI(grading_system,course);
         }
     }
