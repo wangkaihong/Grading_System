@@ -111,10 +111,10 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
                     weightUpush[i] = (double)wsu;
                 }
                 if(wsg instanceof String) {
-                    weightGpush[i] =  Double.valueOf((String)wsg);
+                    weightGpush[i] =  Double.valueOf((String) wsg);
                 }
                 if(wsu instanceof Double) {
-                    weightGpush[i] = (double)wsg;
+                    weightGpush[i] = (double) wsg;
                 }
             }
             System.out.println(course.changeCriteria_G(weightGpush) + "add Gweight");
