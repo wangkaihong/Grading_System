@@ -293,57 +293,57 @@ public class Course implements Reportable {
             return 7;
         }
     }
-    public int addCriteria_UG(double[] weights) {
-        //parameters:
-        // weights: double[]: Array of double representing weights
-        //
-        //return 1 if succeeded , return 2 if sum of weights not equals to 1, return 3 if course is ended, return 4 if unknown error
-        if(end) {
-            return 3;
-        }
-        try {
-            double sum = 0;
-            for (int i = 0; i < weights.length; i++) {
-                sum += weights[i];
-            }
-            if (sum != 1) {
-                return 2;
-            }
-            this.criteria_UG = new Criteria(weights);
-            return 1;
-        }
-        catch (Exception e) {
-            return 4;
-        }
-    }
-    public int addCriteria_G(double[] weights) {
-        //parameters:
-        // weights: double[]: Array of double representing weights
-        //
-        //return 1 if succeeded , return 2 if sum of weights not equals to 1, return 3 if course is ended, return 4 if unknown error
-        if(end) {
-            return 3;
-        }
-        try {
-            double sum = 0;
-            for (int i = 0; i < weights.length; i++) {
-                sum += weights[i];
-            }
-            if (sum != 1) {
-                return 2;
-            }
-            this.criteria_G = new Criteria(weights);
-            return 1;
-        }
-        catch (Exception e) {
-            return 4;
-        }
-    }
+//    public int addCriteria_UG(double[] weights) {
+//        //parameters:
+//        // weights: double[]: Array of double representing weights
+//        //
+//        //return 1 if succeeded , return 2 if sum of weights is greater than 1, return 3 if course is ended, return 4 if unknown error
+//        if(end) {
+//            return 3;
+//        }
+//        try {
+//            double sum = 0;
+//            for (int i = 0; i < weights.length; i++) {
+//                sum += weights[i];
+//            }
+//            if (sum > 1) {
+//                return 2;
+//            }
+//            this.criteria_UG = new Criteria(weights);
+//            return 1;
+//        }
+//        catch (Exception e) {
+//            return 4;
+//        }
+//    }
+//    public int addCriteria_G(double[] weights) {
+//        //parameters:
+//        // weights: double[]: Array of double representing weights
+//        //
+//        //return 1 if succeeded , return 2 if sum of weights is greater than 1, return 3 if course is ended, return 4 if unknown error
+//        if(end) {
+//            return 3;
+//        }
+//        try {
+//            double sum = 0;
+//            for (int i = 0; i < weights.length; i++) {
+//                sum += weights[i];
+//            }
+//            if (sum > 1) {
+//                return 2;
+//            }
+//            this.criteria_G = new Criteria(weights);
+//            return 1;
+//        }
+//        catch (Exception e) {
+//            return 4;
+//        }
+//    }
     public int changeCriteria_UG(double[] weights) {
         //parameters:
         // weights: double[]: Array of double representing weights
         //
-        // return 1 if succeeded , return 2 if sum of weights not equals to 1,
+        // return 1 if succeeded , return 2 if sum of weights is greater than 1,
         // return 3 if course is ended, return 4 if unknown error
         if(end) {
             return 3;
@@ -354,7 +354,7 @@ public class Course implements Reportable {
             for (int i = 0; i < weights.length; i++) {
                 sum += weights[i];
             }
-            if (sum != 1) {
+            if (sum > 1) {
                 return 2;
             }
             criteria_UG.changeCriteria(weights);
@@ -368,7 +368,7 @@ public class Course implements Reportable {
         //parameters:
         // weights: double[]: Array of double representing weights
         //
-        // return 1 if succeeded , return 2 if sum of weights not equals to 1,
+        // return 1 if succeeded , return 2 if sum of weights is greater than 1,
         // return 3 if course is ended, return 4 if unknown error
         if(end) {
             return 3;
@@ -379,7 +379,7 @@ public class Course implements Reportable {
             for (int i = 0; i < weights.length; i++) {
                 sum += weights[i];
             }
-            if (sum != 1) {
+            if (sum > 1) {
                 return 2;
             }
             criteria_G.changeCriteria(weights);

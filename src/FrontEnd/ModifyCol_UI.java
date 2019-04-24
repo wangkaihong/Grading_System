@@ -104,8 +104,8 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
                 weightUpush[i] = (double) wsu;
                 weightGpush[i] =  (double) wsg;
             }
-            System.out.println(course.changeCriteria_G(weightGpush) + "add Gweight");
-            System.out.println(course.changeCriteria_UG(weightUpush)+ "add Uweight");
+            System.out.println(course.addCriteria_G(weightGpush) + "add Gweight");
+            System.out.println(course.addCriteria_UG(weightUpush)+ "add Uweight");
             new GradeSheet_UI();
         }
     }

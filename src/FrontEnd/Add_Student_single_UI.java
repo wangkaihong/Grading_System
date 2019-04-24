@@ -88,8 +88,8 @@ public class Add_Student_single_UI extends JFrame implements ActionListener {
             String studentType = this.G2.getSelection().getActionCommand().toLowerCase();
 
             System.out.println(studentType);
-            if(studentFName.isBlank() || studentLName.isBlank() || studentID.isBlank()|| studentEmail.isBlank()
-                    || studentEmail.isBlank() || studentType.isBlank()){
+            if(studentFName.isEmpty() || studentLName.isEmpty() || studentID.isEmpty()|| studentEmail.isEmpty()
+                    || studentEmail.isEmpty() || studentType.isEmpty()){
                 JOptionPane.showMessageDialog(null,"Please fill all the blank!");
             }
             else{

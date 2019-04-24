@@ -33,6 +33,7 @@ public class Select_Course_UI extends JFrame implements ActionListener {
         course = grading_system.getCourseList();
         System.out.print(course.length);
         JComboBox courses = new JComboBox(course);
+        courses.setPreferredSize(new Dimension(350, 30));
         Container contentPane = this.getContentPane();
 
         contentPane.setLayout(null);
@@ -79,7 +80,6 @@ public class Select_Course_UI extends JFrame implements ActionListener {
             dispose();
             new Add_Class_UI(grading_system);
         } else if (e.getSource() == enter) {
-            System.out.println(course.length);
             for (int i = 0; i < course.length; i++) {
                 if (getSelect.equals(course[i])) {
                     dispose();
