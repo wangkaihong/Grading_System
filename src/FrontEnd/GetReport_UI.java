@@ -17,7 +17,7 @@ public class GetReport_UI extends JFrame implements ActionListener{
     JButton confirm = new JButton("Confirm");
     JButton returnBack = new JButton("Return");
 
-    static String getSelect;
+    static int getSelect;
     public Course courseBE;
     public Grading_System grading_system;
     public GetReport_UI(Grading_System grading_system, Course course){
@@ -44,7 +44,7 @@ public class GetReport_UI extends JFrame implements ActionListener{
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    getSelect = assignment.getSelectedItem().toString();
+                    getSelect = assignment.getSelectedIndex();
                 }
             }
         });

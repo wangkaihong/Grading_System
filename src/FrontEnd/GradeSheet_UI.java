@@ -60,10 +60,8 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
             columnNamesW[i] = a.getName();
             i++;
         }
-        //System.out.println("CourseName"+course.getSheet().getCellScore(0,0));//testtest
-        //testtest
         String[][] rowData = course.getTable();
-        System.out.println("rowData"+rowData.length);
+
         String[] columnNames = new String[length];
         columnNames[0] = "ID";
         columnNames[1] = "Name";
@@ -72,8 +70,21 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
             columnNames[j] = "   ";
             j++;
         }
-        // student data
-        String[][] rowDataW = course.getAssignmentInformation();
+        // student data！！！！
+        int colSize = ass.size()+2;
+        String[][] rowDataW = new String[3][colSize];
+        rowDataW[0][0] = "Weight_Undergraduate";
+        rowDataW[1][0] = "Weight_Graduate";
+        rowDataW[2][0] = "Total";
+        ArrayList<Double> weight_ug = course.getCriteria_UG().getWeight();
+        ArrayList<Double> weight_g = course.getCriteria_G().getWeight();
+        for(int c = 2; c < colSize; c++){
+            rowDataW[0][c] = weight_ug.get(c-2).toString();
+            rowDataW[1][c] = weight_g.get(c-2).toString();
+            Double temp = ass.get(c-2).getTotal();
+            rowDataW[2][c] = temp.toString();
+        }
+                //course.getAssignmentInformation();
         wSheet = new DefaultTableModel(rowDataW, columnNamesW) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -174,7 +185,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         setResizable(false);
         setVisible(true);
 
-        System.out.println(course.getStudents().get(0) + "  student");
+        //System.out.println(course.getStudents().get(0) + "  student");
     }
 
     public void actionPerformed(ActionEvent e){
@@ -185,7 +196,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
                 int col = tSheet.getSelectedColumn();
                 //System.out.println(course.getSheet().getCellNote(row,col));
 
-                System.out.println(mSheet.getValueAt(row,col));
+                //System.out.println(mSheet.getValueAt(row,col));
 
             }
         });
@@ -216,11 +227,11 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
             if(input == 0){
 
                 mSheet.addColumn("ExtraCredit");
-                int size = mSheet.getColumnCount();
-                Object[] extra = new Object[size];
-                extra[size - 1] = "ExtraCredit";
-                mSheet.addRow(extra);
                 wSheet.addColumn("ExtraCredit");
+//                int size = mSheet.getColumnCount();
+//                Object[] extra = new Object[size];
+//                extra[size - 1] = "ExtraCredit";
+//                mSheet.addRow(extra);
             }
         }
         else if(e.getSource() == addStudent){
@@ -229,6 +240,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         else if(e.getSource() == removeStudent){
             int select = tSheet.getSelectedRow();
             mSheet.removeRow(select);
+            course.removeStudent(select);
         }
         else if(e.getSource() == addNote){
             int col = tSheet.getSelectedColumn();
