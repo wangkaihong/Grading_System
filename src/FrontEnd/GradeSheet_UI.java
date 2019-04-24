@@ -190,7 +190,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
                 noteText.setText(" ");
                 int row = tSheet.getSelectedRow();
                 int col = tSheet.getSelectedColumn();
-                String pullNote = course.getNote(row, col).toString();
+                String pullNote = course.getNote(row, col)[0]+"\n Last modification:"+course.getNote(row, col)[1];
                 System.out.println(course.getNote(row, col) +" ---- note info");
                 noteText.setText(pullNote);
                 //System.out.println(mSheet.getValueAt(row,col));
