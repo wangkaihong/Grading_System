@@ -417,13 +417,18 @@ public class Course implements Reportable {
                 return table;
             }
             else {
+                System.out.println("Try421");//testtest
                 int column = 2;
                 int height = sheet.getHeight();
                 int width = sheet.getWidth();
                 String[][] table = new String[height][width + column];
+                System.out.println("Height"+height);//testtest
+                System.out.println("Width"+width);//testtest
                 for (int i = 0; i < height; i++) {
                     table[i][0] = students.get(i).getStudentId();
+                    System.out.println(table[i][0]);//testtest
                     table[i][1] = students.get(i).getFirstName() + " " + students.get(i).getLastName();
+                    System.out.println(table[i][1]);//testtest
                     for (int j = column; j < width + column; j++) {
                         table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j).getTotal());
                     }
