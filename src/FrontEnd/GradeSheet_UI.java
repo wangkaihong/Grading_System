@@ -46,6 +46,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         this.grading_system = grading_system;
         this.course = course;
 
+        System.out.println("GradeSheetUI_course"+course.getStudents().get(0).getFirstName());//testtest
         setTitle("Grade Sheet");
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
@@ -175,7 +176,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         setResizable(false);
         setVisible(true);
 
-        System.out.println(course.getStudents().get(0) + "  student");
+        System.out.println(course.getStudents().get(0).getFirstName() + "  student");
     }
 
     public void actionPerformed(ActionEvent e){
