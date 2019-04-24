@@ -59,24 +59,15 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         String[][] rowDataW = course.getTable();
 
         String[] columnNames = new String[length];
-        columnNames[0] = "ID";
-        columnNames[1] = "Name";
+        columnNames[0] = "   ";
+        columnNames[1] = "   ";
         int j = 2;
         for(Assignment a: ass){
-            columnNames[j] = a.getName();
+            columnNames[j] = "   ";
             j++;
         }
         // student data
-        String[][] rowData = course.getTable();
-//                {
-//                {"Weights_UG","", "80", "80", "80", ""},
-//                {"Weights_Graduate","", "80", "80", "80", ""},
-//                {"Full Points","", "80", "80", "80", ""},
-//                {},
-//                {"U12345","Jack", "LJack","80", "80", "80", ""},
-//                {"U1245","Jack","LJack", "80", "80", "80",  ""},
-//                {"U1345","Jack","LJack", "80", "80", "80",  ""}
-//        };
+        String[][] rowData = course.getAssignmentInformation();
         wSheet = new DefaultTableModel(rowDataW, columnNamesW) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -108,6 +99,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
                 return (columnIndex != 0) & (columnIndex != 1);
             }
         };
+
         mSheet.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
@@ -115,12 +107,14 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
                     int row = e.getFirstRow();
                     int col = e.getColumn();
                     //Object value = mSheet.getValueAt(row,col);
-                    String value = (String)  mSheet.getValueAt(row,col);
+                    double value = (double)  mSheet.getValueAt(row,col);
                     System.out.println(value);
-
+                    course.getSheet().setScore(row, col,value);
                 }
             }
+
         });
+
 
         tSheet = new JTable(mSheet);
         // Set the size of scroll panel window
@@ -176,6 +170,16 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
     }
 
     public void actionPerformed(ActionEvent e){
+        tSheet.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int row = tSheet.getSelectedRow();
+                int col = tSheet.getSelectedColumn();
+                //System.out.println(course.getSheet().getCellNote(row,col));
+                System.out.println(mSheet.getValueAt(row,col));
+
+            }
+        });
         if(e.getSource() == back){
             dispose();
             new Select_Course_UI(null);
@@ -201,8 +205,14 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         else if(e.getSource() == exCredit){
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to add extra credit?");
             if(input == 0){
-                mSheet.addColumn("ExtraCredit");
-                wSheet.addColumn("ExtraCredit");
+
+                mSheet.addColumn("    ");
+                int size = mSheet.getColumnCount();
+                Object[] extra = new Object[size];
+                extra[size - 1] = "ExtraCredit";
+                mSheet.addRow(extra);
+                wSheet.addColumn("   ");
+                wSheet.addRow(extra);
             }
         }
         else if(e.getSource() == addStudent){
@@ -211,6 +221,13 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         else if(e.getSource() == removeStudent){
             int select = tSheet.getSelectedRow();
             mSheet.removeRow(select);
+        }
+        else if(e.getSource() == addNote){
+            int col = tSheet.getSelectedColumn();
+            int row = tSheet.getSelectedRow();
+            String noteS = noteText.getText();
+            course.getSheet().setNote(row,col,noteS);
+
         }
         else{
             int selectR = tSheet.getSelectedRow();

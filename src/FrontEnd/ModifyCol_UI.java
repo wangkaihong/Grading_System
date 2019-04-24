@@ -20,7 +20,7 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
     JButton back = new JButton("Back");
     JButton confirm = new JButton("Confirm");
     static DefaultTableModel table;
-    static double totalWeight;
+    double totalWeight = 0;
     static Course course = GradeSheet_UI.course;
 
 
@@ -73,12 +73,14 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
         this.setSize(1000, 600);
         this.setTitle("Modify Column");
         this.setVisible(true);
-
-        for (int i = 0; i < tSheet.getRowCount(); i++){
-            double amount = Double.parseDouble((String) tSheet.getValueAt(i, 2));
+        int size = table.getRowCount();
+        for (int i = 0; i < size; i++){
+            System.out.println(table.getValueAt(i, 2));
+            double amount = (double) table.getValueAt(i, 2);
+            System.out.println(amount + " amount");
             totalWeight += amount;
         }
-        System.out.println(totalWeight + "aaa");
+        System.out.println(totalWeight + " total weight");
         if(totalWeight > 1){
             pWaring.setVisible(true);
         }
@@ -104,8 +106,8 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
                 weightUpush[i] = (double) wsu;
                 weightGpush[i] =  (double) wsg;
             }
-            System.out.println(course.addCriteria_G(weightGpush) + "add Gweight");
-            System.out.println(course.addCriteria_UG(weightUpush)+ "add Uweight");
+            System.out.println(course.changeCriteria_G(weightGpush) + "add Gweight");
+            System.out.println(course.changeCriteria_UG(weightUpush)+ "add Uweight");
             new GradeSheet_UI();
         }
     }
