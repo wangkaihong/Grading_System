@@ -123,9 +123,9 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
                     int row = e.getFirstRow();
                     int col = e.getColumn();
                     //Object value = mSheet.getValueAt(row,col);
-                    double value = Double.parseDouble((String)mSheet.getValueAt(row,col));
+                    String value = (String) mSheet.getValueAt(row,col);
                     //save changed score to sheet
-                    course.getSheet().setScore(row, col,value);
+                    course.setScore(row, col,value);
                     System.out.println(value +" ----change or add score");
                 }
             }
