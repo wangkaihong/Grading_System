@@ -23,7 +23,6 @@ public class Report_UI extends JFrame implements ActionListener {
     DefaultTableModel report;
     DefaultTableModel analysis;
 
-    public Report reportBE = new Report();
     Grading_System grading_system;
     Course course;
 
@@ -61,8 +60,7 @@ public class Report_UI extends JFrame implements ActionListener {
 //        contentPane.add(reportTable);
 
         Object[] analysisData = null;
-        analysisData = reportBE.reportAssignToUI(GetReport_UI.getSelect).toArray();
-
+        analysisData = course.reportAssignToUI(GetReport_UI.getSelect);
 
 
         analysis = new DefaultTableModel((Object[][]) analysisData, analysisNames);

@@ -82,6 +82,7 @@ public class Add_Student_single_UI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == ret) {
             dispose();
+            new GradeSheet_UI(grading_system,course);
 
         }else if(e.getSource() == confirm){
             String studentFName = fname.getText();

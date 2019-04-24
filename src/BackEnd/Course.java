@@ -564,8 +564,8 @@ public class Course implements Reportable {
         return null;
     }
 
-    public ArrayList<String> reportAssignToUI(int assignIndex){
-        ArrayList<String> res = new ArrayList<String>();
+    public String[][] reportAssignToUI(int assignIndex){
+        String[][] res = new String[1][4];
         ArrayList<Double> listScore = new ArrayList<Double>();
         double min = 0;
         double max = 0;
@@ -574,7 +574,7 @@ public class Course implements Reportable {
         double sumD = 0;
         if (assignIndex == -1){
             System.out.println("Invalid Assignment Name");
-            return res;
+            return null;
         }
         for(Double tempD : this.sheet.getScoreColumn(assignIndex+2)){
             listScore.add(tempD);
@@ -590,10 +590,10 @@ public class Course implements Reportable {
         } else{
             med = listScore.get(listSize/2);
         }
-        res.add(Double.toString(min));
-        res.add(Double.toString(max));
-        res.add(Double.toString(ave));
-        res.add(Double.toString(med));
+        res[0][0] = String.valueOf(min);
+        res[0][1] = String.valueOf(max);
+        res[0][2] = String.valueOf(ave);
+        res[0][3] = String.valueOf(med);
 
         return res;
     }
