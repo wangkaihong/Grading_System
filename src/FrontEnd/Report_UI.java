@@ -1,5 +1,6 @@
 package FrontEnd;
 
+import BackEnd.Assignment;
 import BackEnd.Course;
 import BackEnd.Grading_System;
 import BackEnd.Report;
@@ -16,7 +17,7 @@ public class Report_UI extends JFrame implements ActionListener {
     JPanel reportTable = new JPanel();
     JPanel analysisTable = new JPanel();
     JPanel returnBack = new JPanel();
-    JLabel title = new JLabel(GetReport_UI.getSelect);
+    JLabel title;
     JButton returnToTable = new JButton("return to main table");
     Object[] analysisNames = { "Analysis", "Result"};
     DefaultTableModel report;
@@ -33,6 +34,13 @@ public class Report_UI extends JFrame implements ActionListener {
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
 
+        ArrayList<Assignment> assignments = course.getAssignments();
+        String assignmentList[] = new String[assignments.size()];
+        for( int i =0; i < assignmentList.length;i++) {
+            assignmentList[i] = assignments.get(i).getName();
+        }
+
+        JLabel title = new JLabel(assignmentList[GetReport_UI.getSelect]);
         assignmentLabel.setLayout(new GridLayout(1,1));
         title.setFont(new Font("Serif",Font.PLAIN,30));
         assignmentLabel.add(title);
@@ -53,11 +61,8 @@ public class Report_UI extends JFrame implements ActionListener {
 //        contentPane.add(reportTable);
 
         Object[] analysisData = null;
-        if (GetReport_UI.getSelect == "total") {
-            analysisData = reportBE.reportCourseToUI(GetReport_UI.getSelect).toArray();
-        } else{
-            analysisData = reportBE.reportAssignToUI(GetReport_UI.getSelect).toArray();
-        }
+        analysisData = reportBE.reportAssignToUI(GetReport_UI.getSelect).toArray();
+
 
 
         analysis = new DefaultTableModel((Object[][]) analysisData, analysisNames);
