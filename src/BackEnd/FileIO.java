@@ -300,7 +300,7 @@ public class FileIO {
         return matrixCell;
     }
 
-    public void writeCourse(ArrayList<Course> listCourse, String filename){
+    public void writeCourse(ArrayList<Course> listCourse){
         JSONObject out1 = new JSONObject();
         int count1 = 0;
 
