@@ -3,6 +3,7 @@ package BackEnd;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 /**
@@ -555,6 +556,41 @@ public class Course implements Reportable {
         // tbd
         return null;
     }
+
+    public ArrayList<String> reportAssignToUI(int assignIndex){
+        ArrayList<String> res = new ArrayList<String>();
+        ArrayList<Double> listScore = new ArrayList<Double>();
+        double min = 0;
+        double max = 0;
+        double ave = 0;
+        double med = 0;
+        double sumD = 0;
+        if (assignIndex == -1){
+            System.out.println("Invalid Assignment Name");
+            return res;
+        }
+        for(Double tempD : this.sheet.getScoreColumn(assignIndex+2)){
+            listScore.add(tempD);
+            sumD = sumD + tempD;
+        }
+        int listSize = listScore.size();
+        Collections.sort(listScore);
+        min = Collections.min(listScore);
+        max = Collections.max(listScore);
+        ave = (sumD - min - max) / listSize;
+        if(listSize % 2 == 0){
+            med = (listScore.get(listSize/2) + listScore.get(listSize/2-1)) / 2;
+        } else{
+            med = listScore.get(listSize/2);
+        }
+        res.add(Double.toString(min));
+        res.add(Double.toString(max));
+        res.add(Double.toString(ave));
+        res.add(Double.toString(med));
+
+        return res;
+    }
+
     public int endCourse() {
         //return 1 if succeeded , return 2 if course is already ended, return 3 if unknown error
         try {
