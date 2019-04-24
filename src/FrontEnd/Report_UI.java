@@ -1,8 +1,11 @@
 package FrontEnd;
 
+import BackEnd.Report;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -13,10 +16,11 @@ public class Report_UI extends JFrame implements ActionListener {
     JPanel returnBack = new JPanel();
     JLabel title = new JLabel(GetReport_UI.getSelect);
     JButton returnToTable = new JButton("return to main table");
-    Object[] reportNames = { "Students", "Grades"};
     Object[] analysisNames = { "Analysis", "Result"};
     DefaultTableModel report;
     DefaultTableModel analysis;
+
+    public Report reportBE = new Report();
 
 
     public Report_UI() {
@@ -29,28 +33,28 @@ public class Report_UI extends JFrame implements ActionListener {
         assignmentLabel.setBounds(30,40,100,40);
         contentPane.add(assignmentLabel);
 
-        Object[][] reportData = {
-                {"Student1", "-10"},
-                {"Student1", "-60"},
-                {"Student1", "-30"},
-                {"Student1", "-59"},
-        };
-        report = new DefaultTableModel(reportData, reportNames);
-        JTable reportSheet = new JTable(report);
-        reportSheet.setPreferredScrollableViewportSize(new Dimension(300, 300));
-        reportTable.add(reportSheet);
-        reportTable.setBounds(30,100,150,250);
-        contentPane.add(reportTable);
+//        Object[][] reportData = {
+//                {"Student1", "-10"},
+//                {"Student1", "-60"},
+//                {"Student1", "-30"},
+//                {"Student1", "-59"},
+//        };
+//        report = new DefaultTableModel(reportData, reportNames);
+//        JTable reportSheet = new JTable(report);
+//        reportSheet.setPreferredScrollableViewportSize(new Dimension(300, 300));
+//        reportTable.add(reportSheet);
+//        reportTable.setBounds(30,100,150,250);
+//        contentPane.add(reportTable);
 
-        Object[][] analysisData = {
-                {"Min", "40"},
-                {"Max", "90"},
-                {"Average", "62.5"},
-                {"Median", "60"},
-        };
+        Object[] analysisData = null;
+        if (GetReport_UI.getSelect == "total") {
+            analysisData = reportBE.reportCourseToUI(GetReport_UI.getSelect).toArray();
+        } else{
+            analysisData = reportBE.reportAssignToUI(GetReport_UI.getSelect).toArray();
+        }
 
 
-        analysis = new DefaultTableModel(analysisData, analysisNames);
+        analysis = new DefaultTableModel((Object[][]) analysisData, analysisNames);
         JTable analysisSheet = new JTable(analysis);
         analysisSheet.setPreferredScrollableViewportSize(new Dimension(300, 300));
         analysisTable.add(analysisSheet);

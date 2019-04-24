@@ -17,7 +17,6 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
     JPanel addAssignment = new JPanel();
     JPanel buttons = new JPanel();
     JPanel weights = new JPanel();
-    JPanel addButton = new JPanel();
 
     JComboBox courses = new JComboBox(Select_Course_UI.course);
     JTextField assignmentName = new JTextField();
@@ -26,7 +25,6 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
     JButton returnBack = new JButton("Return");
     JButton cancel = new JButton("Cancel");
 
-    JButton addSection = new JButton("Add more");
 
     public static ArrayList<JTextField> name_fields = new ArrayList<>();
     public static ArrayList<JTextField> weight_fields = new ArrayList<>();
@@ -38,6 +36,7 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
     public String semesterName;
 
     public static int selectNum = -1;
+
 
     public Add_Assignment_info_UI(Grading_System grading_system, String name, String lecturerName, String semesterName){
         this.grading_system = grading_system;
@@ -74,11 +73,6 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
         contentPane.add(addAssignment);
         contentPane.add(weights);
 
-        addButton.setBounds(500,200,50,30);
-        addSection.addActionListener(this);
-        addButton.add(addSection);
-        contentPane.add(addButton);
-
 
         next.addActionListener(this);
         returnBack.addActionListener(this);
@@ -97,28 +91,6 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    public void add_section() {
-        setVisible(false);
-        JPanel p2 = new JPanel();
-
-        JLabel name_label = new JLabel("Name of the section:");
-        JTextField name = new JTextField(20);
-        p2.add(name_label);
-        name_fields.add(name);
-        p2.add(name);
-
-        JLabel weight_label = new JLabel("Weight:");
-        JTextField weight = new JTextField(20);
-        weight_fields.add(weight);
-        p2.add(weight_label);
-        p2.add(weight);
-        Container contentPane = this.getContentPane();
-        contentPane.add(p2);
-
-        setVisible(true);
-
-    }
-
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == next){
             dispose();
@@ -132,9 +104,6 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
             dispose();
             new Add_Class_UI(grading_system);
         }
-// else if (e.getSource() == addSection){
-////            add_section();
-//        }
 
     }
 

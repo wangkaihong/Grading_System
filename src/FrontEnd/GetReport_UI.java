@@ -1,5 +1,7 @@
 package FrontEnd;
 
+import BackEnd.Course;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -8,15 +10,16 @@ public class GetReport_UI extends JFrame implements ActionListener{
     JPanel selectReport = new JPanel();
     JPanel confirmOrNot = new JPanel();
     JLabel select = new JLabel("Select one assignment to view report:");
-    String assignmentList[] = {"HW1", "HW2", "HW3", "Exam", "Attendance", "Extra", "Total"};
-    JComboBox assignment = new JComboBox(assignmentList);
     JButton confirm = new JButton("Confirm");
     JButton returnBack = new JButton("Return");
 
     static String getSelect;
+    public Course courseBE = new Course();
 
     public GetReport_UI(){
         Container contentPane = this.getContentPane();
+        String assignmentList[] = (String[]) courseBE.getAssignments().toArray();
+        JComboBox assignment = new JComboBox(assignmentList);
 
         selectReport.add(select);
         selectReport.add(assignment);
@@ -25,7 +28,6 @@ public class GetReport_UI extends JFrame implements ActionListener{
 
         confirm.addActionListener(this);
         returnBack.addActionListener(this);
-        getSelect = "HW1";
         assignment.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {

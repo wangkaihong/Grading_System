@@ -34,10 +34,12 @@ public class Select_Course_UI extends JFrame implements ActionListener {
         System.out.print(course.length);
         JComboBox courses = new JComboBox(course);
         Container contentPane = this.getContentPane();
-//        getSelect = "CS 591 P1: Object Oriented Design";
 
         contentPane.setLayout(null);
 
+        String defaultMessage ="please select";
+        ComboBoxEditor editor= courses.getEditor();
+        courses.configureEditor(editor,defaultMessage);
         courses.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
