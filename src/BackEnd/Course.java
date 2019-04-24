@@ -375,13 +375,13 @@ public class Course implements Reportable {
         }
         try {
             double sum = 0;
-
             for (int i = 0; i < weights.length; i++) {
                 sum += weights[i];
             }
             if (sum > 1) {
                 return 2;
             }
+            System.out.println(criteria_G);
             criteria_G.changeCriteria(weights);
             return 1;
         }

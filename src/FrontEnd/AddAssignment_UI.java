@@ -1,6 +1,8 @@
 package FrontEnd;
 
 import BackEnd.Course;
+import BackEnd.Grading_System;
+import com.sun.tools.javac.util.StringUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,9 +29,12 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
     JButton ret = new JButton("Cancel");
     JLabel sameWeight = new JLabel("Please check if Weights are indifferent: ");
     JCheckBox copy = new JCheckBox();
-    Course course = ModifyCol_UI.course;
+    Course course;
+    Grading_System grading_system;
 
-    public AddAssignment_UI(){
+    public AddAssignment_UI(Grading_System grading_system, Course course){
+        this.grading_system = grading_system;
+        this.course = course;
         Container contentPane = this.getContentPane();
         FlowLayout layout = new FlowLayout();
         layout.setHgap(100);
@@ -101,6 +106,7 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
             double weightU = Double.parseDouble(weightedU.getText());
             double weightG = Double.parseDouble(weightedG.getText());
             String scoring  = this.G1.getSelection().getActionCommand();
+
             if(scoring.isEmpty() || name.isEmpty()|| totalS.isEmpty() ||(us.isEmpty() || us.isEmpty())){
                 JOptionPane.showMessageDialog(null,"Please fill all necessary blank");
             }

@@ -12,7 +12,6 @@ import BackEnd.*;
 
 
 public class GradeSheet_UI extends JFrame implements ActionListener{
-    static Course course = Select_Course_UI.coursetest;
     JPanel pSheet = new JPanel();
     //JScrollPane spSheet;
     JButton addStudent = new JButton("+ Add Student");
@@ -34,6 +33,8 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
     JTable tSheet;
     static DefaultTableModel wSheet;
     JTable titleSheet;
+    Course course;
+    Grading_System grading_system;
     //ArrayList<String> starter = new ArrayList<>();
 
     //String[] columnNames = { "ID", "FirstName","LastName"};
@@ -41,7 +42,10 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
     //JLabel lSheet1 = new JLabel("Select Students Info：");
     //String[] listInfo = new String[]{"FirstName", "ID", "Email"};
 
-    public GradeSheet_UI() {
+    public GradeSheet_UI(Grading_System grading_system, Course course) {
+        this.grading_system = grading_system;
+        this.course = course;
+
         setTitle("Grade Sheet");
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
@@ -183,7 +187,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         else if(e.getSource() == addColumn){
 //            mSheet.addColumn("New Column");
             dispose();
-            new ModifyCol_UI();
+            new ModifyCol_UI(grading_system,course);
         }
         else if(e.getSource() == grade){
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to get final grade?");
@@ -196,7 +200,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
             }
         }
         else if(e.getSource() == report){
-            new GetReport_UI();
+            new GetReport_UI(grading_system,course);
         }
         else if(e.getSource() == exCredit){
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to add extra credit?");
@@ -206,7 +210,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
             }
         }
         else if(e.getSource() == addStudent){
-            new Add_Student_single_UI();
+            new Add_Student_single_UI(grading_system,course);
         }
         else if(e.getSource() == removeStudent){
             int select = tSheet.getSelectedRow();
@@ -228,7 +232,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
 //
 //    }
 
-    public static void main(String[] args) {
-        new GradeSheet_UI();
-    }
+//    public static void main(String[] args) {
+//        new GradeSheet_UI();
+//    }
 }

@@ -21,10 +21,13 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
     JButton confirm = new JButton("Confirm");
     static DefaultTableModel table;
     static double totalWeight;
-    static Course course = GradeSheet_UI.course;
+    Course course;
+    Grading_System grading_system;
 
 
-    public ModifyCol_UI(){
+    public ModifyCol_UI(Grading_System grading_system, Course course){
+        this.grading_system = grading_system;
+        this.course = course;
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
 
@@ -88,11 +91,11 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == back) {
             dispose();
-            new GradeSheet_UI();
+            new GradeSheet_UI(grading_system,course);
         }else if(e.getSource() == addRow){
             //String selection = this.G1.getSelection().getActionCommand();
             //addRows(selection);
-            new AddAssignment_UI();
+            new AddAssignment_UI(grading_system,course);
         }else if(e.getSource() ==confirm){
             dispose();
             int size = table.getRowCount();
@@ -101,12 +104,22 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
             for(int i = 0; i < size; i++){
                 Object wsu =  table.getValueAt(i,2);
                 Object wsg = table.getValueAt(i,3);
-                weightUpush[i] = (double) wsu;
-                weightGpush[i] =  (double) wsg;
+                if(wsu instanceof String) {
+                    weightUpush[i] = Double.valueOf((String) wsu);
+                }
+                if(wsu instanceof Double) {
+                    weightUpush[i] = (double)wsu;
+                }
+                if(wsg instanceof String) {
+                    weightGpush[i] =  Double.valueOf((String)wsg);
+                }
+                if(wsu instanceof Double) {
+                    weightGpush[i] = (double)wsg;
+                }
             }
             System.out.println(course.changeCriteria_G(weightGpush) + "add Gweight");
             System.out.println(course.changeCriteria_UG(weightUpush)+ "add Uweight");
-            new GradeSheet_UI();
+            new GradeSheet_UI(grading_system,course);
         }
     }
     public static void addRows(String name, double total, double weight,double weightG, String scoring){
