@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 
 
@@ -19,6 +20,7 @@ public class Add_Student_info_UI extends JFrame implements ActionListener {
     JButton ok = new JButton("OK");
     JButton returnBack = new JButton("Return");
     JButton cancel = new JButton("Cancel");
+    JButton browse = new JButton("Browse");
 
     public static ArrayList<Student> student_list;
     public Grading_System grading_system;
@@ -40,10 +42,12 @@ public class Add_Student_info_UI extends JFrame implements ActionListener {
         contentPane.setLayout(null);
         p.add(lCheck);
         p.add(file_path);
+        p.add(browse);
 
         ok.addActionListener(this);
         cancel.addActionListener(this);
         returnBack.addActionListener(this);
+        browse.addActionListener(this);
         buttons.setLayout(new GridLayout(1,3));
         buttons.add(ok);
         buttons.add(returnBack);
@@ -72,6 +76,12 @@ public class Add_Student_info_UI extends JFrame implements ActionListener {
         } else if(e.getSource() == returnBack){
             dispose();
             new Add_Assignment_info_UI(grading_system,name, lecturerName, semesterName);
+        } else if(e.getSource() == browse) {
+            javax.swing.JFileChooser jFileChooser1 = new JFileChooser();
+            jFileChooser1.showOpenDialog(null);
+            File f = jFileChooser1.getSelectedFile();
+            String fname = f.getAbsolutePath();
+            file_path.setText(fname);
         }
     }
 
