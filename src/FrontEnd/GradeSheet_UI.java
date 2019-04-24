@@ -62,9 +62,8 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         }
         //System.out.println("CourseName"+course.getSheet().getCellScore(0,0));//testtest
         //testtest
-        System.out.println(course.getTable());
         String[][] rowData = course.getTable();
-
+        System.out.println("rowData"+rowData.length);
         String[] columnNames = new String[length];
         columnNames[0] = "ID";
         columnNames[1] = "Name";

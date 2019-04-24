@@ -435,11 +435,11 @@ public class Course implements Reportable {
                 for (int j = 0; j < width - offset_column; j++) {
                     table[0][j + offset_column] = assignments.get(j).getName();
                 }
-                for (int i = offset_row; i < height; i++) { // todo
+                for (int i = offset_row; i < height; i++) { //
                     table[i][0] = students.get(i - offset_row).getStudentId();
                     table[i][1] = students.get(i - offset_row).getFirstName() + " " + students.get(i - offset_row).getLastName();
                     for (int j = offset_column; j < width; j++) {
-                        table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j).getTotal());
+                        table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j-offset_column).getTotal());
                     }
                 }
                 return table;
