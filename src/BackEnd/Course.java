@@ -479,6 +479,8 @@ public class Course implements Reportable {
             int real_cor2 = cor2 - 2; // offset first two columns
             double input = Double.valueOf(score)/assignments.get(real_cor2).getTotal(); // todo calculate portion to the total point
             sheet.setScore(cor1, cor2, input);
+            FileIO fileIO = new FileIO();
+            fileIO.writeCell(sheet.getAllCell(),courseName+semester);
             return 1;
         }
         catch (NumberFormatException e) {
