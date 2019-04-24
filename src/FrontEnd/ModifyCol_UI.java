@@ -47,7 +47,7 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
         table.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
-                if(e.getColumn() >  columnNames.length && e.getFirstRow() != 0 ){
+                if(e.getColumn() <  columnNames.length && e.getFirstRow() != 0 ){
                     int row = e.getFirstRow();
                     int col = e.getColumn();
                     //Object value = mSheet.getValueAt(row,col);

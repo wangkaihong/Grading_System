@@ -94,7 +94,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         wSheet.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
-                if(e.getColumn() >  columnNames.length && e.getFirstRow() != 1 ){
+                if(e.getColumn() <  columnNames.length && e.getFirstRow() != 1 ){
                     int row = e.getFirstRow();
                     int col = e.getColumn();
                     //Object value = mSheet.getValueAt(row,col);
