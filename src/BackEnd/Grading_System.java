@@ -230,7 +230,7 @@ public class Grading_System {
 
         //write file
         FileIO fileIO1 = new FileIO();
-        fileIO1.writeCourse(listCourse,"Test");
+        fileIO1.writeCourse(listCourse);
 
 
         //read file

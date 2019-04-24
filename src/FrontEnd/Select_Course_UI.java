@@ -31,6 +31,7 @@ public class Select_Course_UI extends JFrame implements ActionListener {
         course = grading_system.getCourseList();
         System.out.print(course.length);
         JComboBox courses = new JComboBox(course);
+        courses.setPreferredSize(new Dimension(350, 30));
         Container contentPane = this.getContentPane();
 
         contentPane.setLayout(null);
