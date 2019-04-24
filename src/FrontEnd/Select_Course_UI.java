@@ -15,7 +15,7 @@ public class Select_Course_UI extends JFrame implements ActionListener {
     JPanel courseList = new JPanel();
     JPanel buttons = new JPanel();
 
-    static String[] course = new String[10];
+    static String[] course;
     JLabel courseLabel = new JLabel("Course: ");
 
 
@@ -28,10 +28,10 @@ public class Select_Course_UI extends JFrame implements ActionListener {
 
     public Select_Course_UI(Grading_System grading_system) {
         this.grading_system = grading_system;
-        course[0] = "CS 591 P1: Object Oriented Design";
+        course = grading_system.getCourseList();
         JComboBox courses = new JComboBox(course);
         Container contentPane = this.getContentPane();
-        getSelect = "CS 591 P1: Object Oriented Design";
+//        getSelect = "CS 591 P1: Object Oriented Design";
 
         contentPane.setLayout(null);
 
