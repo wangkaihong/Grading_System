@@ -122,6 +122,7 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
             /*add criteria??? */
             ModifyCol_UI.addRows(name, total, weightU, weightG, scoring);
             dispose();
+            //=new ModifyCol_UI(grading_system,course);
             System.out.print("scoring way is :" + scoring);
         }
     }

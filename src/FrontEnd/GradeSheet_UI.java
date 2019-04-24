@@ -49,7 +49,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         setTitle("Grade Sheet");
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
-
+        /*assignment list*/
         ArrayList<Assignment> ass = course.getAssignments();
         int length = ass.size() + 2;
         String[] columnNamesW = new String[length];
@@ -60,18 +60,18 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
             columnNamesW[i] = a.getName();
             i++;
         }
-        String[][] rowDataW = course.getTable();
+        String[][] rowData = course.getTable();
 
         String[] columnNames = new String[length];
-        columnNames[0] = "   ";
-        columnNames[1] = "   ";
+        columnNames[0] = "ID";
+        columnNames[1] = "Name";
         int j = 2;
         for(Assignment a: ass){
             columnNames[j] = "   ";
             j++;
         }
         // student data
-        String[][] rowData = course.getAssignmentInformation();
+        String[][] rowDataW = course.getAssignmentInformation();
         wSheet = new DefaultTableModel(rowDataW, columnNamesW) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -81,7 +81,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         wSheet.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
-                if(e.getColumn() >  columnNames.length && e.getFirstRow() != 0 ){
+                if(e.getColumn() >  columnNames.length && e.getFirstRow() != 1 ){
                     int row = e.getFirstRow();
                     int col = e.getColumn();
                     //Object value = mSheet.getValueAt(row,col);
@@ -100,7 +100,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         mSheet = new DefaultTableModel(rowData, columnNames) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return (columnIndex != 0) & (columnIndex != 1);
+                return (columnIndex != 0) & (columnIndex != 1) & (rowIndex != 0);
             }
         };
 
@@ -171,6 +171,8 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         setSize(1000, 700);
         setResizable(false);
         setVisible(true);
+
+        System.out.println(course.getStudents().get(0) + "  student");
     }
 
     public void actionPerformed(ActionEvent e){
@@ -186,7 +188,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         });
         if(e.getSource() == back){
             dispose();
-            new Select_Course_UI(null);
+            new Select_Course_UI(grading_system);
         }
         else if(e.getSource() == addColumn){
 //            mSheet.addColumn("New Column");
@@ -210,13 +212,12 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to add extra credit?");
             if(input == 0){
 
-                mSheet.addColumn("    ");
+                mSheet.addColumn("ExtraCredit");
                 int size = mSheet.getColumnCount();
                 Object[] extra = new Object[size];
                 extra[size - 1] = "ExtraCredit";
                 mSheet.addRow(extra);
-                wSheet.addColumn("   ");
-                wSheet.addRow(extra);
+                wSheet.addColumn("ExtraCredit");
             }
         }
         else if(e.getSource() == addStudent){
