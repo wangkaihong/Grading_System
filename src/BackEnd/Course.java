@@ -190,6 +190,7 @@ public class Course implements Reportable {
                 }
                 sheet.addRows(1);
                 FileIO fileIO = new FileIO();
+                fileIO.writeCell(sheet.getAllCell(),courseName+semester);
                 fileIO.writeStudentInfo(students,courseName+semester);
 
                 return 1;
@@ -230,7 +231,10 @@ public class Course implements Reportable {
                 if(extra_credits != null) {
                     extra_credits.remove(index);
                 }
-                // todo: update sheet when removing assignments
+                sheet.removeRow(index+1);
+                FileIO fileIO = new FileIO();
+                fileIO.writeCell(sheet.getAllCell(),courseName+semester);
+                fileIO.writeStudentInfo(students,courseName+semester);
                 return 1;
             }
         }
