@@ -258,7 +258,8 @@ public class Course implements Reportable {
             Assignment assignment = new Assignment(name, total, scoring_method);
             assignments.add(assignment);
             sheet.addColumns(1);
-            // todo: update sheet when adding assignments
+            FileIO fileIO = new FileIO();
+            fileIO.writeAssignment(assignments,courseName+semester);
             return 1;
         }
         catch (Exception e) {
@@ -365,6 +366,8 @@ public class Course implements Reportable {
                 return 2;
             }
             criteria_UG.changeCriteria(weights);
+            FileIO fileIO = new FileIO();
+            fileIO.writeCriteria(criteria_UG,courseName+semester+"UG");
             return 1;
         }
         catch (Exception e) {
@@ -390,6 +393,8 @@ public class Course implements Reportable {
             }
             System.out.println(criteria_G);
             criteria_G.changeCriteria(weights);
+            FileIO fileIO = new FileIO();
+            fileIO.writeCriteria(criteria_G,courseName+semester+"G");
             return 1;
         }
         catch (Exception e) {
@@ -418,7 +423,7 @@ public class Course implements Reportable {
                     table[i][0] = students.get(i - offset_row).getStudentId();
                     table[i][1] = students.get(i - offset_row).getFirstName() + " " + students.get(i).getLastName();
                     for (int j = offset_column; j < width; j++) {
-                        table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j).getTotal());
+                        table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal());
                     }
                     table[i][width] = "";
                 }

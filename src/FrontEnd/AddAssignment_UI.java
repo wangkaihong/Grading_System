@@ -102,8 +102,8 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
             String us = weightedU.getText();
             String gs = weightedG.getText();
             double total = Double.parseDouble(totalPoint.getText());
-            //double weightU = Double.parseDouble(weightedU.getText());
-            //double weightG = Double.parseDouble(weightedG.getText());
+            double weightU = Double.parseDouble(weightedU.getText());
+            double weightG = Double.parseDouble(weightedG.getText());
             String scoring  = this.G1.getSelection().getActionCommand();
 
             if(scoring.isEmpty() || name.isEmpty()|| totalS.isEmpty() ||(us.isEmpty() || us.isEmpty())){
@@ -119,6 +119,7 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
             }else {
                 //System.out.println(name + total+ weightU +weightG+scoring);
                 System.out.println(course.addAssignment(name, total, scoring));
+
 
                 /*add criteria??? */
                 ModifyCol_UI.addRows(name, totalS, us, gs, scoring);
