@@ -1,5 +1,7 @@
 package FrontEnd;
 
+import BackEnd.Course;
+import BackEnd.Grading_System;
 import BackEnd.Report;
 
 import java.awt.*;
@@ -21,9 +23,13 @@ public class Report_UI extends JFrame implements ActionListener {
     DefaultTableModel analysis;
 
     public Report reportBE = new Report();
+    Grading_System grading_system;
+    Course course;
 
+    public Report_UI(Grading_System grading_system, Course course) {
+        this.grading_system = grading_system;
+        this.course = course;
 
-    public Report_UI() {
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
 
@@ -75,7 +81,7 @@ public class Report_UI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == returnToTable){
-            new GradeSheet_UI();
+            new GradeSheet_UI(grading_system,course);
             this.setVisible(false);
         }
     }

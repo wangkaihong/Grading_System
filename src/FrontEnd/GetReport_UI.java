@@ -1,6 +1,7 @@
 package FrontEnd;
 
 import BackEnd.Course;
+import BackEnd.Grading_System;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -14,9 +15,11 @@ public class GetReport_UI extends JFrame implements ActionListener{
     JButton returnBack = new JButton("Return");
 
     static String getSelect;
-    public Course courseBE = new Course();
-
-    public GetReport_UI(){
+    public Course courseBE;
+    public Grading_System grading_system;
+    public GetReport_UI(Grading_System grading_system, Course course){
+        courseBE = course;
+        this.grading_system = grading_system;
         Container contentPane = this.getContentPane();
         String assignmentList[] = (String[]) courseBE.getAssignments().toArray();
         JComboBox assignment = new JComboBox(assignmentList);
@@ -63,7 +66,7 @@ public class GetReport_UI extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == confirm){
-            new Report_UI();
+            new Report_UI(grading_system,courseBE);
             dispose();
         }
         if (e.getSource() == returnBack){
