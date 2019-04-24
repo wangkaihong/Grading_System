@@ -25,7 +25,7 @@ public class Course implements Reportable {
         this.courseName = "";
         this.lecturerName = "";
         this.semester = "";
-        this.sheet = null;
+        this.sheet = new Sheet();
         this.students = new ArrayList<>();
         this.assignments = new ArrayList<>();
         this.criteria_UG = null;
@@ -51,7 +51,7 @@ public class Course implements Reportable {
         this.courseName = courseName;
         this.lecturerName = lecturerName;
         this.semester = semester;
-        this.sheet = null;
+        this.sheet = new Sheet();
         this.students = student_list;
         if(previous == null) {
             this.assignments = new ArrayList<Assignment>();
@@ -186,6 +186,7 @@ public class Course implements Reportable {
                 if(extra_credits != null) {
                     extra_credits.add(0.0);
                 }
+//                sheet.setRow();
                 // todo: update sheet when adding student
 
                 return 1;

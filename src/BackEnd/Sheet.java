@@ -7,6 +7,23 @@ import java.util.ArrayList;
  */
 public class Sheet {
     private int col;
+
+    public int getCol() {
+        return col;
+    }
+
+    public void setCol(int col) {
+        this.col = col;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
     private int row;
     private ArrayList<ArrayList<Cell>> cells;
 
@@ -22,6 +39,8 @@ public class Sheet {
     public ArrayList<ArrayList<Cell>> getAllCell() {
         return cells;
     }
+
+
 
     public double getCellScore(int cor1, int cor2) {
         return cells.get(cor1).get(cor2).getScore();

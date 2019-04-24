@@ -365,11 +365,11 @@ public class FileIO {
                 end = (boolean) tempRead.get("end");
                 extra_credit = (ArrayList<Double>) tempRead.get("extra_credits");
                 //read cell matrix and use it to construct a sheet
-                sheet = new Sheet(readCell(courseName));
-                students = readStudentInfo(courseName);
-                assignments = readAssignment(courseName);
-                criUG = readCriteria(courseName+"UG");
-                criG = readCriteria(courseName+"G");
+                sheet = new Sheet(readCell(courseName+semester));
+                students = readStudentInfo(courseName+semester);
+                assignments = readAssignment(courseName+semester);
+                criUG = readCriteria(courseName+semester+"UG");
+                criG = readCriteria(courseName+semester+"G");
                 Course course = new Course(courseName,lecturerName,semester,sheet,students,assignments,criUG,criG,end,extra_credit);
                 listCourse.add(course);
                 i = i + 1;
