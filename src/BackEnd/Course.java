@@ -500,8 +500,8 @@ public class Course implements Reportable {
         for(int i = 0; i < assignments.size();i++) {
             table[i][0] = assignments.get(i).getName();
             table[i][1] = String.valueOf(assignments.get(i).getTotal());
-            table[i][2] = String.valueOf(criteria_UG.getWeight());
-            table[i][3] = String.valueOf(criteria_G.getWeight()); //todo
+            table[i][2] = String.valueOf(criteria_UG.getWeight().get(i));
+            table[i][3] = String.valueOf(criteria_G.getWeight().get(i)); //todo
             table[i][4] = assignments.get(i).getScoring_method();
         }
         return table;
