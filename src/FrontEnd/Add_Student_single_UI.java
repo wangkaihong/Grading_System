@@ -97,11 +97,13 @@ public class Add_Student_single_UI extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null,"Please fill all the blank!");
             }
             else{
-                System.out.println(course.addStudent(studentFName, studentMName,studentLName,studentID,studentEmail,studentType));
-                GradeSheet_UI.addRows(studentID,studentFName+" "+ studentLName);
+                System.out.println(course.addStudent(studentFName, studentMName,studentLName,studentID,studentEmail,studentType) + " --- addStudent");
+                //GradeSheet_UI.addRows(studentID,studentFName+" "+ studentLName);
                 //course.getStudents();
                 dispose();
+                new GradeSheet_UI(grading_system,course);
             }
+
 
             //add weight?!
         }
