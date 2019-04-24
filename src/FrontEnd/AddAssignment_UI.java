@@ -1,6 +1,7 @@
 package FrontEnd;
 
 import BackEnd.Course;
+import com.sun.tools.javac.util.StringUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -101,13 +102,14 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
             double weightU = Double.parseDouble(weightedU.getText());
             double weightG = Double.parseDouble(weightedG.getText());
             String scoring  = this.G1.getSelection().getActionCommand();
-            if(scoring.isBlank() || name.isBlank()|| totalS.isBlank() ||(us.isBlank() || us.isBlank())){
+
+            if(scoring.isEmpty() || name.isEmpty()|| totalS.isEmpty() ||(us.isEmpty() || us.isEmpty())){
                 JOptionPane.showMessageDialog(null,"Please fill all necessary blank");
             }
-            else if (us.isBlank() && gs.isBlank() != true){
+            else if (us.isEmpty() && gs.isEmpty() != true){
                 weightG = Double.parseDouble(gs);
                 weightU = weightG;
-            }else if(gs.isBlank() && us.isBlank() != true){
+            }else if(gs.isEmpty() && us.isEmpty() != true){
                 weightU = Double.parseDouble(us);
                 weightG = weightU;
             }
