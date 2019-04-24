@@ -240,8 +240,12 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         }
         else if(e.getSource() == removeStudent){
             int select = tSheet.getSelectedRow();
-            mSheet.removeRow(select);
-            System.out.println(course.removeStudent(select-1)+" --- RemoveStudent");
+            if(select == -1){
+                JOptionPane.showMessageDialog(null,"Please select a student");
+            }else{
+                mSheet.removeRow(select);
+                System.out.println(course.removeStudent(select-1)+" --- RemoveStudent");
+            }
         }
         else if(e.getSource() == addNote){
             int col = tSheet.getSelectedColumn();
