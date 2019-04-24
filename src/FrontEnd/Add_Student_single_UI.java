@@ -27,9 +27,13 @@ public class Add_Student_single_UI extends JFrame implements ActionListener {
     JRadioButton under = new JRadioButton("Undergraduate");
     JButton confirm = new JButton("Confirm");
     JButton ret = new JButton("Cancel");
-    static Course course = GradeSheet_UI.course;
+    Course course;
+    Grading_System grading_system;
 
-    public Add_Student_single_UI(){
+    public Add_Student_single_UI(Grading_System grading_system, Course course){
+        this.grading_system = grading_system;
+        this.course = course;
+
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
         infoP.setLayout(new GridLayout(5,2));

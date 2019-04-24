@@ -18,7 +18,7 @@ public class Grading_System {
     public Grading_System() {
         // Constructor: read from IO and construct system instance
         FileIO fileIO = new FileIO();
-        this.courses = fileIO.readCourse("Test");
+        this.courses = fileIO.readCourse();
     }
 
     public ArrayList<Course> getCourses() {
@@ -49,6 +49,10 @@ public class Grading_System {
         // return 4 if invalid course name, return 5 if invalid lecturer name, return 6 if invalid semester name,
         // return 7 if invalid path to student info file, return 8 if invalid format of student info file,
         // return 9 if file not found, return 10 if unknown error
+
+        //testtest
+        System.out.println("Call AddCourse");
+
         Course previous = null;
         if(previous_Course_ind != -1) {
             if (previous_Course_ind >= courses.size() || previous_Course_ind < 0) {
@@ -83,9 +87,12 @@ public class Grading_System {
                     }
                     else {
                         try {
+                            System.out.print(student_file_dir);//testtest
                             ArrayList<Student> student_list = getStudentsFromFile(student_file_dir);
+                            System.out.print("Try92");//testtest
                             courses.add(new Course(courseName,lecturerName,semester,student_list,previous));
                             FileIO fileIO = new FileIO();
+                            System.out.print("Write Course");//testtest
                             fileIO.writeCourse(courses);
                             return 1;
                         }
@@ -242,7 +249,7 @@ public class Grading_System {
         ArrayList<Student> listStudentRead = new ArrayList<Student>();
         ArrayList<Assignment> listAssignRead = new ArrayList<Assignment>();
         ArrayList<ArrayList<Cell>> matrixCellRead = new ArrayList<ArrayList<Cell>>();
-        listCourseRead = fileIO1.readCourse("Test");
+        listCourseRead = fileIO1.readCourse();
         for(Course tempc : listCourseRead){
             System.out.println(tempc.getCourseName());
             System.out.println(tempc.getLecturerName());

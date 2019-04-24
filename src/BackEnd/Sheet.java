@@ -8,7 +8,14 @@ import java.util.ArrayList;
 public class Sheet {
     private ArrayList<ArrayList<Cell>> cells;
 
+
     public Sheet() {
+        ArrayList<Cell> temp = new ArrayList<>();
+        for(int i = 1; i < 2; i++) {
+            temp.add(new Cell());
+        }
+        cells = new ArrayList<ArrayList<Cell>>();
+        cells.add(temp);
     }
 
     public Sheet(ArrayList<ArrayList<Cell>> c){
@@ -18,15 +25,19 @@ public class Sheet {
     public ArrayList<ArrayList<Cell>> getAllCell() {
         return cells;
     }
+
     public double getCellScore(int cor1, int cor2) {
         return cells.get(cor1).get(cor2).getScore();
     }
+
     public Note getCellNote(int cor1, int cor2) {
         return cells.get(cor1).get(cor2).getNote();
     }
+
     public int getHeight() {
         return cells.size();
     }
+
     public int getWidth() {
         if(cells.size() > 0) {
             return cells.get(0).size();
@@ -52,11 +63,30 @@ public class Sheet {
     public void setCell(ArrayList<ArrayList<Cell>> cell) {
         this.cells = cell;
     }
+
     public void setScore(int cor1,int cor2, double score) {
         cells.get(cor1).get(cor2).setScore(score);
     }
+
     public void setNote(int cor1,int cor2, String note) {
         cells.get(cor1).get(cor2).setNote(note);
     }
 
+    public void addRows(int row_number) {
+        for(int i = 0; i < row_number;i++) {
+            ArrayList<Cell> temp = new ArrayList<>();
+            for(int j = 0; j < cells.get(0).size();j++) {
+                temp.add(new Cell());
+            }
+            cells.add(temp);
+        }
+    }
+
+    public void addColumns(int col_number) {
+        for(int i = 0; i < cells.size(); i++) {
+            for(int j = 0; j < col_number; j++) {
+                cells.get(i).add(new Cell());
+            }
+        }
+    }
 }
