@@ -1,10 +1,13 @@
 package FrontEnd;
 
+import BackEnd.Assignment;
 import BackEnd.Course;
 import BackEnd.Grading_System;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import javax.swing.*;
 
 public class GetReport_UI extends JFrame implements ActionListener{
@@ -21,7 +24,13 @@ public class GetReport_UI extends JFrame implements ActionListener{
         courseBE = course;
         this.grading_system = grading_system;
         Container contentPane = this.getContentPane();
-        String assignmentList[] = (String[]) courseBE.getAssignments().toArray();
+        //String assignmentList[] = (String[]) courseBE.getAssignments().toArray();
+        ArrayList<Assignment> assignments = courseBE.getAssignments();
+        String assignmentList[] = new String[assignments.size()];
+        for( int i =0; i < assignmentList.length;i++) {
+            assignmentList[i] = assignments.get(i).getName();
+        }
+
         JComboBox assignment = new JComboBox(assignmentList);
 
         selectReport.add(select);
@@ -39,7 +48,6 @@ public class GetReport_UI extends JFrame implements ActionListener{
                 }
             }
         });
-        assignment.setSelectedIndex(0);
 
         selectReport.setLayout(new GridLayout(2,1));
         confirmOrNot.setLayout(new GridLayout(1,2));

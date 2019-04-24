@@ -7,6 +7,9 @@ import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import BackEnd.*;
 
 public class ModifyCol_UI extends JFrame implements ActionListener {
@@ -19,8 +22,8 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
     JButton addRow = new JButton("Add");
     JButton back = new JButton("Back");
     JButton confirm = new JButton("Confirm");
+    JTable tSheet;
     static DefaultTableModel table;
-    static double totalWeight;
     Course course;
     Grading_System grading_system;
 
@@ -48,13 +51,17 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
                     int row = e.getFirstRow();
                     int col = e.getColumn();
                     //Object value = mSheet.getValueAt(row,col);
-                    String value = (String)  table.getValueAt(row,col);
-                    System.out.println(value);
+                    if(table.getValueAt(row,col) == null){
+                        table.setValueAt(0,row,col);
+                    }else {
+                        String value = (String) table.getValueAt(row, col);
+                        System.out.println(value);
+                    }
 
                 }
             }
         });
-        JTable tSheet = new JTable(table);
+        tSheet = new JTable(table);
         JScrollPane scrollPane = new JScrollPane(tSheet);
         pTable.add(scrollPane);
         pFuncs.add(confirm);
@@ -72,23 +79,39 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
         contentPane.add(pTable);
         contentPane.add(pFuncs);
         contentPane.add(pWaring);
+        pWaring.setVisible(false);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setSize(1000, 600);
         this.setTitle("Modify Column");
         this.setVisible(true);
 
-        for (int i = 0; i < tSheet.getRowCount(); i++){
-            double amount = Double.parseDouble((String) tSheet.getValueAt(i, 2));
-            totalWeight += amount;
-        }
-        System.out.println(totalWeight + "aaa");
-        if(totalWeight > 1){
-            pWaring.setVisible(true);
-        }
+
 
 
     }
     public void actionPerformed(ActionEvent e) {
+
+        tSheet.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                double totalWeight = 0;
+                double totalWeightG = 0;
+
+                for (int i = 0; i < tSheet.getRowCount(); i++){
+                    double amount = Double.parseDouble((String) tSheet.getValueAt(i, 2));
+                    double amountG = Double.parseDouble((String) tSheet.getValueAt(i, 3));
+                    totalWeight += amount;
+                    totalWeightG += amountG;
+
+                }
+                System.out.println(totalWeight + "--total weight");
+                if(totalWeight > 1 || totalWeightG > 1){
+                    pWaring.setVisible(true);
+                }else{
+                    pWaring.setVisible(false);
+                }
+            }
+        });
         if (e.getSource() == back) {
             dispose();
             new GradeSheet_UI(grading_system,course);
@@ -122,10 +145,11 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
             new GradeSheet_UI(grading_system,course);
         }
     }
-    public static void addRows(String name, double total, double weight,double weightG, String scoring){
+    public static void addRows(String name, String total, String weight, String weightG, String scoring){
         table.addRow(new Object[]{name,total,weight,weightG,scoring});
 
     }
+
 
 
 }
