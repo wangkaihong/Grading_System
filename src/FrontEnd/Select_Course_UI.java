@@ -32,7 +32,6 @@ public class Select_Course_UI extends JFrame implements ActionListener {
         System.out.print(course.length);
         JComboBox courses = new JComboBox(course);
         Container contentPane = this.getContentPane();
-//        getSelect = "CS 591 P1: Object Oriented Design";
 
         contentPane.setLayout(null);
 
@@ -75,7 +74,6 @@ public class Select_Course_UI extends JFrame implements ActionListener {
             dispose();
             new Add_Class_UI(grading_system);
         } else if (e.getSource() == enter) {
-            System.out.println(course.length);
             for (int i = 0; i < course.length; i++) {
                 if (getSelect.equals(course[i])) {
                     dispose();
