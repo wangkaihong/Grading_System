@@ -1,5 +1,6 @@
 package FrontEnd;
 
+import BackEnd.Course;
 import BackEnd.Grading_System;
 
 import javax.swing.*;
@@ -25,6 +26,7 @@ public class Select_Course_UI extends JFrame implements ActionListener {
 
     static String getSelect;
     Grading_System grading_system;
+    static Course coursetest = new Course();
 
     public Select_Course_UI(Grading_System grading_system) {
         this.grading_system = grading_system;
@@ -35,6 +37,9 @@ public class Select_Course_UI extends JFrame implements ActionListener {
 
         contentPane.setLayout(null);
 
+        String defaultMessage ="please select";
+        ComboBoxEditor editor= courses.getEditor();
+        courses.configureEditor(editor,defaultMessage);
         courses.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
