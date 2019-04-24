@@ -188,7 +188,8 @@ public class Course implements Reportable {
                     extra_credits.add(0.0);
                 }
                 sheet.addRows(1);
-                // todo: update sheet when adding student
+                FileIO fileIO = new FileIO();
+                fileIO.writeStudentInfo(students,courseName+semester);
 
                 return 1;
             }
@@ -198,6 +199,9 @@ public class Course implements Reportable {
                 if(extra_credits != null) {
                     extra_credits.add(0.0);
                 }
+                sheet.addRows(1);
+                FileIO fileIO = new FileIO();
+                fileIO.writeStudentInfo(students,courseName+semester);
                 return 1;
             }
             else {
@@ -260,6 +264,7 @@ public class Course implements Reportable {
             sheet.addColumns(1);
             FileIO fileIO = new FileIO();
             fileIO.writeAssignment(assignments,courseName+semester);
+            fileIO.writeCell(sheet.getAllCell(),courseName+semester);
             return 1;
         }
         catch (Exception e) {
