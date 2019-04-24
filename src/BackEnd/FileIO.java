@@ -374,7 +374,13 @@ public class FileIO {
                 i = i + 1;
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            try(FileWriter fw1 = new FileWriter(filename+"Course.json")){
+                //fw1.write(out1.toJSONString());
+                fw1.flush();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
