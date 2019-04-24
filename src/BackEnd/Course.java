@@ -428,6 +428,7 @@ public class Course implements Reportable {
                 for (int j = 0; j < width - offset_column; j++) {
                     table[0][j + offset_column] = assignments.get(j).getName();
                 }
+                table[0][width] = "Extra Credit";
 
                 for (int i = 1; i < height; i++) { // todo
                     table[i][0] = students.get(i - offset_row).getStudentId();
@@ -435,7 +436,7 @@ public class Course implements Reportable {
                     for (int j = offset_column; j < width; j++) {
                         table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal());
                     }
-                    table[i][width] = "";
+                    table[i][width] = String.valueOf(extra_credits.get(i - offset_row));
                 }
                 return table;
             }
