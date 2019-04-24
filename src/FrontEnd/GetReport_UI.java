@@ -1,10 +1,13 @@
 package FrontEnd;
 
+import BackEnd.Assignment;
 import BackEnd.Course;
 import BackEnd.Grading_System;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import javax.swing.*;
 
 public class GetReport_UI extends JFrame implements ActionListener{
@@ -14,14 +17,20 @@ public class GetReport_UI extends JFrame implements ActionListener{
     JButton confirm = new JButton("Confirm");
     JButton returnBack = new JButton("Return");
 
-    static String getSelect;
+    static int getSelect;
     public Course courseBE;
     public Grading_System grading_system;
     public GetReport_UI(Grading_System grading_system, Course course){
         courseBE = course;
         this.grading_system = grading_system;
         Container contentPane = this.getContentPane();
-        String assignmentList[] = (String[]) courseBE.getAssignments().toArray();
+        //String assignmentList[] = (String[]) courseBE.getAssignments().toArray();
+        ArrayList<Assignment> assignments = courseBE.getAssignments();
+        String assignmentList[] = new String[assignments.size()];
+        for( int i =0; i < assignmentList.length;i++) {
+            assignmentList[i] = assignments.get(i).getName();
+        }
+
         JComboBox assignment = new JComboBox(assignmentList);
 
         selectReport.add(select);
@@ -35,11 +44,10 @@ public class GetReport_UI extends JFrame implements ActionListener{
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    getSelect = assignment.getSelectedItem().toString();
+                    getSelect = assignment.getSelectedIndex();
                 }
             }
         });
-        assignment.setSelectedIndex(0);
 
         selectReport.setLayout(new GridLayout(2,1));
         confirmOrNot.setLayout(new GridLayout(1,2));

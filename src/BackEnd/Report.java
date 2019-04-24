@@ -25,7 +25,7 @@ public class Report {
     public String to_UI() {
         return null;
     }
-    public ArrayList<String> reportAssignToUI(String assignName){
+    public ArrayList<String> reportAssignToUI(int assignIndex){
         ArrayList<String> res = new ArrayList<String>();
         ArrayList<Double> listScore = new ArrayList<Double>();
         double min = 0;
@@ -33,7 +33,6 @@ public class Report {
         double ave = 0;
         double med = 0;
         double sumD = 0;
-        int assignIndex = assignments.indexOf(assignName);
         if (assignIndex == -1){
             System.out.println("Invalid Assignment Name");
             return res;
