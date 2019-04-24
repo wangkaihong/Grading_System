@@ -71,18 +71,18 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
             j++;
         }
         // student data！！！！
-        int colSize = ass.size();
+        int colSize = ass.size()+2;
         String[][] rowDataW = new String[3][colSize];
-        rowData[0][0] = "Weight_Undergraduate";
-        rowData[1][0] = "Weight_Graduate";
-        rowData[2][0] = "Total";
+        rowDataW[0][0] = "Weight_Undergraduate";
+        rowDataW[1][0] = "Weight_Graduate";
+        rowDataW[2][0] = "Total";
         ArrayList<Double> weight_ug = course.getCriteria_UG().getWeight();
         ArrayList<Double> weight_g = course.getCriteria_G().getWeight();
-        for(int c =1; c < colSize; c++){
-            rowData[0][c] = weight_ug.get(c-1).toString();
-            rowData[1][c] = weight_g.get(c-1).toString();
+        for(int c = 1; c < colSize; c++){
+            rowDataW[0][c] = weight_ug.get(c-1).toString();
+            rowDataW[1][c] = weight_g.get(c-1).toString();
             Double temp = ass.get(c-1).getTotal();
-            rowData[2][c] = temp.toString();
+            rowDataW[2][c] = temp.toString();
         }
                 //course.getAssignmentInformation();
         wSheet = new DefaultTableModel(rowDataW, columnNamesW) {
