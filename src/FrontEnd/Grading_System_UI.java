@@ -68,7 +68,7 @@ public class Grading_System_UI extends JFrame implements ActionListener{
         if(e.getSource() == login){
             dispose();
 
-            new Select_Course_UI(grading_system,courseList);
+            //new Select_Course_UI(grading_system,courseList);
         }
     }
     public static void main(String[] args) {

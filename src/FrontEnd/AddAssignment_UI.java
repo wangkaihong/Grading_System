@@ -112,7 +112,7 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
             //System.out.println(name + total+ weightU +weightG+scoring);
             System.out.println(course.addAssignment(name, total,scoring));
             /*add criteria??? */
-            //ModifyCol_UI.addRows(name, total, weightU, weightG, scoring);
+            ModifyCol_UI.addRows(name, total, weightU, weightG, scoring);
             dispose();
             System.out.print("scoring way is :" + scoring);
         }

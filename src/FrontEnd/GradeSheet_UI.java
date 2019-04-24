@@ -172,7 +172,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == back){
             dispose();
-            new Select_Course_UI(gradingSystem, courseList);
+            //new Select_Course_UI(gradingSystem, courseList);
         }
         else if(e.getSource() == addColumn){
 //            mSheet.addColumn("New Column");
@@ -184,12 +184,20 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         }
         else if(e.getSource() == complete){
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to end this course?");
+            System.out.println(input);
+            if(input == 0){
+                tSheet.setEnabled(false);
+            }
         }
         else if(e.getSource() == report){
             new GetReport_UI();
         }
         else if(e.getSource() == exCredit){
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to add extra credit?");
+            if(input == 0){
+                mSheet.addColumn("ExtraCredit");
+                wSheet.addColumn("ExtraCredit");
+            }
         }
         else if(e.getSource() == addStudent){
             new Add_Student_single_UI();

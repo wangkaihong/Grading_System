@@ -7,7 +7,7 @@ import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import BackEnd.*;
 
 public class ModifyCol_UI extends JFrame implements ActionListener {
     JPanel pTable = new JPanel(new BorderLayout());
@@ -22,6 +22,7 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
     String[][] rowData = {{"hw1","80", "80", "80", "deduction"},{"hw2","80", "80", "80",   "percentage"}};
     static DefaultTableModel table;
     static double totalWeight;
+    Course course = new Course();
 
 
     public ModifyCol_UI(){
@@ -35,17 +36,18 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return (columnIndex != 5);
             }
+
         };
-        table.addTableModelListener(new TableModelListener() {
-            @Override
-            public void tableChanged(TableModelEvent e) {
-                int row = e.getFirstRow();
-                int col = e.getColumn();
-                //Object value = mSheet.getValueAt(row,col);
-                String value = (String)  table.getValueAt(row,col);
-                System.out.println(value);
-            }
-        });
+//        table.addTableModelListener(new TableModelListener() {
+//            @Override
+//            public void tableChanged(TableModelEvent e) {
+//                int row = e.getFirstRow();
+//                int col = e.getColumn();
+//                //Object value = mSheet.getValueAt(row,col);
+//                String value = (String)  table.getValueAt(row,col);
+//                System.out.println(value);
+//            }
+//        });
         JTable tSheet = new JTable(table);
         JScrollPane scrollPane = new JScrollPane(tSheet);
         pTable.add(scrollPane);
@@ -60,10 +62,7 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
         pTable.setBounds(50,50,600,500);
         pFuncs.setBounds(675,400,300,50);
         pWaring.setBounds(650,200,300,200);
-        if(totalWeight > 1){
-            pWaring.setVisible(true);
-        }
-        pWaring.setVisible(false);
+        //pWaring.setVisible(false);
         contentPane.add(pTable);
         contentPane.add(pFuncs);
         contentPane.add(pWaring);
@@ -71,6 +70,15 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
         this.setSize(1000, 600);
         this.setTitle("Modify Column");
         this.setVisible(true);
+
+        for (int i = 0; i < tSheet.getRowCount(); i++){
+            double amount = Double.parseDouble((String) tSheet.getValueAt(i, 2));
+            totalWeight += amount;
+        }
+        System.out.println(totalWeight + "aaa");
+        if(totalWeight > 1){
+            pWaring.setVisible(true);
+        }
 
 
     }
