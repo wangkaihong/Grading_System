@@ -32,6 +32,7 @@ public class Add_Class_UI extends JFrame implements ActionListener {
     public Add_Class_UI(Grading_System grading_system){
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
+        this.grading_system = grading_system;
 
         labels.setLayout(new GridLayout(3, 1));
         labels.add(courseName);
