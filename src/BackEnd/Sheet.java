@@ -60,6 +60,10 @@ public class Sheet {
         return ret;
     }
 
+    public void removeRow(int ind) {
+        cells.remove(ind);
+    }
+
     public void setCell(ArrayList<ArrayList<Cell>> cell) {
         this.cells = cell;
     }
