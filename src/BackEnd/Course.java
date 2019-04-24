@@ -186,6 +186,8 @@ public class Course implements Reportable {
                 if(extra_credits != null) {
                     extra_credits.add(0.0);
                 }
+                // todo: update sheet when adding student
+
                 return 1;
             }
             if(studentType.equals("graduate")) {
@@ -221,6 +223,7 @@ public class Course implements Reportable {
                 if(extra_credits != null) {
                     extra_credits.remove(index);
                 }
+                // todo: update sheet when removing assignments
                 return 1;
             }
         }
@@ -252,6 +255,7 @@ public class Course implements Reportable {
             }
             Assignment assignment = new Assignment(name, total, scoring_method);
             assignments.add(assignment);
+            // todo: update sheet when adding assignments
             return 1;
         }
         catch (Exception e) {
@@ -375,13 +379,13 @@ public class Course implements Reportable {
         }
         try {
             double sum = 0;
-
             for (int i = 0; i < weights.length; i++) {
                 sum += weights[i];
             }
             if (sum > 1) {
                 return 2;
             }
+            System.out.println(criteria_G);
             criteria_G.changeCriteria(weights);
             return 1;
         }

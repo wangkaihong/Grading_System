@@ -8,7 +8,8 @@ public class Cell implements Reportable {
     private double score;
 
     public Cell() {
-
+        note = new Note();
+        score = 0;
     }
 
     public Cell(Note n, double s){

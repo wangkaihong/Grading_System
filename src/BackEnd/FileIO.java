@@ -303,6 +303,9 @@ public class FileIO {
     public void writeCourse(ArrayList<Course> listCourse){
         JSONObject out1 = new JSONObject();
         int count1 = 0;
+        //testtest
+        System.out.println("HEre");
+        System.out.println(listCourse);
 
         for( Course course : listCourse){
             JSONObject obj1 = new JSONObject();
@@ -311,6 +314,12 @@ public class FileIO {
             obj1.put("semester",course.getSemester());
             obj1.put("end",course.isEnd());
             obj1.put("extra_credits",course.getExtra_credits());
+            //testtest
+            System.out.println(course.getCourseName());
+            System.out.println(course.getLecturerName());
+            System.out.println(course.getSemester());
+            System.out.println(course.isEnd());
+            System.out.println(course.getExtra_credits());
             //write cell matrix instead of sheet
             writeCell(course.getSheet().getAllCell(), course.getCourseName()+course.getSemester());
             writeStudentInfo(course.getStudents(), course.getCourseName()+course.getSemester());
@@ -326,12 +335,13 @@ public class FileIO {
         try(FileWriter fw1 = new FileWriter("CourseList.json")){
             fw1.write(out1.toJSONString());
             fw1.flush();
+            System.out.print("Write CourseList JSON");//testtest
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public ArrayList<Course> readCourse(String filename){
+    public ArrayList<Course> readCourse(){
         JSONParser parser1 = new JSONParser();
         ArrayList<Course> listCourse = new ArrayList<Course>();
         String courseName;
@@ -375,7 +385,7 @@ public class FileIO {
             }
         } catch (FileNotFoundException e) {
             //e.printStackTrace();
-            try(FileWriter fw1 = new FileWriter(filename+"CourseList.json")){
+            try(FileWriter fw1 = new FileWriter("CourseList.json")){
                 //fw1.write(out1.toJSONString());
                 fw1.flush();
             } catch (IOException e1) {

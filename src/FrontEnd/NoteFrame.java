@@ -1,5 +1,8 @@
 package FrontEnd;
 
+import BackEnd.Course;
+import BackEnd.Grading_System;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -12,8 +15,11 @@ public class NoteFrame extends JFrame implements ActionListener{
     JScrollPane spNote = new JScrollPane(taNote);
     //JTextField tfNote = new JTextField(5);
     DefaultTableModel mNote;
-
-    public NoteFrame(){
+    Grading_System grading_system;
+    Course course;
+    public NoteFrame(Grading_System grading_system, Course course){
+        this.grading_system = grading_system;
+        this.course = course;
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
         //spNote.add(taNote);
@@ -65,7 +71,7 @@ public class NoteFrame extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == back){
             dispose();
-            new GradeSheet_UI();
+            new GradeSheet_UI(grading_system,course);
         }
     }
 }
