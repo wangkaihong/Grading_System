@@ -2,7 +2,6 @@ package FrontEnd;
 
 import BackEnd.Course;
 import BackEnd.Grading_System;
-import com.sun.tools.javac.util.StringUtils;
 
 import javax.swing.*;
 import java.awt.*;
