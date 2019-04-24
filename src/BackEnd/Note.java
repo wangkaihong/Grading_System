@@ -49,4 +49,9 @@ public class Note {
         this.time = time;
     }
 
+    public String toString(){
+        return getNoteContent()[0] + " (" + getNoteContent()[1]+")";
+
+    }
+
 }
