@@ -164,9 +164,9 @@ public class Course implements Reportable {
         if(firstName == null || firstName.equals("")) {
             return 2;
         }
-        if(middleInitial == null || middleInitial.equals("")) {
-            return 3;
-        }
+//        if(middleInitial == null || middleInitial.equals("")) {
+//            return 3;
+//        }
         if(lastName == null || lastName.equals("")) {
             return 4;
         }
