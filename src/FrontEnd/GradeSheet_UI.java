@@ -195,8 +195,8 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
             public void mouseClicked(MouseEvent e) {
                 int row = tSheet.getSelectedRow();
                 int col = tSheet.getSelectedColumn();
-                String pullNote = course.getSheet().getCellNote(row,col).toString();
-                System.out.println(course.getSheet().getCellNote(row,col) +" ---- note info");
+                String pullNote = course.getNote(row, col).toString();
+                System.out.println(course.getNote(row, col) +" ---- note info");
                 noteText.setText(pullNote);
                 //System.out.println(mSheet.getValueAt(row,col));
 
