@@ -186,6 +186,8 @@ public class Course implements Reportable {
                 if(extra_credits != null) {
                     extra_credits.add(0.0);
                 }
+                // todo: update sheet when adding student
+
                 return 1;
             }
             if(studentType.equals("graduate")) {
@@ -221,6 +223,7 @@ public class Course implements Reportable {
                 if(extra_credits != null) {
                     extra_credits.remove(index);
                 }
+                // todo: update sheet when removing assignments
                 return 1;
             }
         }
@@ -252,6 +255,7 @@ public class Course implements Reportable {
             }
             Assignment assignment = new Assignment(name, total, scoring_method);
             assignments.add(assignment);
+            // todo: update sheet when adding assignments
             return 1;
         }
         catch (Exception e) {
