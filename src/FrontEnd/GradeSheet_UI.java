@@ -78,10 +78,10 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         rowDataW[2][0] = "Total";
         ArrayList<Double> weight_ug = course.getCriteria_UG().getWeight();
         ArrayList<Double> weight_g = course.getCriteria_G().getWeight();
-        for(int c = 1; c < colSize; c++){
-            rowDataW[0][c] = weight_ug.get(c-1).toString();
-            rowDataW[1][c] = weight_g.get(c-1).toString();
-            Double temp = ass.get(c-1).getTotal();
+        for(int c = 2; c < colSize; c++){
+            rowDataW[0][c] = weight_ug.get(c-2).toString();
+            rowDataW[1][c] = weight_g.get(c-2).toString();
+            Double temp = ass.get(c-2).getTotal();
             rowDataW[2][c] = temp.toString();
         }
                 //course.getAssignmentInformation();
