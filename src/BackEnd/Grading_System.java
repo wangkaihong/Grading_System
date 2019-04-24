@@ -85,6 +85,8 @@ public class Grading_System {
                         try {
                             ArrayList<Student> student_list = getStudentsFromFile(student_file_dir);
                             courses.add(new Course(courseName,lecturerName,semester,student_list,previous));
+                            FileIO fileIO = new FileIO();
+                            fileIO.writeCourse(courses);
                             return 1;
                         }
                         catch (FileNotFoundException e) {
