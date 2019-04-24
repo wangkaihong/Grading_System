@@ -27,8 +27,7 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
     JButton ret = new JButton("Cancel");
     JLabel sameWeight = new JLabel("Please check if Weights are indifferent: ");
     JCheckBox copy = new JCheckBox();
-    String scoring = "" ;
-    Course course = new Course();
+    Course course = ModifyCol_UI.course;
 
     public AddAssignment_UI(){
         Container contentPane = this.getContentPane();
@@ -44,6 +43,7 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
         G1.add(raw);
         G1.add(deduction);
         G1.add(percentage);
+        raw.setSelected(true);
         radioPanel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Scoring Method"));
         p.add(name);
@@ -92,25 +92,28 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
             //new ModifyCol();
         }
         else if(e.getSource() == confirm) {
-            scoring = this.G1.getSelection().getActionCommand();
-            String name = assignmentname.getText();
-            double weightU=0,weightG = 0,total = 0;
-            total = Double.parseDouble(totalPoint.getText());
 
-            if (weightedU.getText() == null && weightedG.getText() == null){
-                JOptionPane.showMessageDialog(null,"Please enter at least one weight");
-            }else if(weightedU.getText() != null &&weightedG.getText() == null){
-                weightU = Double.parseDouble(weightedU.getText());
-                weightG = weightU;
-            }else if (weightedU.getText() == null && weightedG.getText() != null){
-                weightG = Double.parseDouble(weightedG.getText());
+            String name = assignmentname.getText();
+            String totalS = totalPoint.getText();
+            String us = weightedU.getText();
+            String gs = weightedG.getText();
+            double total = Double.parseDouble(totalPoint.getText());
+            double weightU = Double.parseDouble(weightedU.getText());
+            double weightG = Double.parseDouble(weightedG.getText());
+            String scoring  = this.G1.getSelection().getActionCommand();
+            if(scoring.isEmpty() || name.isEmpty()|| totalS.isEmpty() ||(us.isEmpty() || us.isEmpty())){
+                JOptionPane.showMessageDialog(null,"Please fill all necessary blank");
+            }
+            else if (us.isEmpty() && gs.isEmpty() != true){
+                weightG = Double.parseDouble(gs);
                 weightU = weightG;
-            }else{
-                weightU = Double.parseDouble(weightedU.getText());
-                weightG = Double.parseDouble(weightedG.getText());
+            }else if(gs.isEmpty() && us.isEmpty() != true){
+                weightU = Double.parseDouble(us);
+                weightG = weightU;
             }
             //System.out.println(name + total+ weightU +weightG+scoring);
             System.out.println(course.addAssignment(name, total,scoring));
+
             /*add criteria??? */
             ModifyCol_UI.addRows(name, total, weightU, weightG, scoring);
             dispose();

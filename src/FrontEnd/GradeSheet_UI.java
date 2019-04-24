@@ -12,7 +12,7 @@ import BackEnd.*;
 
 
 public class GradeSheet_UI extends JFrame implements ActionListener{
-    Course course = new Course();
+    static Course course = Select_Course_UI.coursetest;
     JPanel pSheet = new JPanel();
     //JScrollPane spSheet;
     JButton addStudent = new JButton("+ Add Student");
@@ -23,6 +23,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
     JButton complete = new JButton("End Course");
     JButton report = new JButton("BackEnd.Report");
     JButton exCredit = new JButton("Extra Credit");
+    JButton addNote = new JButton("Save Note");
     JLabel note = new JLabel("Notes");
     JPanel pB6 = new JPanel();
     JPanel pB2 = new JPanel();
@@ -45,11 +46,11 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
 
-        ArrayList<Assignment> ass= course.getAssignments();
+        ArrayList<Assignment> ass = course.getAssignments();
         int length = ass.size() + 2;
         String[] columnNamesW = new String[length];
-        columnNamesW[0] = "ID";
-        columnNamesW[1] = "Name";
+        columnNamesW[0] = "Item";
+        columnNamesW[1] = "    ";
         int i = 2;
         for(Assignment a: ass){
             columnNamesW[i] = a.getName();
@@ -62,7 +63,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         columnNames[1] = "Name";
         int j = 2;
         for(Assignment a: ass){
-            columnNames[i] = a.getName();
+            columnNames[j] = a.getName();
             j++;
         }
         // student data
@@ -85,12 +86,14 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         wSheet.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
-                int row = e.getFirstRow();
-                int col = e.getColumn();
+                if(e.getColumn() >  columnNames.length && e.getFirstRow() != 0 ){
+                    int row = e.getFirstRow();
+                    int col = e.getColumn();
+                    //Object value = mSheet.getValueAt(row,col);
+                    String value = (String)  mSheet.getValueAt(row,col);
+                    System.out.println(value);
 
-                //Object value = mSheet.getValueAt(row,col);
-                String value = (String)  wSheet.getValueAt(row,col);
-                System.out.println(value);
+                }
             }
         });
 
@@ -108,12 +111,14 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         mSheet.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
-                int row = e.getFirstRow();
-                int col = e.getColumn();
+                if(e.getColumn() >  columnNames.length && e.getFirstRow() != 0 ){
+                    int row = e.getFirstRow();
+                    int col = e.getColumn();
+                    //Object value = mSheet.getValueAt(row,col);
+                    String value = (String)  mSheet.getValueAt(row,col);
+                    System.out.println(value);
 
-                //Object value = mSheet.getValueAt(row,col);
-                String value = (String)  mSheet.getValueAt(row,col);
-                System.out.println(value);
+                }
             }
         });
 
@@ -126,7 +131,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         pFunc6.setLayout(new FlowLayout());
         pFunc2.setLayout(new FlowLayout());
         pB6.setLayout(new GridLayout(3,2));
-        pB2.setLayout(new GridLayout(2,1));
+        pB2.setLayout(new GridLayout(3,1));
         //set color of button
         complete.setForeground(Color.RED);
         grade.setForeground(Color.BLUE);
@@ -137,6 +142,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         pB6.add(report);
         pB6.add(exCredit);
         pB6.add(grade);
+        pB2.add(addNote);
         pB2.add(complete);
         pB2.add(back);
 
@@ -184,26 +190,27 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         }
         else if(e.getSource() == complete){
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to end this course?");
+            if(input == 0){
+                tSheet.setEnabled(false);
+                titleSheet.setEnabled(false);
+            }
         }
         else if(e.getSource() == report){
             new GetReport_UI();
         }
         else if(e.getSource() == exCredit){
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to add extra credit?");
+            if(input == 0){
+                mSheet.addColumn("ExtraCredit");
+                wSheet.addColumn("ExtraCredit");
+            }
         }
         else if(e.getSource() == addStudent){
             new Add_Student_single_UI();
         }
         else if(e.getSource() == removeStudent){
-            //??
-//            int selectR = tSheet.getSelectedRow();
-//            int selectC = tSheet.getSelectedColumn();
-            //System.out.println("Row-- "+ selectR + "Col--  "+ selectC);
-
             int select = tSheet.getSelectedRow();
-            //System.out.println(select);
             mSheet.removeRow(select);
-
         }
         else{
             int selectR = tSheet.getSelectedRow();
@@ -212,10 +219,14 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         }
     }
 
-    public static void addRows(String id, String first, String last){
-        mSheet.addRow(new Object[]{id,first,last});
+    public static void addRows(String id, String name){
+        mSheet.addRow(new Object[]{id,name});
 
     }
+//    public static void addRowsWeight(String id, String name){
+//        wSheet.addRow(new Object[]{id,name});
+//
+//    }
 
     public static void main(String[] args) {
         new GradeSheet_UI();

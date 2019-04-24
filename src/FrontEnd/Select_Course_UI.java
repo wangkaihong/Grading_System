@@ -1,5 +1,6 @@
 package FrontEnd;
 
+import BackEnd.Course;
 import BackEnd.Grading_System;
 
 import javax.swing.*;
@@ -25,6 +26,7 @@ public class Select_Course_UI extends JFrame implements ActionListener {
 
     static String getSelect;
     Grading_System grading_system;
+    static Course coursetest = new Course();
 
     public Select_Course_UI(Grading_System grading_system) {
         this.grading_system = grading_system;
@@ -78,7 +80,6 @@ public class Select_Course_UI extends JFrame implements ActionListener {
             dispose();
             new Add_Class_UI(grading_system);
         } else if (e.getSource() == enter) {
-            System.out.println(course.length);
             for (int i = 0; i < course.length; i++) {
                 if (getSelect.equals(course[i])) {
                     dispose();

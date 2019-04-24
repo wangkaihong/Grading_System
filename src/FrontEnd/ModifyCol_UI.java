@@ -19,10 +19,9 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
     JButton addRow = new JButton("Add");
     JButton back = new JButton("Back");
     JButton confirm = new JButton("Confirm");
-    String[][] rowData = {{"hw1","80", "80", "80", "deduction"},{"hw2","80", "80", "80",   "percentage"}};
     static DefaultTableModel table;
     static double totalWeight;
-    Course course = new Course();
+    static Course course = GradeSheet_UI.course;
 
 
     public ModifyCol_UI(){
@@ -30,6 +29,7 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
         contentPane.setLayout(null);
 
         String[] columnNames =  {"Name", "Total", "Weighted_UG", "Weighted_G","Scoring Way"};
+        String[][] rowData = course.getAssignmentInformation();
         //item data
         table = new DefaultTableModel(rowData, columnNames) {
             @Override
@@ -38,16 +38,19 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
             }
 
         };
-//        table.addTableModelListener(new TableModelListener() {
-//            @Override
-//            public void tableChanged(TableModelEvent e) {
-//                int row = e.getFirstRow();
-//                int col = e.getColumn();
-//                //Object value = mSheet.getValueAt(row,col);
-//                String value = (String)  table.getValueAt(row,col);
-//                System.out.println(value);
-//            }
-//        });
+        table.addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                if(e.getColumn() >  columnNames.length && e.getFirstRow() != 0 ){
+                    int row = e.getFirstRow();
+                    int col = e.getColumn();
+                    //Object value = mSheet.getValueAt(row,col);
+                    String value = (String)  table.getValueAt(row,col);
+                    System.out.println(value);
+
+                }
+            }
+        });
         JTable tSheet = new JTable(table);
         JScrollPane scrollPane = new JScrollPane(tSheet);
         pTable.add(scrollPane);
@@ -92,6 +95,17 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
             new AddAssignment_UI();
         }else if(e.getSource() ==confirm){
             dispose();
+            int size = table.getRowCount();
+            double[] weightGpush= new double[size];
+            double[] weightUpush= new double[size];
+            for(int i = 0; i < size; i++){
+                Object wsu =  table.getValueAt(i,2);
+                Object wsg = table.getValueAt(i,3);
+                weightUpush[i] = (double) wsu;
+                weightGpush[i] =  (double) wsg;
+            }
+            System.out.println(course.addCriteria_G(weightGpush) + "add Gweight");
+            System.out.println(course.addCriteria_UG(weightUpush)+ "add Uweight");
             new GradeSheet_UI();
         }
     }

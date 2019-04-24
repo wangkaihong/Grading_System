@@ -14,7 +14,7 @@ public class Add_Student_single_UI extends JFrame implements ActionListener {
     JPanel radioPanel = new JPanel();
     JLabel firstName = new JLabel("First Name: ");
     JTextField fname = new JTextField(20);
-    JLabel midName = new JLabel("Middle Initial: ");
+    JLabel midName = new JLabel("Middle Initial(optional): ");
     JTextField mname = new JTextField(20);
     JLabel lastName = new JLabel("Last Name: ");
     JTextField lname = new JTextField(20);
@@ -27,7 +27,7 @@ public class Add_Student_single_UI extends JFrame implements ActionListener {
     JRadioButton under = new JRadioButton("Undergraduate");
     JButton confirm = new JButton("Confirm");
     JButton ret = new JButton("Cancel");
-    Course course = new Course();
+    static Course course = GradeSheet_UI.course;
 
     public Add_Student_single_UI(){
         Container contentPane = this.getContentPane();
@@ -51,6 +51,7 @@ public class Add_Student_single_UI extends JFrame implements ActionListener {
         this.under.setActionCommand("undergraduate");
         G2.add(grad);
         G2.add(under);
+        under.setSelected(true);
 
         radioPanel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Student Type"));
@@ -87,17 +88,18 @@ public class Add_Student_single_UI extends JFrame implements ActionListener {
             String studentType = this.G2.getSelection().getActionCommand().toLowerCase();
 
             System.out.println(studentType);
-            System.out.println(course.addStudent(studentFName, studentMName,studentLName,studentID,studentEmail,studentType));
-//            }else{
-//                Student s = new Undergraduate(studentFName, studentMName,studentLName,studentID,studentEmail);
-//                course.addStudent(studentFName, studentMName,studentLName,studentID,studentEmail,studentType);
-//            }
-            //GradeSheet_UI.addRows(studentID, studentFName, studentLName);
-            System.out.println(course.getStudents());
-            dispose();
+            if(studentFName.isEmpty() || studentLName.isEmpty() || studentID.isEmpty()|| studentEmail.isEmpty()
+                    || studentEmail.isEmpty() || studentType.isEmpty()){
+                JOptionPane.showMessageDialog(null,"Please fill all the blank!");
+            }
+            else{
+                System.out.println(course.addStudent(studentFName, studentMName,studentLName,studentID,studentEmail,studentType));
+                GradeSheet_UI.addRows(studentID,studentFName+" "+ studentLName);
+                //course.getStudents();
+                dispose();
+            }
 
-
-            //??
+            //add weight?!
         }
 
     }
