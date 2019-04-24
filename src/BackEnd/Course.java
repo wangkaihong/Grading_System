@@ -514,6 +514,8 @@ public class Course implements Reportable {
         }
         try {
             sheet.setNote(cor1, cor2, note);
+            FileIO fileIO = new FileIO();
+            fileIO.writeCell(sheet.getAllCell(),courseName+semester);
             return 1;
         }
         catch (Exception e) {
