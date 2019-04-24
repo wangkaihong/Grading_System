@@ -196,7 +196,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
             }
         }
         else if(e.getSource() == report){
-            new GetReport_UI();
+            new GetReport_UI(course);
         }
         else if(e.getSource() == exCredit){
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to add extra credit?");

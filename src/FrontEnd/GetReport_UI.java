@@ -14,11 +14,13 @@ public class GetReport_UI extends JFrame implements ActionListener{
     JButton returnBack = new JButton("Return");
 
     static String getSelect;
-    public Course courseBE = new Course();
 
-    public GetReport_UI(){
+    public GetReport_UI(Course course){
         Container contentPane = this.getContentPane();
-        String assignmentList[] = (String[]) courseBE.getAssignments().toArray();
+        int size = course.getAssignments().size();
+        System.out.println(course.getAssignments());
+        System.out.println(size);
+        String assignmentList[] = (String[]) course.getAssignments().toArray(new String[size]);
         JComboBox assignment = new JComboBox(assignmentList);
 
         selectReport.add(select);
