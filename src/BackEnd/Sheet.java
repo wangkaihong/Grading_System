@@ -6,30 +6,16 @@ import java.util.ArrayList;
  * Created by wangkaihong on 2019/4/9.
  */
 public class Sheet {
-    private int col;
-
-    public int getCol() {
-        return col;
-    }
-
-    public void setCol(int col) {
-        this.col = col;
-    }
-
-    public int getRow() {
-        return row;
-    }
-
-    public void setRow(int row) {
-        this.row = row;
-    }
-
-    private int row;
     private ArrayList<ArrayList<Cell>> cells;
 
 
     public Sheet() {
+        ArrayList<Cell> temp = new ArrayList<>();
+        for(int i = 1; i < 2; i++) {
+            temp.add(new Cell());
+        }
         cells = new ArrayList<ArrayList<Cell>>();
+        cells.add(temp);
     }
 
     public Sheet(ArrayList<ArrayList<Cell>> c){
@@ -39,8 +25,6 @@ public class Sheet {
     public ArrayList<ArrayList<Cell>> getAllCell() {
         return cells;
     }
-
-
 
     public double getCellScore(int cor1, int cor2) {
         return cells.get(cor1).get(cor2).getScore();
@@ -89,12 +73,20 @@ public class Sheet {
     }
 
     public void addRows(int row_number) {
-        if(cells == null) {
-
+        for(int i = 0; i < row_number;i++) {
+            ArrayList<Cell> temp = new ArrayList<>();
+            for(int j = 0; j < cells.get(0).size();j++) {
+                temp.add(new Cell());
+            }
+            cells.add(temp);
         }
     }
 
     public void addColumns(int col_number) {
-
+        for(int i = 0; i < cells.size(); i++) {
+            for(int j = 0; j < col_number; j++) {
+                cells.get(i).add(new Cell());
+            }
+        }
     }
 }
