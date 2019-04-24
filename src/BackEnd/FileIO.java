@@ -331,7 +331,7 @@ public class FileIO {
         }
     }
 
-    public ArrayList<Course> readCourse(String filename){
+    public ArrayList<Course> readCourse(){
         JSONParser parser1 = new JSONParser();
         ArrayList<Course> listCourse = new ArrayList<Course>();
         String courseName;
@@ -375,7 +375,7 @@ public class FileIO {
             }
         } catch (FileNotFoundException e) {
             //e.printStackTrace();
-            try(FileWriter fw1 = new FileWriter(filename+"CourseList.json")){
+            try(FileWriter fw1 = new FileWriter("CourseList.json")){
                 //fw1.write(out1.toJSONString());
                 fw1.flush();
             } catch (IOException e1) {
