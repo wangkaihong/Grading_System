@@ -112,7 +112,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
                     int col = e.getColumn();
                     //Object value = mSheet.getValueAt(row,col);
                     double value = (double)  mSheet.getValueAt(row,col);
-                    System.out.println(value);
+                    //save changed score to sheet
                     course.getSheet().setScore(row, col,value);
                 }
             }
@@ -182,6 +182,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
                 int row = tSheet.getSelectedRow();
                 int col = tSheet.getSelectedColumn();
                 //System.out.println(course.getSheet().getCellNote(row,col));
+
                 System.out.println(mSheet.getValueAt(row,col));
 
             }

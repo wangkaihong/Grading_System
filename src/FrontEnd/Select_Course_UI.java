@@ -80,7 +80,6 @@ public class Select_Course_UI extends JFrame implements ActionListener {
             new Add_Class_UI(grading_system);
         } else if (e.getSource() == enter) {
             for (int i = 0; i < course.length; i++) {
-                System.out.print(getSelect);
                 if (getSelect == i) {
                     dispose();
                     new GradeSheet_UI(grading_system,grading_system.getCourses().get(i));

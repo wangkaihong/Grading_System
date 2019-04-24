@@ -396,7 +396,7 @@ public class Course implements Reportable {
             return 4;
         }
     }
-    public String[][] getTable() { // todo calculate portion to the total point
+    public String[][] getTable() { //
         // parameters:
         // None
         // return String[][] of content of sheet, first two columns: ID, Name, null of unknown error
@@ -405,8 +405,9 @@ public class Course implements Reportable {
                 int column = 2;
                 int height = sheet.getHeight();
                 int width = sheet.getWidth();
+
                 String[][] table = new String[height][width + column + 1];
-                for (int i = 0; i < height; i++) {
+                for (int i = 0; i < height; i++) { // todo
                     table[i][0] = students.get(i).getStudentId();
                     table[i][1] = students.get(i).getFirstName() + " " + students.get(i).getLastName();
                     for (int j = column; j < width + column; j++) {
@@ -420,11 +421,11 @@ public class Course implements Reportable {
                 int column = 2;
                 int height = sheet.getHeight();
                 int width = sheet.getWidth();
-                String[][] table = new String[height][width + column];
-                for (int i = 0; i < height; i++) {
+                String[][] table = new String[height][width];
+                for (int i = 0; i < height - 1; i++) {
                     table[i][0] = students.get(i).getStudentId();
                     table[i][1] = students.get(i).getFirstName() + " " + students.get(i).getLastName();
-                    for (int j = column; j < width + column; j++) {
+                    for (int j = column; j < width; j++) {
                         table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j).getTotal());
                     }
                 }
