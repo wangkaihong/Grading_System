@@ -18,7 +18,7 @@ public class Grading_System {
     public Grading_System() {
         // Constructor: read from IO and construct system instance
         FileIO fileIO = new FileIO();
-        this.courses = fileIO.readCourse("Test");
+        this.courses = fileIO.readCourse();
     }
 
     public ArrayList<Course> getCourses() {
@@ -242,7 +242,7 @@ public class Grading_System {
         ArrayList<Student> listStudentRead = new ArrayList<Student>();
         ArrayList<Assignment> listAssignRead = new ArrayList<Assignment>();
         ArrayList<ArrayList<Cell>> matrixCellRead = new ArrayList<ArrayList<Cell>>();
-        listCourseRead = fileIO1.readCourse("Test");
+        listCourseRead = fileIO1.readCourse();
         for(Course tempc : listCourseRead){
             System.out.println(tempc.getCourseName());
             System.out.println(tempc.getLecturerName());
