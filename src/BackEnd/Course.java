@@ -402,33 +402,44 @@ public class Course implements Reportable {
         // return String[][] of content of sheet, first two columns: ID, Name, null of unknown error
         try {
             if(extra_credits != null) {
-                int column = 2;
+                int offset_column = 2;
+                int offset_row = 1;
                 int height = sheet.getHeight();
                 int width = sheet.getWidth();
 
-                String[][] table = new String[height][width + column + 1];
-                for (int i = 0; i < height; i++) { // todo
-                    table[i][0] = students.get(i).getStudentId();
-                    table[i][1] = students.get(i).getFirstName() + " " + students.get(i).getLastName();
-                    for (int j = column; j < width + column; j++) {
+                String[][] table = new String[height][width + 1];
+                table[0][0] = "Student ID";
+                table[0][1] = "Student Name";
+                for (int j = 0; j < width - offset_column; j++) {
+                    table[0][j + offset_column] = assignments.get(j).getName();
+                }
+
+                for (int i = 1; i < height; i++) { // todo
+                    table[i][0] = students.get(i - offset_row).getStudentId();
+                    table[i][1] = students.get(i - offset_row).getFirstName() + " " + students.get(i).getLastName();
+                    for (int j = offset_column; j < width; j++) {
                         table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j).getTotal());
                     }
-                    table[i][width + column] = "";
+                    table[i][width] = "";
                 }
                 return table;
             }
             else {
-                System.out.println("Try421");//testtest
-                int column = 2;
+                int offset_column = 2;
+                int offset_row = 1;
                 int height = sheet.getHeight();
                 int width = sheet.getWidth();
                 String[][] table = new String[height][width];
-                for (int i = 0; i < height - 1; i++) {
-                    table[i][0] = students.get(i).getStudentId();
-                    System.out.println(table[i][0]);//testtest
-                    table[i][1] = students.get(i).getFirstName() + " " + students.get(i).getLastName();
-                    for (int j = column; j < width; j++) {
-                        table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j).getTotal());
+                table[0][0] = "Student ID";
+                table[0][1] = "Student Name";
+                for (int j = 0; j < width - offset_column; j++) {
+                    table[0][j + offset_column] = assignments.get(j).getName();
+                }
+                for (int i = offset_row; i < height; i++) { //
+                    table[i][0] = students.get(i - offset_row).getStudentId();
+                    table[i][1] = students.get(i - offset_row).getFirstName() + " " + students.get(i - offset_row).getLastName();
+                    for (int j = offset_column; j < width; j++) {
+                        table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j-offset_column).getTotal());
                     }
                 }
                 return table;
