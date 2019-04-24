@@ -26,7 +26,7 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
     ButtonGroup G1 = new ButtonGroup();
     JButton confirm = new JButton("Confirm");
     JButton ret = new JButton("Cancel");
-    JLabel sameWeight = new JLabel("Please check if Weights are indifferent: ");
+    JLabel sameWeight = new JLabel("Please check if Weights are same: ");
     JCheckBox copy = new JCheckBox();
     Course course;
     Grading_System grading_system;
@@ -102,28 +102,30 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
             String us = weightedU.getText();
             String gs = weightedG.getText();
             double total = Double.parseDouble(totalPoint.getText());
-            double weightU = Double.parseDouble(weightedU.getText());
-            double weightG = Double.parseDouble(weightedG.getText());
+            //double weightU = Double.parseDouble(weightedU.getText());
+            //double weightG = Double.parseDouble(weightedG.getText());
             String scoring  = this.G1.getSelection().getActionCommand();
 
             if(scoring.isEmpty() || name.isEmpty()|| totalS.isEmpty() ||(us.isEmpty() || us.isEmpty())){
                 JOptionPane.showMessageDialog(null,"Please fill all necessary blank");
+
             }
             else if (us.isEmpty() && gs.isEmpty() != true){
-                weightG = Double.parseDouble(gs);
-                weightU = weightG;
+                /*weightG = Double.parseDouble(gs);
+                weightU = weightG;*/
+                us = gs;
             }else if(gs.isEmpty() && us.isEmpty() != true){
-                weightU = Double.parseDouble(us);
-                weightG = weightU;
-            }
-            //System.out.println(name + total+ weightU +weightG+scoring);
-            System.out.println(course.addAssignment(name, total,scoring));
+                gs = us;
+            }else {
+                //System.out.println(name + total+ weightU +weightG+scoring);
+                System.out.println(course.addAssignment(name, total, scoring));
 
-            /*add criteria??? */
-            ModifyCol_UI.addRows(name, total, weightU, weightG, scoring);
-            dispose();
-            //=new ModifyCol_UI(grading_system,course);
-            System.out.print("scoring way is :" + scoring);
+                /*add criteria??? */
+                ModifyCol_UI.addRows(name, totalS, us, gs, scoring);
+                dispose();
+                //=new ModifyCol_UI(grading_system,course);
+                System.out.print("scoring way is :" + scoring);
+            }
         }
     }
 
