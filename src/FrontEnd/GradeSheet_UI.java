@@ -184,15 +184,10 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         setSize(1000, 700);
         setResizable(false);
         setVisible(true);
-
-        //System.out.println(course.getStudents().get(0) + "  student");
-    }
-
-    public void actionPerformed(ActionEvent e){
-
         tSheet.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                noteText.setText("");
                 int row = tSheet.getSelectedRow();
                 int col = tSheet.getSelectedColumn();
                 String pullNote = course.getNote(row, col).toString();
@@ -202,6 +197,13 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
 
             }
         });
+
+        //System.out.println(course.getStudents().get(0) + "  student");
+    }
+
+    public void actionPerformed(ActionEvent e){
+
+
         if(e.getSource() == back){
             dispose();
             new Select_Course_UI(grading_system);
