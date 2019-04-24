@@ -326,6 +326,7 @@ public class FileIO {
         try(FileWriter fw1 = new FileWriter("CourseList.json")){
             fw1.write(out1.toJSONString());
             fw1.flush();
+            System.out.print("Write CourseList JSON");//testtest
         } catch (IOException e) {
             e.printStackTrace();
         }
