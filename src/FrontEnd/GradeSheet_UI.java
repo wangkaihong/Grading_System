@@ -53,11 +53,12 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         ArrayList<Assignment> ass = course.getAssignments();
 
         String[][] rowData = course.getTable();
+        System.out.println(rowData + " --- loading getTable");
         int length = ass.size()+2;
 
         String[] columnNamesW = new String[length];
-        System.out.println(course.extra() + "--- had extra?");
-        System.out.println(length + "--- how many assignment");
+        System.out.println(course.extra() + " --- had extra?");
+        System.out.println(length + " --- how many Column");
 
         columnNamesW[0] = "Item";
         columnNamesW[1] = "    ";
