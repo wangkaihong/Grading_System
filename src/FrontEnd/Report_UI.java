@@ -66,8 +66,6 @@ public class Report_UI extends JFrame implements ActionListener {
         analysisData[2][0] = "average";
         analysisData[3][0] = "middle";
 
-        System.out.println(analysisData[0].length);
-
         analysis = new DefaultTableModel(analysisData, analysisNames){
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
