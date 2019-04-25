@@ -55,7 +55,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         String[][] rowData = course.getTable();
         System.out.println(rowData + " --- loading getTable");
         int length = rowData[0].length;
-
+        int extra = length - ass.size();
         String[] columnNamesW = new String[length];
         //System.out.println(course.extra() + " --- had extra?");
         System.out.println(length + " --- how many Column");
@@ -71,6 +71,12 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         String[] columnNames = new String[length];
         columnNames[0] = "ID";
         columnNames[1] = "Name";
+        if(extra == 3){
+            columnNamesW[length -1] = "Extra Credit";
+            columnNames[length -1] = "Extra Credit";
+            System.out.println(extra + " --- Extra");
+        }
+        //System.out.println(extra + " --- Extra");
         int j = 2;
         for(Assignment a: ass){
             columnNames[j] = a.getName();
@@ -209,6 +215,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         setResizable(false);
         setVisible(true);
         tSheet.addMouseListener(this);
+        titleSheet.addMouseListener(this);
 //    {
 //            @Override
 //            public void mouseClicked(MouseEvent e) {
@@ -253,6 +260,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                 tSheet.setEnabled(false);
                 titleSheet.setEnabled(false);
                 System.out.println(course.endCourse() +" ---- end course");
+                //todo --- mouse click null
             }
         }
         else if(e.getSource() == report){
@@ -262,10 +270,12 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             //System.out.println(course.extra()+ "--- button");
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to add extra credit?");
             if(input == 0 && course.extra() != 2){
+                dispose();
 
-                mSheet.addColumn("ExtraCredit");
-                wSheet.addColumn("ExtraCredit");
-                course.setExtra_credits(new ArrayList<>());
+                System.out.println(course.extra());
+                new GradeSheet_UI(grading_system,course);
+//                mSheet.addColumn("ExtraCredit");
+//                wSheet.addColumn("ExtraCredit");
 
             }
         }
