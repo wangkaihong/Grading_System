@@ -57,7 +57,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         int length = rowData[0].length;
 
         String[] columnNamesW = new String[length];
-        System.out.println(course.extra() + " --- had extra?");
+        //System.out.println(course.extra() + " --- had extra?");
         System.out.println(length + " --- how many Column");
 
         columnNamesW[0] = "Item";
@@ -238,7 +238,14 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         }
         else if(e.getSource() == grade){
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to get final grade?");
+
             //todo
+            if(input == 0) {
+                String[] ret = course.calTotal();
+                for(int i =0; i < ret.length; i++) {
+                    System.out.println(ret[i]);
+                }
+            }
         }
         else if(e.getSource() == complete){
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to end this course?");
@@ -252,7 +259,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             new GetReport_UI(grading_system,course);
         }
         else if(e.getSource() == exCredit){
-            System.out.println(course.extra()+ "--- button");
+            //System.out.println(course.extra()+ "--- button");
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to add extra credit?");
             if(input == 0 && course.extra() != 2){
 
