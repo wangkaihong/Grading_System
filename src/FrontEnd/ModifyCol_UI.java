@@ -5,14 +5,11 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 import BackEnd.*;
 
-public class ModifyCol_UI extends JFrame implements ActionListener {
+public class ModifyCol_UI extends JFrame implements ActionListener, MouseListener {
     JPanel pTable = new JPanel(new BorderLayout());
     JPanel pFuncs = new JPanel(new GridLayout(1,5));
     JPanel pWaring = new JPanel();
@@ -47,7 +44,7 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
         table.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
-                if(e.getColumn() <  columnNames.length && e.getFirstRow() != 0 ){
+                if(e.getColumn() <  columnNames.length && e.getColumn() != -1){
                     int row = e.getFirstRow();
                     int col = e.getColumn();
                     //Object value = mSheet.getValueAt(row,col);
@@ -72,6 +69,7 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
         back.addActionListener(this);
         confirm.addActionListener(this);
         addRow.addActionListener(this);
+        tSheet.addMouseListener(this);
         pTable.setBounds(50,50,600,500);
         pFuncs.setBounds(675,400,300,50);
         pWaring.setBounds(650,200,300,200);
@@ -84,30 +82,30 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
         this.setSize(1000, 600);
         this.setTitle("Modify Column");
         this.setVisible(true);
-        tSheet.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                double totalWeight = 0;
-                double totalWeightG = 0;
-
-                for (int i = 0; i < tSheet.getRowCount(); i++){
-                    double amount = Double.parseDouble((String) tSheet.getValueAt(i, 2));
-                    double amountG = Double.parseDouble((String) tSheet.getValueAt(i, 3));
-                    totalWeight += amount;
-                    totalWeightG += amountG;
-
-                }
-                System.out.println(totalWeight + "--total weight");
-                if(totalWeight > 1 || totalWeightG > 1){
-                    pWaring.setVisible(true);
-                }else{
-                    pWaring.setVisible(false);
-                }
-            }
-        });
-
     }
     public void actionPerformed(ActionEvent e) {
+//        tSheet.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                double totalWeight = 0;
+//                double totalWeightG = 0;
+//
+//                for (int i = 0; i < tSheet.getRowCount(); i++){
+//                    double amount = Double.parseDouble((String) tSheet.getValueAt(i, 2));
+//                    double amountG = Double.parseDouble((String) tSheet.getValueAt(i, 3));
+//                    totalWeight += amount;
+//                    totalWeightG += amountG;
+//
+//                }
+//                System.out.println(totalWeight + "--total weight");
+//                if(totalWeight > 1 || totalWeightG > 1){
+//                    pWaring.setVisible(true);
+//                }else{
+//                    pWaring.setVisible(false);
+//                }
+//            }
+//        });
+
 
 
         if (e.getSource() == back) {
@@ -136,6 +134,7 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
                 if(wsu instanceof Double) {
                     weightGpush[i] = (double) wsg;
                 }
+
             }
             System.out.println(course.changeCriteria_G(weightGpush) + "add Gweight");
             System.out.println(course.changeCriteria_UG(weightUpush)+ "add Uweight");
@@ -149,5 +148,43 @@ public class ModifyCol_UI extends JFrame implements ActionListener {
     }
 
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        double totalWeight = 0;
+        double totalWeightG = 0;
 
+        for (int i = 0; i < tSheet.getRowCount(); i++){
+            double amount = Double.parseDouble((String) tSheet.getValueAt(i, 2));
+            double amountG = Double.parseDouble((String) tSheet.getValueAt(i, 3));
+            totalWeight += amount;
+            totalWeightG += amountG;
+
+        }
+        System.out.println(totalWeight + "--total weight");
+        if(totalWeight > 1 || totalWeightG > 1){
+            pWaring.setVisible(true);
+        }else{
+            pWaring.setVisible(false);
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
 }

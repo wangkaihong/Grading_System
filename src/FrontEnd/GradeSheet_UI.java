@@ -51,8 +51,15 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         contentPane.setLayout(null);
         /*assignment list*/
         ArrayList<Assignment> ass = course.getAssignments();
-        int length = ass.size() + 2;
+
+        String[][] rowData = course.getTable();
+        System.out.println(rowData + " --- loading getTable");
+        int length = ass.size()+2;
+
         String[] columnNamesW = new String[length];
+        System.out.println(course.extra() + " --- had extra?");
+        System.out.println(length + " --- how many Column");
+
         columnNamesW[0] = "Item";
         columnNamesW[1] = "    ";
         int i = 2;
@@ -60,7 +67,6 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
             columnNamesW[i] = a.getName();
             i++;
         }
-        String[][] rowData = course.getTable();
 
         String[] columnNames = new String[length];
         columnNames[0] = "ID";
@@ -94,12 +100,12 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         wSheet.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
-                if(e.getColumn() <  columnNames.length && e.getFirstRow() != 1 ){
+                if(e.getColumn() <  columnNames.length && e.getColumn() >=0){
                     int row = e.getFirstRow();
                     int col = e.getColumn();
                     //Object value = mSheet.getValueAt(row,col);
                     String value = (String)  mSheet.getValueAt(row,col);
-                    System.out.println(value);
+                    System.out.println(value + "changing in weight table");
 
                 }
             }
@@ -119,7 +125,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         mSheet.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
-                if(e.getColumn() <  columnNames.length && e.getFirstRow() != 0 ){
+                if(e.getColumn() <  columnNames.length && e.getColumn() >=0){
                     int row = e.getFirstRow();
                     int col = e.getColumn();
                     //Object value = mSheet.getValueAt(row,col);
@@ -202,8 +208,6 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
     }
 
     public void actionPerformed(ActionEvent e){
-
-
         if(e.getSource() == back){
             dispose();
             new Select_Course_UI(grading_system);
@@ -233,12 +237,13 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
             new GetReport_UI(grading_system,course);
         }
         else if(e.getSource() == exCredit){
+            System.out.println(course.extra()+ "--- button");
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to add extra credit?");
-            if(input == 0){
+            if(input == 0 && course.extra() != 2){
 
                 mSheet.addColumn("ExtraCredit");
                 wSheet.addColumn("ExtraCredit");
-
+                course.setExtra_credits(new ArrayList<>());
 
             }
         }

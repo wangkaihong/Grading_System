@@ -14,7 +14,6 @@ import javax.swing.table.DefaultTableModel;
 
 public class Report_UI extends JFrame implements ActionListener {
     JPanel assignmentLabel = new JPanel();
-    JPanel reportTable = new JPanel();
     JPanel analysisTable = new JPanel();
     JPanel returnBack = new JPanel();
     JLabel title;
@@ -46,7 +45,7 @@ public class Report_UI extends JFrame implements ActionListener {
         assignmentLabel.setBounds(30,40,100,40);
         contentPane.add(assignmentLabel);
 
-//        Object[][] reportData = {
+//        Object[][] analysisData = {
 //                {"Student1", "-10"},
 //                {"Student1", "-60"},
 //                {"Student1", "-30"},
@@ -59,15 +58,21 @@ public class Report_UI extends JFrame implements ActionListener {
 //        reportTable.setBounds(30,100,150,250);
 //        contentPane.add(reportTable);
 
-        Object[] analysisData = null;
-        analysisData = course.reportAssignToUI(GetReport_UI.getSelect);
+        String[][] analysisData = new String[4][2];
+        for (int i = 0; i < 4;i ++) {
+            analysisData[i][1] =course.reportAssignToUI(GetReport_UI.getSelect)[0][i];
+        }
+        analysisData[0][0] = "min";
+        analysisData[1][0] = "max";
+        analysisData[2][0] = "average";
+        analysisData[3][0] = "middle";
 
 
-        analysis = new DefaultTableModel((Object[][]) analysisData, analysisNames);
+        analysis = new DefaultTableModel(analysisData, analysisNames);
         JTable analysisSheet = new JTable(analysis);
-        analysisSheet.setPreferredScrollableViewportSize(new Dimension(300, 300));
+        analysisSheet.setPreferredScrollableViewportSize(new Dimension(600, 400));
         analysisTable.add(analysisSheet);
-        analysisTable.setBounds(400,100,200,200);
+        analysisTable.setBounds(50,100,600,200);
         contentPane.add(analysisTable);
 
         returnToTable.addActionListener(this);
