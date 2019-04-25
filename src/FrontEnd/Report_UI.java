@@ -18,8 +18,7 @@ public class Report_UI extends JFrame implements ActionListener {
     JPanel returnBack = new JPanel();
     JLabel title;
     JButton returnToTable = new JButton("return to main table");
-    Object[] analysisNames = { "Analysis", "Result"};
-    DefaultTableModel report;
+    String[] analysisNames = { "Analysis", "Result"};
     DefaultTableModel analysis;
 
     Grading_System grading_system;
@@ -38,7 +37,7 @@ public class Report_UI extends JFrame implements ActionListener {
             assignmentList[i] = assignments.get(i).getName();
         }
 
-        JLabel title = new JLabel(assignmentList[GetReport_UI.getSelect]);
+        title = new JLabel(assignmentList[GetReport_UI.getSelect]);
         assignmentLabel.setLayout(new GridLayout(1,1));
         title.setFont(new Font("Serif",Font.PLAIN,30));
         assignmentLabel.add(title);
@@ -67,12 +66,13 @@ public class Report_UI extends JFrame implements ActionListener {
         analysisData[2][0] = "average";
         analysisData[3][0] = "middle";
 
+        System.out.println(analysisData[0]);
 
         analysis = new DefaultTableModel(analysisData, analysisNames);
         JTable analysisSheet = new JTable(analysis);
         analysisSheet.setPreferredScrollableViewportSize(new Dimension(600, 400));
         analysisTable.add(analysisSheet);
-        analysisTable.setBounds(50,100,600,200);
+        analysisTable.setBounds(0,100,600,400);
         contentPane.add(analysisTable);
 
         returnToTable.addActionListener(this);
@@ -89,7 +89,6 @@ public class Report_UI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == returnToTable){
-            new GradeSheet_UI(grading_system,course);
             this.setVisible(false);
         }
     }
