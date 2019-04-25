@@ -44,7 +44,7 @@ public class ModifyCol_UI extends JFrame implements ActionListener, MouseListene
         table.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
-                if(e.getColumn() <  columnNames.length && e.getColumn() != -1){
+                if(e.getColumn() <  columnNames.length && e.getColumn() >= 0){
                     int row = e.getFirstRow();
                     int col = e.getColumn();
                     //Object value = mSheet.getValueAt(row,col);
