@@ -586,11 +586,16 @@ public class Course implements Reportable {
             listScore.add(tempD);
             sumD = sumD + tempD;
         }
+        listScore.remove(0);
         int listSize = listScore.size();
         Collections.sort(listScore);
         min = Collections.min(listScore);
         max = Collections.max(listScore);
-        ave = (sumD - min - max) / listSize;
+        if(listSize <= 2){
+            ave = 0;
+        } else {
+            ave = (sumD - min - max) / (listSize - 2);
+        }
         if(listSize % 2 == 0){
             med = (listScore.get(listSize/2) + listScore.get(listSize/2-1)) / 2;
         } else{
