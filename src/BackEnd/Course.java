@@ -138,6 +138,10 @@ public class Course implements Reportable {
         return extra_credits;
     }
 
+    public void setExtra_credits(ArrayList<Double> extra_credits) {
+        this.extra_credits = extra_credits;
+    }
+
     public boolean isEnd() {
         return end;
     }
@@ -311,7 +315,7 @@ public class Course implements Reportable {
             return 7;
         }
     }
-//    public int addCriteria_UG(double[] weights) {
+    //    public int addCriteria_UG(double[] weights) {
 //        //parameters:
 //        // weights: double[]: Array of double representing weights
 //        //

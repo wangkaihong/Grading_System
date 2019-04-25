@@ -86,7 +86,7 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
         if(copy.isSelected()){
             if(weightedU.getText().equals("")){
                 weightedU.setText(weightedG.getText());
-            }else if(weightedG.getText().equals("")){
+            }else{
                 weightedG.setText(weightedU.getText());
             }
         }
@@ -111,16 +111,12 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
 
             }
             else if (us.isEmpty() && gs.isEmpty() != true){
-                /*weightG = Double.parseDouble(gs);
-                weightU = weightG;*/
                 us = gs;
             }else if(gs.isEmpty() && us.isEmpty() != true){
                 gs = us;
             }else {
-                //System.out.println(name + total+ weightU +weightG+scoring);
+                //todo here or modiCol??
                 System.out.println(course.addAssignment(name, total, scoring));
-
-
                 /*add criteria??? */
                 ModifyCol_UI.addRows(name, totalS, us, gs, scoring);
                 dispose();
