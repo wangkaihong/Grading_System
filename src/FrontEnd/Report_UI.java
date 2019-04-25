@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class Report_UI extends JFrame implements ActionListener {
     JPanel assignmentLabel = new JPanel();
-    JPanel analysisTable = new JPanel();
+    JScrollPane analysisTable;
     JPanel returnBack = new JPanel();
     JLabel title;
     JButton returnToTable = new JButton("return to main table");
@@ -68,11 +68,19 @@ public class Report_UI extends JFrame implements ActionListener {
 
         System.out.println(analysisData[0].length);
 
-        analysis = new DefaultTableModel(analysisData, analysisNames);
+        analysis = new DefaultTableModel(analysisData, analysisNames){
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return false;
+            }
+
+        };
+
+
         JTable analysisSheet = new JTable(analysis);
-        analysisSheet.setPreferredScrollableViewportSize(new Dimension(600, 400));
-        analysisTable.add(analysisSheet);
-        analysisTable.setBounds(0,100,600,400);
+        analysisSheet.setPreferredScrollableViewportSize(new Dimension(350, 150));
+        analysisTable = new JScrollPane(analysisSheet);
+        analysisTable.setBounds(100,80,300,150);
         contentPane.add(analysisTable);
 
         returnToTable.addActionListener(this);

@@ -436,7 +436,7 @@ public class Course implements Reportable {
 
                 for (int i = 1; i < height; i++) { // todo
                     table[i][0] = students.get(i - offset_row).getStudentId();
-                    table[i][1] = students.get(i - offset_row).getFirstName() + " " + students.get(i).getLastName();
+                    table[i][1] = students.get(i - offset_row).getFirstName() + " " + students.get(i - offset_row).getLastName();
                     for (int j = offset_column; j < width; j++) {
                         table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal());
                     }
@@ -641,25 +641,25 @@ public class Course implements Reportable {
         for(int i = 0; i < res.length;i++) {
             if(students.get(i) instanceof Undergraduate) {
                 ArrayList<Double> row = sheet.getScoreRow(i);
-                if(row.size() != criteria_UG.getWeight().size()) {
+                if(row.size() - 2 != criteria_UG.getWeight().size()) {
                     return null;
                 }
                 double score = 0;
-                for(int j = 0; j < row.size(); j++) {
-                    score += row.get(j) * criteria_UG.getWeight().get(j);
+                for(int j = 2; j < row.size(); j++) {
+                    score += row.get(j) * criteria_UG.getWeight().get(j - 2);
                 }
-                res[i] = String.valueOf(score);
+                res[i] = String.valueOf(100 * score);
             }
             else {
                 ArrayList<Double> row = sheet.getScoreRow(i);
-                if(row.size() != criteria_G.getWeight().size()) {
+                if(row.size() - 2 != criteria_G.getWeight().size()) {
                     return null;
                 }
                 double score = 0;
-                for(int j = 0; j < row.size(); j++) {
-                    score += row.get(j) * criteria_G.getWeight().get(j);
+                for(int j = 2; j < row.size(); j++) {
+                    score += row.get(j) * criteria_G.getWeight().get(j - 2);
                 }
-                res[i] = String.valueOf(score);
+                res[i] = String.valueOf(100 * score);
             }
         }
         return res;

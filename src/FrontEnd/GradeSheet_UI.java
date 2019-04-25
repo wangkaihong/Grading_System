@@ -11,7 +11,7 @@ import BackEnd.*;
 
 
 
-public class GradeSheet_UI extends JFrame implements ActionListener{
+public class GradeSheet_UI extends JFrame implements ActionListener, MouseListener{
     JPanel pSheet = new JPanel();
     //JScrollPane spSheet;
     JButton addStudent = new JButton("+ Add Student");
@@ -28,7 +28,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
     JPanel pB2 = new JPanel();
     JPanel pFunc6 = new JPanel();
     JPanel pFunc2 = new JPanel();
-    JTextField noteText = new JTextField();
+    JTextArea noteText = new JTextArea();
     static DefaultTableModel mSheet;
     JTable tSheet;
     static DefaultTableModel wSheet;
@@ -54,7 +54,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
 
         String[][] rowData = course.getTable();
         System.out.println(rowData + " --- loading getTable");
-        int length = ass.size()+2;
+        int length = rowData[0].length;
 
         String[] columnNamesW = new String[length];
         System.out.println(course.extra() + " --- had extra?");
@@ -104,7 +104,22 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
                     int row = e.getFirstRow();
                     int col = e.getColumn();
                     //Object value = mSheet.getValueAt(row,col);
-                    String value = (String)  mSheet.getValueAt(row,col);
+                    String value = (String)  wSheet.getValueAt(row,col);
+                    if(row == 0){
+                        ArrayList creteria_ug = course.getCriteria_UG().getWeight();
+                        creteria_ug.set(col-2, Double.parseDouble(value));
+                        System.out.println("change the UG weight");
+                    }else if(row ==1){
+                        ArrayList creteria_g = course.getCriteria_G().getWeight();
+                        creteria_g.set(col-2, Double.parseDouble(value));
+
+                        System.out.println("change the G weight");
+                    }else{
+                        ArrayList assignTotal = course.getAssignments();
+                        assignTotal.set(col, Double.parseDouble(value));
+                    }
+
+
                     System.out.println(value + "changing in weight table");
 
                 }
@@ -151,6 +166,8 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         //set color of button
         complete.setForeground(Color.RED);
         grade.setForeground(Color.BLUE);
+        noteText.setLineWrap(true);
+        JScrollPane notePane = new JScrollPane(noteText);
 
         pB6.add(addStudent);
         pB6.add(removeStudent);
@@ -167,13 +184,14 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         wp.setBounds(50,50,600,75);
         jp.setBounds(50,125,600,400);
         note.setBounds(700,125,200,50);
-        noteText.setBounds(670,175,280,350);
+        notePane.setBounds(670,175,280,350);
         pFunc6.setBounds(100,550,400,100);
         pFunc2.setBounds(700,550,200, 100);
 
         contentPane.add(jp);
         contentPane.add(wp);
-        contentPane.add(noteText);
+        contentPane.add(notePane);
+        //contentPane.add(noteText);
         contentPane.add(note);
         contentPane.add(pFunc6);
         contentPane.add(pFunc2);
@@ -190,19 +208,20 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         setSize(1000, 700);
         setResizable(false);
         setVisible(true);
-        tSheet.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                noteText.setText(" ");
-                int row = tSheet.getSelectedRow();
-                int col = tSheet.getSelectedColumn();
-                String pullNote = course.getNote(row, col)[0]+"\n Last modification:"+course.getNote(row, col)[1];
-                System.out.println(course.getNote(row, col) +" ---- note info");
-                noteText.setText(pullNote);
-                //System.out.println(mSheet.getValueAt(row,col));
-
-            }
-        });
+        tSheet.addMouseListener(this);
+//    {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                noteText.setText(" ");
+//                int row = tSheet.getSelectedRow();
+//                int col = tSheet.getSelectedColumn();
+//                String pullNote = course.getNote(row, col)[0]+"\n Last modification:"+course.getNote(row, col)[1];
+//                System.out.println(course.getNote(row, col) +" ---- note info");
+//                noteText.setText(pullNote);
+//                //System.out.println(mSheet.getValueAt(row,col));
+//
+//            }
+//        });
 
         //System.out.println(course.getStudents().get(0) + "  student");
     }
@@ -219,12 +238,14 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         }
         else if(e.getSource() == grade){
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to get final grade?");
+            //todo
         }
         else if(e.getSource() == complete){
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to end this course?");
             if(input == 0){
                 tSheet.setEnabled(false);
                 titleSheet.setEnabled(false);
+                System.out.println(course.endCourse() +" ---- end course");
             }
         }
         else if(e.getSource() == report){
@@ -271,6 +292,38 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
 
     public static void addRows(String id, String name){
         mSheet.addRow(new Object[]{id,name});
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        noteText.setText(" ");
+        int row = tSheet.getSelectedRow();
+        int col = tSheet.getSelectedColumn();
+        String pullNote = course.getNote(row, col)[0]+"\n Last modification:"+course.getNote(row, col)[1];
+        System.out.println(course.getNote(row, col) +" ---- note info");
+        noteText.setText(pullNote);
+        //System.out.println(mSheet.getValueAt(row,col));
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
 
     }
 //    public static void main(String[] args) {
