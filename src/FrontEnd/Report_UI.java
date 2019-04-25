@@ -17,7 +17,7 @@ public class Report_UI extends JFrame implements ActionListener {
     JScrollPane analysisTable;
     JPanel returnBack = new JPanel();
     JLabel title;
-    JButton returnToTable = new JButton("return to main table");
+    JButton returnBackTo = new JButton("return");
     String[] analysisNames = { "Analysis", "Result"};
     DefaultTableModel analysis;
 
@@ -66,8 +66,6 @@ public class Report_UI extends JFrame implements ActionListener {
         analysisData[2][0] = "average";
         analysisData[3][0] = "middle";
 
-        System.out.println(analysisData[0]);
-
         analysis = new DefaultTableModel(analysisData, analysisNames){
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -83,8 +81,8 @@ public class Report_UI extends JFrame implements ActionListener {
         analysisTable.setBounds(100,80,300,150);
         contentPane.add(analysisTable);
 
-        returnToTable.addActionListener(this);
-        returnBack.add(returnToTable);
+        returnBackTo.addActionListener(this);
+        returnBack.add(returnBackTo);
         returnBack.setBounds(420,250,150,30);
         contentPane.add(returnBack);
 
@@ -96,8 +94,9 @@ public class Report_UI extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == returnToTable){
-            this.setVisible(false);
+        if (e.getSource() == returnBackTo){
+            dispose();
+            new GetReport_UI(grading_system,course);
         }
     }
 }
