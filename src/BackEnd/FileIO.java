@@ -341,7 +341,7 @@ public class FileIO {
         ArrayList<Student> students;
         ArrayList<Assignment> assignments;
         boolean end;
-        ArrayList<Double> extra_credit;
+        Extra_credit extra_credit;
         //ArrayList<Criteria> criteria;
         Criteria criUG;
         Criteria criG;
@@ -362,7 +362,7 @@ public class FileIO {
                 lecturerName = (String) tempRead.get("lecturerName");
                 semester = (String) tempRead.get("semester");
                 end = (boolean) tempRead.get("end");
-                extra_credit = (ArrayList<Double>) tempRead.get("extra_credits");
+                extra_credit = new Extra_credit((ArrayList<Double>) tempRead.get("extra_credits"));
                 //read cell matrix and use it to construct a sheet
                 sheet = new Sheet(readCell(courseName+semester));
                 students = readStudentInfo(courseName+semester);
