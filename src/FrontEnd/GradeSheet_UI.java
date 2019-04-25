@@ -219,6 +219,12 @@ public class GradeSheet_UI extends JFrame implements ActionListener{
         }
         else if(e.getSource() == grade){
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to get final grade?");
+            if(input == 0) {
+                String[] ret = course.calTotal();
+                for(int i =0; i < ret.length; i++) {
+                    System.out.println(ret[i]);
+                }
+            }
         }
         else if(e.getSource() == complete){
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to end this course?");
