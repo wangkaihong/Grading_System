@@ -265,7 +265,6 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
 
                 mSheet.addColumn("ExtraCredit");
                 wSheet.addColumn("ExtraCredit");
-                course.setExtra_credits(new ArrayList<>());
 
             }
         }

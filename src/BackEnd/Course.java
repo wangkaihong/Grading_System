@@ -20,7 +20,7 @@ public class Course implements Reportable {
     private Criteria criteria_UG;
     private Criteria criteria_G;
     private boolean end;
-    private ArrayList<Double> extra_credits;
+    private Extra_credit extra_credits;
 
     public Course() {
         this.courseName = "";
@@ -34,7 +34,7 @@ public class Course implements Reportable {
         this.end = false;
         this.extra_credits = null;
     }
-    public Course(String cN, String lN, String s, Sheet sh, ArrayList<Student> stu, ArrayList<Assignment> assign, Criteria c_ug, Criteria c_g, boolean end, ArrayList<Double> extra){
+    public Course(String cN, String lN, String s, Sheet sh, ArrayList<Student> stu, ArrayList<Assignment> assign, Criteria c_ug, Criteria c_g, boolean end, Extra_credit extra){
         courseName = cN;
         lecturerName = lN;
         semester = s;
@@ -134,11 +134,11 @@ public class Course implements Reportable {
         this.criteria_G = criteria_G;
     }
     //Add get extra_credit
-    public ArrayList<Double> getExtra_credits() {
+    public Extra_credit getExtra_credits() {
         return extra_credits;
     }
 
-    public void setExtra_credits(ArrayList<Double> extra_credits) {
+    public void setExtra_credits(Extra_credit extra_credits) {
         this.extra_credits = extra_credits;
     }
 
@@ -190,7 +190,7 @@ public class Course implements Reportable {
                 students.add(student);
                 //System.out.println(student.toString()+"2");
                 if(extra_credits != null) {
-                    extra_credits.add(0.0);
+                    extra_credits.add_one();
                 }
                 sheet.addRows(1);
                 FileIO fileIO = new FileIO();
@@ -203,7 +203,7 @@ public class Course implements Reportable {
                 Student student = new Graduate(firstName, middleInitial, lastName, studentId, emailAddress);
                 students.add(student);
                 if(extra_credits != null) {
-                    extra_credits.add(0.0);
+                    extra_credits.add_one();
                 }
                 sheet.addRows(1);
                 FileIO fileIO = new FileIO();
@@ -440,7 +440,7 @@ public class Course implements Reportable {
                     for (int j = offset_column; j < width; j++) {
                         table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal());
                     }
-                    table[i][width] = String.valueOf(extra_credits.get(i - offset_row));
+                    table[i][width] = String.valueOf(extra_credits.getExtra_credits().get(i - offset_row));
                 }
                 return table;
             }
@@ -628,10 +628,7 @@ public class Course implements Reportable {
             if (extra_credits != null) {
                 return 2;
             }
-            extra_credits = new ArrayList<Double>();
-            for(int i = 0; i < students.size();i++) {
-                extra_credits.add(0.0);
-            }
+            extra_credits = new Extra_credit(students.size());
             return 1;
         }
         catch (Exception e) {
