@@ -137,6 +137,9 @@ public class Course implements Reportable {
     public ArrayList<Double> getExtra_credits() {
         return extra_credits;
     }
+    public void setExtra_credits(ArrayList<Double> extra){
+        extra_credits = extra;
+    }
 
     public boolean isEnd() {
         return end;
@@ -422,7 +425,7 @@ public class Course implements Reportable {
                 int height = sheet.getHeight();
                 int width = sheet.getWidth();
 
-                String[][] table = new String[height][width + 1];
+                String[][] table = new String[height][width+1];
                 table[0][0] = "Student ID";
                 table[0][1] = "Student Name";
                 for (int j = 0; j < width - offset_column; j++) {
@@ -438,6 +441,7 @@ public class Course implements Reportable {
                     }
                     table[i][width] = String.valueOf(extra_credits.get(i - offset_row));
                 }
+                System.out.println("including extra");
                 return table;
             }
             else {
@@ -458,6 +462,7 @@ public class Course implements Reportable {
                         table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j-offset_column).getTotal());
                     }
                 }
+                System.out.println("excluding extra");
                 return table;
             }
         }

@@ -117,10 +117,8 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
             }else if(gs.isEmpty() && us.isEmpty() != true){
                 gs = us;
             }else {
-                //System.out.println(name + total+ weightU +weightG+scoring);
+                //todo here or modiCol??
                 System.out.println(course.addAssignment(name, total, scoring));
-
-
                 /*add criteria??? */
                 ModifyCol_UI.addRows(name, totalS, us, gs, scoring);
                 dispose();
