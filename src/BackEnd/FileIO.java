@@ -39,7 +39,7 @@ public class FileIO {
     */
 
     public void writeCriteria(Criteria cri, String filename){
-        //Input a list of Criteria instances, write it to JSON file
+        //Input an instance of Criteria class, write it to JSON file
         JSONObject obj1 = new JSONObject();
         obj1.put("Weights",cri.getWeight());
 
@@ -70,6 +70,40 @@ public class FileIO {
             e.printStackTrace();
         }
         return new Criteria(listWeights);
+    }
+
+    public void writeExtraCredit(Extra_credit extraCredit, String filename){
+        //Input an instance of Extra_credit class, write it to JSON file
+        JSONObject obj1 = new JSONObject();
+        obj1.put("ExtraCredits",extraCredit.getExtra_credits());
+
+        try(FileWriter fw1 = new FileWriter(filename+"ExtraCredit.json")){
+            fw1.write(obj1.toJSONString());
+            fw1.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Extra_credit readExtraCredit(String filename){
+        //Input the additional JSON file name, output a list of Criteria instances, whose data are read
+        //from JSON file name
+        JSONParser parser1 = new JSONParser();
+        ArrayList<Double> listExtraCredits = new ArrayList<Double>();
+        try (FileReader reader = new FileReader(filename+"ExtraCredit.json")){
+            //Read JSON file
+            Object obj = parser1.parse(reader);
+            JSONObject readCriteria = (JSONObject) obj;
+            listExtraCredits = (ArrayList<Double>) readCriteria.get("ExtraCredits");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new Extra_credit(listExtraCredits);
     }
 
     public void writeStudentInfo(ArrayList<Student> listStu, String filename){
@@ -309,7 +343,6 @@ public class FileIO {
             obj1.put("lecturerName",course.getLecturerName());
             obj1.put("semester",course.getSemester());
             obj1.put("end",course.isEnd());
-            obj1.put("extra_credits",course.getExtra_credits());
             //testtest
             //write cell matrix instead of sheet
             writeCell(course.getSheet().getAllCell(), course.getCourseName()+course.getSemester());
@@ -317,6 +350,7 @@ public class FileIO {
             writeAssignment(course.getAssignments(), course.getCourseName()+course.getSemester());
             writeCriteria(course.getCriteria_UG(), course.getCourseName()+course.getSemester()+"UG");
             writeCriteria(course.getCriteria_G(), course.getCourseName()+course.getSemester()+"G");
+            writeExtraCredit(course.getExtra_credits(),course.getCourseName()+course.getSemester());
 
             out1.put("jOut"+Integer.toString(count1),obj1);
 
@@ -362,7 +396,7 @@ public class FileIO {
                 lecturerName = (String) tempRead.get("lecturerName");
                 semester = (String) tempRead.get("semester");
                 end = (boolean) tempRead.get("end");
-                extra_credit = new Extra_credit((ArrayList<Double>) tempRead.get("extra_credits"));
+                extra_credit = readExtraCredit(courseName+semester);
                 //read cell matrix and use it to construct a sheet
                 sheet = new Sheet(readCell(courseName+semester));
                 students = readStudentInfo(courseName+semester);
