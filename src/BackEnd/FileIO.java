@@ -74,8 +74,14 @@ public class FileIO {
 
     public void writeExtraCredit(Extra_credit extraCredit, String filename){
         //Input an instance of Extra_credit class, write it to JSON file
+        System.out.println("Try77");//testtest
         JSONObject obj1 = new JSONObject();
-        obj1.put("ExtraCredits",extraCredit.getExtra_credits());
+        if(extraCredit == null){
+            obj1.put("ExtraCredits","NULL");
+        } else {
+            obj1.put("ExtraCredits",extraCredit.getExtra_credits());
+        }
+        System.out.println("Try80");//testtest
 
         try(FileWriter fw1 = new FileWriter(filename+"ExtraCredit.json")){
             fw1.write(obj1.toJSONString());
@@ -91,11 +97,20 @@ public class FileIO {
         //from JSON file name
         JSONParser parser1 = new JSONParser();
         ArrayList<Double> listExtraCredits = new ArrayList<Double>();
+        Extra_credit res = new Extra_credit(null);
         try (FileReader reader = new FileReader(filename+"ExtraCredit.json")){
             //Read JSON file
             Object obj = parser1.parse(reader);
             JSONObject readCriteria = (JSONObject) obj;
-            listExtraCredits = (ArrayList<Double>) readCriteria.get("ExtraCredits");
+            String tempStr = (String)readCriteria.get("ExtraCredits");
+            if(tempStr.equals("NULL")){
+                System.out.println("Try106");//testtest
+                res = new Extra_credit(null);
+            } else {
+                System.out.println("Try110");//testtest
+                listExtraCredits = (ArrayList<Double>) readCriteria.get("ExtraCredits");
+                res = new Extra_credit(listExtraCredits);
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -103,7 +118,7 @@ public class FileIO {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return new Extra_credit(listExtraCredits);
+        return res;
     }
 
     public void writeStudentInfo(ArrayList<Student> listStu, String filename){
@@ -347,10 +362,13 @@ public class FileIO {
             //write cell matrix instead of sheet
             writeCell(course.getSheet().getAllCell(), course.getCourseName()+course.getSemester());
             writeStudentInfo(course.getStudents(), course.getCourseName()+course.getSemester());
+            System.out.println("AssignGet"+course.getCriteria_G());//testtest
             writeAssignment(course.getAssignments(), course.getCourseName()+course.getSemester());
             writeCriteria(course.getCriteria_UG(), course.getCourseName()+course.getSemester()+"UG");
             writeCriteria(course.getCriteria_G(), course.getCourseName()+course.getSemester()+"G");
+            System.out.println("Try353");//testtest
             writeExtraCredit(course.getExtra_credits(),course.getCourseName()+course.getSemester());
+            System.out.println("Try355");//testtest
 
             out1.put("jOut"+Integer.toString(count1),obj1);
 

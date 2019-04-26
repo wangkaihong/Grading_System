@@ -93,6 +93,7 @@ public class Grading_System {
                             courses.add(new Course(courseName,lecturerName,semester,student_list,previous));
                             FileIO fileIO = new FileIO();
                             System.out.print("Write Course");//testtest
+                            //System.out.print(courses.get(0).getExtra_credits().getExtra_credits());//testtest
                             fileIO.writeCourse(courses);
                             return 1;
                         }
