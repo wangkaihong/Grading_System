@@ -442,4 +442,75 @@ public class FileIO {
         }
         return listCourse;
     }
+
+    public void writeTempAddAssign(ArrayList<Assignment> tempAssignList, String filename){
+        JSONObject out1 = new JSONObject();
+        int count1 = 0;
+
+        for( Assignment assign : tempAssignList){
+            JSONObject obj1 = new JSONObject();
+            obj1.put("tempName",assign.getName());
+            obj1.put("tempTotal",assign.getTotal());
+            obj1.put("tempScoring_method",assign.getScoring_method());
+
+            out1.put("jOut"+Integer.toString(count1),obj1);
+
+            count1 = count1 + 1;
+        }
+
+        try(FileWriter fw1 = new FileWriter(filename+"TempAddAssign.json")){
+            fw1.write(out1.toJSONString());
+            fw1.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<Assignment> readTempAddAssign(String filename){
+        JSONParser parser1 = new JSONParser();
+        ArrayList<Assignment> listAssign = new ArrayList<Assignment>();
+        String name;
+        double total;
+        String scoring_method;
+        try (FileReader reader = new FileReader(filename+"TempAddAssign.json"))
+        {
+            //Read JSON file
+            Object obj = parser1.parse(reader);
+            JSONObject readAssign = (JSONObject) obj;
+
+            Iterator ite = readAssign.keySet().iterator();
+            int countRead = 0;
+            int i = 0;
+            while(ite.hasNext()){
+                countRead = countRead + 1;
+                ite.next();
+            }
+            while(i < countRead){
+                JSONObject tempRead = (JSONObject) readAssign.get("jOut"+Integer.toString(i));
+                name = (String) tempRead.get("tempName");
+                total = (double)tempRead.get("tempTotal");
+                scoring_method = (String) tempRead.get("tempScoring_method");
+                Assignment assign = new Assignment(name, total, scoring_method);
+                listAssign.add(assign);
+                i = i + 1;
+            }
+
+        } catch (FileNotFoundException e) {
+            try(FileWriter fw1 = new FileWriter(filename+"TempAddAssign.json")){
+                //JSONObject out1 = new JSONObject();
+                //ArrayList<Assignment> tempNullAssign = new ArrayList<Assignment>();
+                //out1.put("jOut"+Integer.toString(0),obj1);
+                //fw1.write(out1.toJSONString());
+                fw1.flush();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            //e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return listAssign;
+    }
 }

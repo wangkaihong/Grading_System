@@ -1,12 +1,15 @@
 package FrontEnd;
 
+import BackEnd.Assignment;
 import BackEnd.Course;
 import BackEnd.Grading_System;
+import BackEnd.FileIO;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class AddAssignment_UI extends JFrame implements ActionListener {
     JPanel p = new JPanel();
@@ -117,7 +120,14 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
                 gs = us;
             }else {
                 //todo here or modiCol??
-                System.out.println(course.addAssignment(name, total, scoring));
+                //System.out.println(course.addAssignment(name, total, scoring));
+                //trytry
+                FileIO fileIO = new FileIO();
+                ArrayList<Assignment> tempAddAssignList = fileIO.readTempAddAssign(course.getCourseName()+course.getSemester());
+                Assignment tempAddAssign = new Assignment(name,total,scoring);
+                tempAddAssignList.add(tempAddAssign);
+                fileIO.writeTempAddAssign(tempAddAssignList,course.getCourseName()+course.getSemester());
+                //trytry
                 /*add criteria??? */
                 ModifyCol_UI.addRows(name, totalS, us, gs, scoring);
                 dispose();

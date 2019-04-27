@@ -6,6 +6,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 import BackEnd.*;
 
@@ -30,6 +31,10 @@ public class ModifyCol_UI extends JFrame implements ActionListener, MouseListene
         this.course = course;
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
+
+        FileIO fileIO = new FileIO();
+        ArrayList<Assignment> tempNullList = new ArrayList<Assignment>();
+        fileIO.writeTempAddAssign(tempNullList,course.getCourseName()+course.getSemester());
 
         String[] columnNames =  {"Name", "Total", "Weighted_UG", "Weighted_G","Scoring Way"};
         String[][] rowData = course.getAssignmentInformation();
@@ -112,15 +117,35 @@ public class ModifyCol_UI extends JFrame implements ActionListener, MouseListene
                 }
 
             }
-            System.out.println(course.changeCriteria_G(weightGpush) + "add Gweight");
-            System.out.println(course.changeCriteria_UG(weightUpush)+ "add Uweight");
-            dispose();
-            new GradeSheet_UI(grading_system,course);
+            if(sum(weightGpush) <= 1 && sum(weightUpush) <= 1) {
+                FileIO fileIO = new FileIO();
+                ArrayList<Assignment> tempAddAssignList = fileIO.readTempAddAssign(course.getCourseName()+course.getSemester());
+                if(tempAddAssignList.size() != 0){
+                    for(Assignment assign : tempAddAssignList){
+                        course.addAssignment(assign.getName(), assign.getTotal(), assign.getScoring_method());
+                    }
+                } else {
+                    System.out.println("Invalid Assignments");
+                }
+                System.out.println(course.changeCriteria_G(weightGpush) + "add Gweight");
+                System.out.println(course.changeCriteria_UG(weightUpush) + "add Uweight");
+                dispose();
+                new GradeSheet_UI(grading_system, course);
+            }else{
+                JOptionPane.showMessageDialog(null,"Total weights is invalid!");
+            }
         }
     }
     public static void addRows(String name, String total, String weight, String weightG, String scoring){
         table.addRow(new Object[]{name,total,weight,weightG,scoring});
 
+    }
+    public double sum(double[] arr){
+        double res = 0;
+        for(int i = 0; i < arr.length; i++){
+            res += arr[i];
+        }
+        return res;
     }
 
 
