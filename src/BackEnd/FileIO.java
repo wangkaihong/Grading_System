@@ -101,14 +101,14 @@ public class FileIO {
         try (FileReader reader = new FileReader(filename+"ExtraCredit.json")){
             //Read JSON file
             Object obj = parser1.parse(reader);
-            JSONObject readCriteria = (JSONObject) obj;
-            String tempStr = (String)readCriteria.get("ExtraCredits");
+            JSONObject readExtra = (JSONObject) obj;
+            String tempStr = (String)readExtra.get("ExtraCredits");
             if(tempStr.equals("NULL")){
                 System.out.println("Try106");//testtest
                 res = new Extra_credit(null);
             } else {
                 System.out.println("Try110");//testtest
-                listExtraCredits = (ArrayList<Double>) readCriteria.get("ExtraCredits");
+                listExtraCredits = (ArrayList<Double>) readExtra.get("ExtraCredits");
                 res = new Extra_credit(listExtraCredits);
             }
         } catch (FileNotFoundException e) {
