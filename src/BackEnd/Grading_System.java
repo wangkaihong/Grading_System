@@ -123,11 +123,11 @@ public class Grading_System {
                 if(arr.length != 6) {
                     throw new InvalidStudentFileException();
                 }
-                if(arr[5].equals("U")) {
+                if(arr[5].contains("U")) {
                     stduent_list.add(new Undergraduate(arr[0], arr[1], arr[2], arr[3], arr[4]));
                 }
                 else {
-                    if(arr[5].equals("G")) {
+                    if(arr[5].contains("G")) {
                         stduent_list.add(new Graduate(arr[0], arr[1], arr[2], arr[3], arr[4]));
                     }
                     else {
