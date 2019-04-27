@@ -150,11 +150,15 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                 if(e.getColumn() <  columnNames.length && e.getColumn() >=0){
                     int row = e.getFirstRow();
                     int col = e.getColumn();
-                    //Object value = mSheet.getValueAt(row,col);
                     String value = (String) mSheet.getValueAt(row,col);
-                    //save changed score to sheet
-                    course.setScore(row, col,value);
-                    System.out.println(value +" ----change or add score");
+                    if(extra == 3 && e.getColumn() == columnNames.length -1){
+                        double val = Double.parseDouble(value);
+                        course.getExtra_credits().modify(row,val);
+                        System.out.println(value +" ----change or add Extra credit");
+                    }else{
+                        course.setScore(row, col,value);
+                        System.out.println(value +" ----change or add score");
+                    }
                 }
 
             }
