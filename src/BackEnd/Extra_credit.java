@@ -16,11 +16,15 @@ public class Extra_credit {
         this.extra_credits = extra_credits;
     }
 
-    public Extra_credit(int size) {
-        this.extra_credits = new ArrayList<>();
-        for(int i = 0; i < size; i++) {
-            extra_credits.add(0.0);
-        }
+//    public Extra_credit(int size) {
+//        this.extra_credits = new ArrayList<>();
+//        for(int i = 0; i < size; i++) {
+//            extra_credits.add(0.0);
+//        }
+//    }
+
+    public void create() {
+        extra_credits = new ArrayList<>();
     }
 
     public void add_one() {
