@@ -37,7 +37,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
     int extra;
     int colSize;
     Grading_System grading_system;
-    static int end = 0;
+    static int end = 0; //q? static or not
     //ArrayList<String> starter = new ArrayList<>();
     //
     //    //String[] columnNames = { "ID", "FirstName","LastName"};
@@ -268,6 +268,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             if(input == 0){
                 tSheet.setEnabled(false);
                 titleSheet.setEnabled(false);
+                course.endCourse();
                 end = course.endCourse();
                 System.out.println(course.endCourse() +" ---- end course");
             }
@@ -319,6 +320,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        System.out.println(end+ "-----2 is end");
         if(end != 2) {
             noteText.setText(" ");
             int row = -2;
