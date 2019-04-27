@@ -76,7 +76,7 @@ public class FileIO {
         //Input an instance of Extra_credit class, write it to JSON file
         System.out.println("Try77");//testtest
         JSONObject obj1 = new JSONObject();
-        if(extraCredit == null){
+        if(extraCredit.getExtra_credits() == null){
             obj1.put("ExtraCredits","NULL");
         } else {
             obj1.put("ExtraCredits",extraCredit.getExtra_credits());

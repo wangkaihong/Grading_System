@@ -9,7 +9,7 @@ public class Extra_credit {
     private ArrayList<Double> extra_credits;
 
     public Extra_credit() {
-        this.extra_credits = new ArrayList<>();
+        this.extra_credits = null;
     }
 
     public Extra_credit(ArrayList<Double> extra_credits) {

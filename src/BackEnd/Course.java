@@ -420,7 +420,7 @@ public class Course implements Reportable {
         // None
         // return String[][] of content of sheet, first two columns: ID, Name, null of unknown error
         try {
-            if(extra_credits != null) {
+            if(extra_credits.getExtra_credits() != null) {
                 int offset_column = 2;
                 int offset_row = 1;
                 int height = sheet.getHeight();
