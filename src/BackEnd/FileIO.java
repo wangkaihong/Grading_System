@@ -105,7 +105,7 @@ public class FileIO {
             Object obj = parser1.parse(reader);
             JSONObject readExtra = (JSONObject) obj;
             ArrayList<String> tempStr = (ArrayList<String>)readExtra.get("ExtraCredits");
-            if(tempStr.get(0).equals("NULL")){
+            if(tempStr.get(0) instanceof  String){
                 System.out.println("Try106");//testtest
                 res = new Extra_credit(null);
             } else {
