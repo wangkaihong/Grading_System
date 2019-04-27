@@ -143,7 +143,7 @@ public class ModifyCol_UI extends JFrame implements ActionListener, MouseListene
         table.addRow(new Object[]{name,total,weight,weightG,scoring});
 
     }
-    public double sum(double[] arr){
+    private double sum(double[] arr){
         double res = 0;
         for(int i = 0; i < arr.length; i++){
             res += arr[i];
