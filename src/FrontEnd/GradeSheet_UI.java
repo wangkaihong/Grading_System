@@ -155,8 +155,8 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                     String value = (String) mSheet.getValueAt(row,col);
                     if(extra == 3 && e.getColumn() == columnNames.length -1){
                         double val = Double.parseDouble(value);
-                        course.getExtra_credits().modify(row,val);
-                        System.out.println(value +" ----change or add Extra credit");
+
+                        System.out.println(course.getExtra_credits().modify(row,val) +" ----change or add Extra credit");
                     }else{
                         course.setScore(row, col,value);
                         System.out.println(value +" ----change or add score");
@@ -223,7 +223,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         setResizable(false);
         setVisible(true);
         tSheet.addMouseListener(this);
-        titleSheet.addMouseListener(this);
+        //titleSheet.addMouseListener(this);
 
         //System.out.println(course.getStudents().get(0) + "  student");
     }
@@ -309,8 +309,6 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         int col = -2;
         row = tSheet.getSelectedRow();
         col = tSheet.getSelectedColumn();
-        int rr = titleSheet.getSelectedRow();
-        int cc = titleSheet.getSelectedColumn();
         System.out.println(extra + "--- if extra is existing ");
         if(extra < 3 || (extra == 3 && col < colSize )){
             if(row != -2 && col != -2){
