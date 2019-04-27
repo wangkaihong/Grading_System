@@ -155,7 +155,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                     String value = (String) mSheet.getValueAt(row,col);
                     if(extra == 3 && e.getColumn() == columnNames.length -1){
                         double val = Double.parseDouble(value);
-                        course.getExtra_credits().modify(row,val);
+                        course.modify(row - 1,val);
                         System.out.println(value +" ----change or add Extra credit");
                     }else{
                         course.setScore(row, col,value);
