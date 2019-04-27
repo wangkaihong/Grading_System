@@ -21,6 +21,7 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
     JButton next = new JButton("Next");
     JButton returnBack = new JButton("Return");
     JButton cancel = new JButton("Cancel");
+    JButton escape = new JButton("Escape");
     
 
     private Course course = new Course();
@@ -29,7 +30,7 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
     public String lecturerName;
     public String semesterName;
 
-    public static int selectNum = -1;
+    public int selectNum = -1;
 
 
     public Add_Assignment_info_UI(Grading_System grading_system, String name, String lecturerName, String semesterName){
@@ -60,15 +61,16 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
 
 
 
-
+        escape.addActionListener(this);
         next.addActionListener(this);
         returnBack.addActionListener(this);
         cancel.addActionListener(this);
         buttons.setLayout(new GridLayout(1,3));
+        buttons.add(escape);
         buttons.add(next);
         buttons.add(returnBack);
         buttons.add(cancel);
-        buttons.setBounds(300,250,300,30);
+        buttons.setBounds(250,250,350,30);
         contentPane.add(buttons);
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -81,6 +83,10 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == next){
             dispose();
+            if (selectNum == -1){
+                dispose();
+                new Add_Assignment_info_UI(grading_system,name,lecturerName,semesterName);
+            }
             new Add_Student_info_UI(grading_system,this.name,this.lecturerName,this.semesterName,selectNum);
         } else if (e.getSource() == cancel){
             dispose();
@@ -88,6 +94,9 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
         } else if (e.getSource() == returnBack){
             dispose();
             new Add_Class_UI(grading_system);
+        } else if (e.getSource() == escape){
+            dispose();
+            new Add_Student_info_UI(grading_system,this.name,this.lecturerName,this.semesterName, -1);
         }
 
     }
