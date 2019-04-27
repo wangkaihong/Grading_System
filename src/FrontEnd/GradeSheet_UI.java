@@ -55,7 +55,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         String[][] rowData = course.getTable();
         System.out.println(rowData + " --- loading getTable");
         int length = rowData[0].length;
-        int extra = length - ass.size();
+
         String[] columnNamesW = new String[length];
         //System.out.println(course.extra() + " --- had extra?");
         System.out.println(length + " --- how many Column");
@@ -76,7 +76,6 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             columnNames[length -1] = "Extra Credit";
             System.out.println(extra + " --- Extra");
         }
-        //System.out.println(extra + " --- Extra");
         int j = 2;
         for(Assignment a: ass){
             columnNames[j] = a.getName();
@@ -96,7 +95,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             Double temp = ass.get(c-2).getTotal();
             rowDataW[2][c] = temp.toString();
         }
-                //course.getAssignmentInformation();
+        //course.getAssignmentInformation();
         wSheet = new DefaultTableModel(rowDataW, columnNamesW) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -105,7 +104,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         };
         wSheet.addTableModelListener(new TableModelListener() {
             @Override
-            public void tableChanged(TableModelEvent e) {
+            public void tableChanged(TableModelEvent e) {//todo change weight
                 if(e.getColumn() <  columnNames.length && e.getColumn() >=0){
                     int row = e.getFirstRow();
                     int col = e.getColumn();
@@ -260,7 +259,6 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                 tSheet.setEnabled(false);
                 titleSheet.setEnabled(false);
                 System.out.println(course.endCourse() +" ---- end course");
-                //todo --- mouse click null
             }
         }
         else if(e.getSource() == report){
@@ -270,12 +268,8 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             //System.out.println(course.extra()+ "--- button");
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to add extra credit?");
             if(input == 0 && course.extra() != 2){
-                dispose();
-
-                System.out.println(course.extra());
-                new GradeSheet_UI(grading_system,course);
-//                mSheet.addColumn("ExtraCredit");
-//                wSheet.addColumn("ExtraCredit");
+                    dispose();
+                    new GradeSheet_UI(grading_system,course);
 
             }
         }
