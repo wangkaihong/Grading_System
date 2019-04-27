@@ -36,7 +36,7 @@ public class Course implements Reportable {
         show_Total = false;
         this.extra_credits = new Extra_credit();
     }
-    public Course(String cN, String lN, String s, Sheet sh, ArrayList<Student> stu, ArrayList<Assignment> assign, Criteria c_ug, Criteria c_g, boolean end, Extra_credit extra){
+    public Course(String cN, String lN, String s, Sheet sh, ArrayList<Student> stu, ArrayList<Assignment> assign, Criteria c_ug, Criteria c_g, boolean end, Extra_credit extra, boolean show_total){
         courseName = cN;
         lecturerName = lN;
         semester = s;
@@ -47,7 +47,7 @@ public class Course implements Reportable {
         criteria_G = c_g;
         this.end = end;
         this.extra_credits = extra;
-        show_Total = false;
+        show_Total = show_total;
     }
 
 
