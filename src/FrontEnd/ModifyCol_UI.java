@@ -37,7 +37,7 @@ public class ModifyCol_UI extends JFrame implements ActionListener, MouseListene
         table = new DefaultTableModel(rowData, columnNames) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return (columnIndex != 5);
+                return (columnIndex != 4);
             }
 
         };
@@ -84,30 +84,6 @@ public class ModifyCol_UI extends JFrame implements ActionListener, MouseListene
         this.setVisible(true);
     }
     public void actionPerformed(ActionEvent e) {
-//        tSheet.addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                double totalWeight = 0;
-//                double totalWeightG = 0;
-//
-//                for (int i = 0; i < tSheet.getRowCount(); i++){
-//                    double amount = Double.parseDouble((String) tSheet.getValueAt(i, 2));
-//                    double amountG = Double.parseDouble((String) tSheet.getValueAt(i, 3));
-//                    totalWeight += amount;
-//                    totalWeightG += amountG;
-//
-//                }
-//                System.out.println(totalWeight + "--total weight");
-//                if(totalWeight > 1 || totalWeightG > 1){
-//                    pWaring.setVisible(true);
-//                }else{
-//                    pWaring.setVisible(false);
-//                }
-//            }
-//        });
-
-
-
         if (e.getSource() == back) {
             dispose();
             new GradeSheet_UI(grading_system,course);

@@ -31,6 +31,7 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
     Course course;
     Grading_System grading_system;
 
+
     public AddAssignment_UI(Grading_System grading_system, Course course){
         this.grading_system = grading_system;
         this.course = course;

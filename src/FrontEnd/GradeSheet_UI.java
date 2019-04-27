@@ -34,6 +34,8 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
     static DefaultTableModel wSheet;
     JTable titleSheet;
     Course course;
+    int extra;
+    int colSize;
     Grading_System grading_system;
     //ArrayList<String> starter = new ArrayList<>();
 
@@ -56,7 +58,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         String[][] rowData = course.getTable();
         System.out.println(rowData + " --- loading getTable");
         int length = rowData[0].length;
-        int extra = length - ass.size();
+
         String[] columnNamesW = new String[length];
         //System.out.println(course.extra() + " --- had extra?");
         System.out.println(length + " --- how many Column");
@@ -72,19 +74,18 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         String[] columnNames = new String[length];
         columnNames[0] = "ID";
         columnNames[1] = "Name";
-        if(extra == 3){
-            columnNamesW[length -1] = "Extra Credit";
-            columnNames[length -1] = "Extra Credit";
-            System.out.println(extra + " --- Extra");
+        extra = length- ass.size();
+        if(extra ==3){
+            columnNames[length-1] = "Extra_credit";
+            columnNamesW[length-1] = "Extra_credit";
         }
-        //System.out.println(extra + " --- Extra");
         int j = 2;
         for(Assignment a: ass){
             columnNames[j] = a.getName();
             j++;
         }
-        // student data！！！！
-        int colSize = ass.size()+2;
+
+        colSize = ass.size()+2;
         String[][] rowDataW = new String[3][colSize];
         rowDataW[0][0] = "Weight_Undergraduate";
         rowDataW[1][0] = "Weight_Graduate";
@@ -97,7 +98,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             Double temp = ass.get(c-2).getTotal();
             rowDataW[2][c] = temp.toString();
         }
-                //course.getAssignmentInformation();
+        //course.getAssignmentInformation();
         wSheet = new DefaultTableModel(rowDataW, columnNamesW) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -106,7 +107,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         };
         wSheet.addTableModelListener(new TableModelListener() {
             @Override
-            public void tableChanged(TableModelEvent e) {
+            public void tableChanged(TableModelEvent e) {//todo change weight
                 if(e.getColumn() <  columnNames.length && e.getColumn() >=0){
                     int row = e.getFirstRow();
                     int col = e.getColumn();
@@ -156,6 +157,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                     course.setScore(row, col,value);
                     System.out.println(value +" ----change or add score");
                 }
+
             }
 
         });
@@ -217,19 +219,6 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         setVisible(true);
         tSheet.addMouseListener(this);
         titleSheet.addMouseListener(this);
-//    {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                noteText.setText(" ");
-//                int row = tSheet.getSelectedRow();
-//                int col = tSheet.getSelectedColumn();
-//                String pullNote = course.getNote(row, col)[0]+"\n Last modification:"+course.getNote(row, col)[1];
-//                System.out.println(course.getNote(row, col) +" ---- note info");
-//                noteText.setText(pullNote);
-//                //System.out.println(mSheet.getValueAt(row,col));
-//
-//            }
-//        });
 
         //System.out.println(course.getStudents().get(0) + "  student");
     }
@@ -261,7 +250,6 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                 tSheet.setEnabled(false);
                 titleSheet.setEnabled(false);
                 System.out.println(course.endCourse() +" ---- end course");
-                //todo --- mouse click null
             }
         }
         else if(e.getSource() == report){
@@ -271,12 +259,8 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             //System.out.println(course.extra()+ "--- button");
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to add extra credit?");
             if(input == 0 && course.extra() != 2){
-                dispose();
-
-                System.out.println(course.extra());
-                new GradeSheet_UI(grading_system,course);
-//                mSheet.addColumn("ExtraCredit");
-//                wSheet.addColumn("ExtraCredit");
+                    dispose();
+                    new GradeSheet_UI(grading_system,course);
 
             }
         }
@@ -318,9 +302,13 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         noteText.setText(" ");
         int row = tSheet.getSelectedRow();
         int col = tSheet.getSelectedColumn();
+        System.out.println(extra + "--- if extra is existing ");
+        if(extra < 3 || (extra == 3 && col < colSize )){
         String pullNote = course.getNote(row, col)[0]+"\n Last modification:"+course.getNote(row, col)[1];
         System.out.println(course.getNote(row, col) +" ---- note info");
         noteText.setText(pullNote);
+        }
+
         //System.out.println(mSheet.getValueAt(row,col));
 
     }
