@@ -73,20 +73,13 @@ public class Add_Class_UI extends JFrame implements ActionListener {
             name = nameInput.getText();
             lecturerName = lecturerInput.getText();
             semesterName = semesterInput.getText();
-            int input = JOptionPane.showConfirmDialog(null, "Are you going to add assignments from existing class?(feel free to click no and add them later in the sheet)");
-            if(input == JOptionPane.YES_OPTION){
-                for (int i = 0; i < Select_Course_UI.course.length; i++){
-                    if (Select_Course_UI.course[i] == null){
-                        Select_Course_UI.course[i] = name;
-                        break;
-                    }
+            for (int i = 0; i < Select_Course_UI.course.length; i++){
+                if (Select_Course_UI.course[i] == null){
+                    Select_Course_UI.course[i] = name;
+                    break;
                 }
-                new Add_Assignment_info_UI(grading_system,name, lecturerName, semesterName);
-            } else if (input == JOptionPane.NO_OPTION){
-                new Add_Student_info_UI(grading_system,this.name,this.lecturerName,this.semesterName, -1);
-            } else if (input == JOptionPane.CANCEL_OPTION){
-                new Add_Class_UI(grading_system);
             }
+            new Add_Assignment_info_UI(grading_system,name, lecturerName, semesterName);
         } else if(e.getSource() == cancel){
             dispose();
             new Select_Course_UI(grading_system);
