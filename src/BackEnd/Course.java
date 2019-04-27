@@ -436,86 +436,153 @@ public class Course implements Reportable {
         // None
         // return String[][] of content of sheet, first two columns: ID, Name, null of unknown error
         try {
-            if(extra_credits.getExtra_credits() != null) {
-                int offset_column = 2;
-                int offset_row = 1;
-                int height = sheet.getHeight();
-                int width = sheet.getWidth();
+            if(show_Total) {
+                if (extra_credits.getExtra_credits() != null) {
+                    int offset_column = 2;
+                    int offset_row = 1;
+                    int height = sheet.getHeight();
+                    int width = sheet.getWidth();
 
-                String[][] table = new String[height][width + 1];
-                table[0][0] = "Student ID";
-                table[0][1] = "Student Name";
-                for (int j = 0; j < width - offset_column - 1; j++) {
-                    table[0][j + offset_column] = assignments.get(j).getName();
-                }
-                table[0][width - 1] = "Total";
-                table[0][width] = "Extra Credit";
-
-                for (int i = 1; i < height; i++) { // todo
-                    table[i][0] = students.get(i - offset_row).getStudentId();
-                    table[i][1] = students.get(i - offset_row).getFirstName() + " " + students.get(i - offset_row).getLastName();
-                    for (int j = offset_column; j < width - 1; j++) {
-                        if(assignments.get(j - offset_column).getScoring_method().equals("raw")) {
-                            table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal());
-                        }
-                        else{
-                            if(assignments.get(j - offset_column).getScoring_method().equals("deduction")) {
-                                table[i][j] = String.valueOf(assignments.get(j - offset_column).getTotal() - (sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal()));
-                            }
-                            else {
-                                if(assignments.get(j - offset_column).getScoring_method().equals("percentage")) {
-                                    table[i][j] = String.valueOf(sheet.getCellScore(i, j));
-                                }
-                                else {
-                                    return null;
-                                }
-
-                            }
-                        }
+                    String[][] table = new String[height][width + 1];
+                    table[0][0] = "Student ID";
+                    table[0][1] = "Student Name";
+                    for (int j = 0; j < width - offset_column - 1; j++) {
+                        table[0][j + offset_column] = assignments.get(j).getName();
                     }
-                    table[i][width - 1] = String.valueOf(sheet.getCellScore(i, width - 1));
-                    table[i][width] = String.valueOf(extra_credits.getExtra_credits().get(i - offset_row));
+                    table[0][width - 1] = "Total";
+                    table[0][width] = "Extra Credit";
+
+                    for (int i = 1; i < height; i++) { // todo
+                        table[i][0] = students.get(i - offset_row).getStudentId();
+                        table[i][1] = students.get(i - offset_row).getFirstName() + " " + students.get(i - offset_row).getLastName();
+                        for (int j = offset_column; j < width - 1; j++) {
+                            if (assignments.get(j - offset_column).getScoring_method().equals("raw")) {
+                                table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal());
+                            } else {
+                                if (assignments.get(j - offset_column).getScoring_method().equals("deduction")) {
+                                    table[i][j] = String.valueOf(assignments.get(j - offset_column).getTotal() - (sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal()));
+                                } else {
+                                    if (assignments.get(j - offset_column).getScoring_method().equals("percentage")) {
+                                        table[i][j] = String.valueOf(sheet.getCellScore(i, j));
+                                    } else {
+                                        return null;
+                                    }
+
+                                }
+                            }
+                        }
+                        table[i][width - 1] = String.valueOf(sheet.getCellScore(i, width - 1));
+                        table[i][width] = String.valueOf(extra_credits.getExtra_credits().get(i - offset_row));
+                    }
+                    return table;
+                } else {
+                    int offset_column = 2;
+                    int offset_row = 1;
+                    int height = sheet.getHeight();
+                    int width = sheet.getWidth();
+                    String[][] table = new String[height][width];
+                    table[0][0] = "Student ID";
+                    table[0][1] = "Student Name";
+                    for (int j = 0; j < width - offset_column - 1; j++) {
+                        table[0][j + offset_column] = assignments.get(j).getName();
+                    }
+                    table[0][width - 1] = "Total";
+
+                    for (int i = offset_row; i < height; i++) { //
+                        table[i][0] = students.get(i - offset_row).getStudentId();
+                        table[i][1] = students.get(i - offset_row).getFirstName() + " " + students.get(i - offset_row).getLastName();
+                        for (int j = offset_column; j < width - 1; j++) {
+                            if (assignments.get(j - offset_column).getScoring_method().equals("raw")) {
+                                table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal());
+                            } else {
+                                if (assignments.get(j - offset_column).getScoring_method().equals("deduction")) {
+                                    table[i][j] = String.valueOf((sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal()) - assignments.get(j - offset_column).getTotal());
+                                } else {
+                                    if (assignments.get(j - offset_column).getScoring_method().equals("percentage")) {
+                                        table[i][j] = String.valueOf(sheet.getCellScore(i, j));
+                                    } else {
+                                        return null;
+                                    }
+                                }
+                            }
+                        }
+
+                        table[i][width - 1] = String.valueOf(sheet.getCellScore(i, width - 1));
+                    }
+                    return table;
                 }
-                return table;
             }
             else {
-                int offset_column = 2;
-                int offset_row = 1;
-                int height = sheet.getHeight();
-                int width = sheet.getWidth();
-                String[][] table = new String[height][width];
-                table[0][0] = "Student ID";
-                table[0][1] = "Student Name";
-                for (int j = 0; j < width - offset_column - 1; j++) {
-                    table[0][j + offset_column] = assignments.get(j).getName();
-                }
-                table[0][width - 1] = "Total";
+                if (extra_credits.getExtra_credits() != null) {
+                    int offset_column = 2;
+                    int offset_row = 1;
+                    int height = sheet.getHeight();
+                    int width = sheet.getWidth();
 
-                for (int i = offset_row; i < height; i++) { //
-                    table[i][0] = students.get(i - offset_row).getStudentId();
-                    table[i][1] = students.get(i - offset_row).getFirstName() + " " + students.get(i - offset_row).getLastName();
-                    for (int j = offset_column; j < width - 1; j++) {
-                        if(assignments.get(j - offset_column).getScoring_method().equals("raw")) {
-                            table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal());
-                        }
-                        else{
-                            if(assignments.get(j - offset_column).getScoring_method().equals("deduction")) {
-                                table[i][j] = String.valueOf((sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal()) - assignments.get(j - offset_column).getTotal());
-                            }
-                            else {
-                                if(assignments.get(j - offset_column).getScoring_method().equals("percentage")) {
-                                    table[i][j] = String.valueOf(sheet.getCellScore(i, j));
+                    String[][] table = new String[height][width];
+                    table[0][0] = "Student ID";
+                    table[0][1] = "Student Name";
+                    for (int j = 0; j < width - offset_column - 1; j++) {
+                        table[0][j + offset_column] = assignments.get(j).getName();
+                    }
+                    table[0][width - 1] = "Extra Credit";
+
+                    for (int i = 1; i < height; i++) { // todo
+                        table[i][0] = students.get(i - offset_row).getStudentId();
+                        table[i][1] = students.get(i - offset_row).getFirstName() + " " + students.get(i - offset_row).getLastName();
+                        for (int j = offset_column; j < width - 1; j++) {
+                            if (assignments.get(j - offset_column).getScoring_method().equals("raw")) {
+                                table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal());
+                            } else {
+                                if (assignments.get(j - offset_column).getScoring_method().equals("deduction")) {
+                                    table[i][j] = String.valueOf(assignments.get(j - offset_column).getTotal() - (sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal()));
+                                } else {
+                                    if (assignments.get(j - offset_column).getScoring_method().equals("percentage")) {
+                                        table[i][j] = String.valueOf(sheet.getCellScore(i, j));
+                                    } else {
+                                        return null;
+                                    }
+
                                 }
-                                else {
-                                    return null;
+                            }
+                        }
+                        table[i][width - 1] = String.valueOf(extra_credits.getExtra_credits().get(i - offset_row));
+                    }
+                    return table;
+                }
+                else {
+                    int offset_column = 2;
+                    int offset_row = 1;
+                    int height = sheet.getHeight();
+                    int width = sheet.getWidth();
+                    String[][] table = new String[height][width - 1];
+                    table[0][0] = "Student ID";
+                    table[0][1] = "Student Name";
+                    for (int j = 0; j < width - offset_column - 1; j++) {
+                        table[0][j + offset_column] = assignments.get(j).getName();
+                    }
+
+                    for (int i = offset_row; i < height; i++) { //
+                        table[i][0] = students.get(i - offset_row).getStudentId();
+                        table[i][1] = students.get(i - offset_row).getFirstName() + " " + students.get(i - offset_row).getLastName();
+                        for (int j = offset_column; j < width - 1; j++) {
+                            if (assignments.get(j - offset_column).getScoring_method().equals("raw")) {
+                                table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal());
+                            } else {
+                                if (assignments.get(j - offset_column).getScoring_method().equals("deduction")) {
+                                    table[i][j] = String.valueOf((sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal()) - assignments.get(j - offset_column).getTotal());
+                                } else {
+                                    if (assignments.get(j - offset_column).getScoring_method().equals("percentage")) {
+                                        table[i][j] = String.valueOf(sheet.getCellScore(i, j));
+                                    } else {
+                                        return null;
+                                    }
                                 }
                             }
                         }
                     }
-
-                    table[i][width - 1] = String.valueOf(sheet.getCellScore(i, width - 1));
+                    return table;
                 }
-                return table;
             }
         }
         catch (Exception e) {
