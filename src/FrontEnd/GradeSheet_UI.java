@@ -43,13 +43,16 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
     public GradeSheet_UI(Grading_System grading_system, Course course) {
         this.grading_system = grading_system;
         this.course = course;
-        this.revalidate();
+
+
 
         setTitle("Grade Sheet");
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
         /*assignment list*/
         ArrayList<Assignment> ass = course.getAssignments();
+
+
 
         System.out.println("test_course"+course.getCourseName());
         String[][] rowData = course.getTable();
@@ -73,9 +76,15 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         columnNames[1] = "Name";
         extra = length - ass.size();
         System.out.println(extra + " --- if 3 extra good");
-        if(extra ==3){
+        if(extra == 4){
             columnNames[length-1] = "Extra_credit";
             columnNamesW[length-1] = "Extra_credit";
+            columnNames[length-2] = "Total";
+            columnNamesW[length-2] = "    ";
+        }
+        else{
+            columnNames[length-1] = "Total";
+            columnNamesW[length-1] = "    ";
         }
         int j = 2;
         for(Assignment a: ass){
@@ -103,7 +112,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                 if (end != 2){
                     if (extra < 3) {
                         return (columnIndex != 0) & (columnIndex != 1);
-                    }else if(extra ==3){
+                    }else if(extra == 3){
                         return (columnIndex != 0) & (columnIndex != 1) & (columnIndex != length - 1);
                     }else{
                         return (columnIndex != 0) & (columnIndex != 1)
@@ -122,17 +131,37 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                     int col = e.getColumn();
                     //Object value = mSheet.getValueAt(row,col);
                     String value = (String)  wSheet.getValueAt(row,col);
+                    int size = ass.size();
+                    double[] weightChange= new double[size];
                     if(row == 0){
-                        ArrayList creteria_ug = course.getCriteria_UG().getWeight();
-                        creteria_ug.set(col-2, Double.parseDouble(value));
-                        System.out.println("change the UG weight");
+                        for(int i =0 ; i < size ;i++){
+                            Object wsu =  wSheet.getValueAt(0,i+2);
+                            weightChange[i] = Double.valueOf((String) wsu);
+                        }
+                        if(totalSum(weightChange) <=1){
+                            System.out.println(course.changeCriteria_UG(weightChange) + "--- changed weight for underg");
+                        }else{
+                            //show notification
+                            JOptionPane.showMessageDialog(null,"Total weights is invalid!");
+                            wSheet.setValueAt("0",row,col);
+                            weightChange[col-2] = 0;
+                            course.changeCriteria_UG(weightChange);
+                        }
                     }else if(row ==1){
-                        ArrayList creteria_g = course.getCriteria_G().getWeight();
-                        creteria_g.set(col-2, Double.parseDouble(value));
-
-                        System.out.println("change the G weight");
+                        for(int i = 0 ; i < size ;i++){
+                            Object wsu =  wSheet.getValueAt(1,i+2);
+                            weightChange[i] = Double.valueOf((String) wsu);
+                        }
+                        if(totalSum(weightChange) <=1){
+                            System.out.println(course.changeCriteria_G(weightChange) + "--- changed weight for G");
+                        }else{
+                            //show notification
+                            JOptionPane.showMessageDialog(null,"Total weights is invalid!");
+                            wSheet.setValueAt("0",row,col);
+                            weightChange[col-2] = 0;
+                            course.changeCriteria_G(weightChange);
+                        }
                     }else{
-
                         System.out.println(course.changeTotal(col-2,Double.parseDouble(value)) + "---changing in total");
                     }
                 }
@@ -163,7 +192,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                     int row = e.getFirstRow();
                     int col = e.getColumn();
                     String value = (String) mSheet.getValueAt(row,col);
-                    if(extra == 3 && e.getColumn() == columnNames.length -1){
+                    if(extra == 4 && e.getColumn() == columnNames.length -1){
                         double val = Double.parseDouble(value);
                         course.modify(row - 1,val);
                         System.out.println(value +" ----change or add Extra credit");
@@ -177,12 +206,15 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
 
         });
 
+        //weight check
+
         tSheet = new JTable(mSheet);
         // Set the size of scroll panel window
         tSheet.setPreferredScrollableViewportSize(new Dimension(400, 300));
         //spSheet = new JScrollPane(tSheet);
 
         tSheet.getTableHeader().setReorderingAllowed(false);
+        //tSheet.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         //tSheet.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         JScrollPane jp = new JScrollPane(tSheet);
         jp.createHorizontalScrollBar();
@@ -243,7 +275,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         tSheet.addMouseListener(this);
 
 
-        //System.out.println(course.getStudents().get(0) + "  student");
+
     }
 
     public void actionPerformed(ActionEvent e){
@@ -298,11 +330,10 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             int select = tSheet.getSelectedRow();
             if(select == -1){
                 JOptionPane.showMessageDialog(null,"Please select a student");
-            }else if(select == 0){
-
-            }else{
+            }else if(select != 0){
                 mSheet.removeRow(select);
                 System.out.println(course.removeStudent(select-1)+" --- RemoveStudent");
+
             }
         }
         else if(e.getSource() == addNote){
@@ -323,6 +354,14 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
     public static void addRows(String id, String name){
         mSheet.addRow(new Object[]{id,name});
 
+    }
+
+    private double totalSum(double[] arr){
+        double res = 0;
+        for(int i = 0; i < arr.length; i++){
+            res += arr[i];
+        }
+        return res;
     }
 
     @Override
