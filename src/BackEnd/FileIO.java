@@ -317,24 +317,42 @@ public class FileIO {
                 JSONObject readCellRow = (JSONObject) readCellMatrix.get("jOut2"+Integer.toString(i));
                 Iterator iteRow = readCellRow.keySet().iterator();
                 ArrayList<Cell> listCell = new ArrayList<Cell>();
+                //trybegin
+                int countRead2 = 0;
+                int j = 0;
                 while(iteRow.hasNext()){
-                    String sKeyRow = (String) iteRow.next();
-                    JSONObject tempRead = (JSONObject) readCellRow.get(sKeyRow);
+                    countRead2 = countRead2 + 1;
+                    iteRow.next();
+                }
+                while(j < countRead2){
+                    JSONObject tempRead = (JSONObject) readCellRow.get("jOut1"+Integer.toString(j));
                     noteInfo = (String) tempRead.get("noteInfo");
                     noteDate = (String) tempRead.get("noteDate");
-                    /*
-                    try{DateFormat dateFmt = new SimpleDateFormat("dd/MM/yyyy");
-                            noteDate = dateFmt.parse(strDate);}
-                    catch (java.text.ParseException e){
-                        e.printStackTrace();
-                    }
-                    */
-                    //score = Double.valueOf((String)tempRead.get("score"));
                     score = (double) tempRead.get("score");
                     Note tempNote = new Note(noteInfo, noteDate);
                     Cell tempCell = new Cell(tempNote, score);
                     listCell.add(tempCell);
+                    j = j + 1;
                 }
+                //tryend
+//                while(iteRow.hasNext()){
+//                    String sKeyRow = (String) iteRow.next();
+//                    JSONObject tempRead = (JSONObject) readCellRow.get(sKeyRow);
+//                    noteInfo = (String) tempRead.get("noteInfo");
+//                    noteDate = (String) tempRead.get("noteDate");
+//                    /*
+//                    try{DateFormat dateFmt = new SimpleDateFormat("dd/MM/yyyy");
+//                            noteDate = dateFmt.parse(strDate);}
+//                    catch (java.text.ParseException e){
+//                        e.printStackTrace();
+//                    }
+//                    */
+//                    //score = Double.valueOf((String)tempRead.get("score"));
+//                    score = (double) tempRead.get("score");
+//                    Note tempNote = new Note(noteInfo, noteDate);
+//                    Cell tempCell = new Cell(tempNote, score);
+//                    listCell.add(tempCell);
+//                }
                 matrixCell.add(listCell);
                 i = i + 1;
             }
