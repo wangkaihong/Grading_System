@@ -18,7 +18,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
     JButton removeStudent = new JButton("- Remove Student");
     JButton addColumn = new JButton("Alter Assignment");
     JButton back = new JButton("Return Class List");
-    JButton grade = new JButton("Total Score");
+    JButton grade = new JButton("Show.TotalGrade");
     JButton complete = new JButton("End Course");
     JButton report = new JButton("BackEnd.Report");
     JButton exCredit = new JButton("Extra Credit");
@@ -38,6 +38,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
     int colSize;
     Grading_System grading_system;
     static int end = 0; //q? static or not
+    int tGrade = 0;
 
 
     public GradeSheet_UI(Grading_System grading_system, Course course) {
@@ -289,15 +290,15 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             new ModifyCol_UI(grading_system,course);
         }
         else if(e.getSource() == grade){
-            int input = JOptionPane.showConfirmDialog(null, "Are you sure to get final grade?");
-
             //todo
-            if(input == 0) {
-//                String[] ret = course.calTotal();
-//                for(int i =0; i < ret.length; i++) {
-//                    System.out.println(ret[i]);
-//                }
+            if(grade.getText() == "Show.TotalGrade") {
+                grade.setText("Hide.TotalGrade");
+                tGrade = 1;
+            }else{
+                grade.setText("Show.TotalGrade");
+                tGrade = 0;
             }
+            System.out.println(grade.getText() + "---" + tGrade);
         }
         else if(e.getSource() == complete){
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to end this course?");
