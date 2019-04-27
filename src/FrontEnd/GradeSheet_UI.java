@@ -38,11 +38,11 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
     int colSize;
     Grading_System grading_system;
     //ArrayList<String> starter = new ArrayList<>();
-
-    //String[] columnNames = { "ID", "FirstName","LastName"};
     //
-    //JLabel lSheet1 = new JLabel("Select Students Info：");
-    //String[] listInfo = new String[]{"FirstName", "ID", "Email"};
+    //    //String[] columnNames = { "ID", "FirstName","LastName"};
+    //    //
+    //    //JLabel lSheet1 = new JLabel("Select Students Info：");
+    //    //String[] listInfo = new String[]{"FirstName", "ID", "Email"};
 
     public GradeSheet_UI(Grading_System grading_system, Course course) {
         this.grading_system = grading_system;
@@ -74,7 +74,8 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         String[] columnNames = new String[length];
         columnNames[0] = "ID";
         columnNames[1] = "Name";
-        extra = length- ass.size();
+        extra = length - ass.size();
+        System.out.println(extra + " --- if 3 extra good");
         if(extra ==3){
             columnNames[length-1] = "Extra_credit";
             columnNamesW[length-1] = "Extra_credit";
@@ -151,11 +152,15 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                 if(e.getColumn() <  columnNames.length && e.getColumn() >=0){
                     int row = e.getFirstRow();
                     int col = e.getColumn();
-                    //Object value = mSheet.getValueAt(row,col);
                     String value = (String) mSheet.getValueAt(row,col);
-                    //save changed score to sheet
-                    course.setScore(row, col,value);
-                    System.out.println(value +" ----change or add score");
+                    if(extra == 3 && e.getColumn() == columnNames.length -1){
+                        double val = Double.parseDouble(value);
+                        course.getExtra_credits().modify(row,val);
+                        System.out.println(value +" ----change or add Extra credit");
+                    }else{
+                        course.setScore(row, col,value);
+                        System.out.println(value +" ----change or add score");
+                    }
                 }
 
             }
@@ -256,8 +261,8 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             new GetReport_UI(grading_system,course);
         }
         else if(e.getSource() == exCredit){
-            //System.out.println(course.extra()+ "--- button");
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to add extra credit?");
+            System.out.println("enter extra---");
             if(input == 0 && course.extra() != 2){
                     dispose();
                     new GradeSheet_UI(grading_system,course);
@@ -300,13 +305,19 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
     @Override
     public void mouseClicked(MouseEvent e) {
         noteText.setText(" ");
-        int row = tSheet.getSelectedRow();
-        int col = tSheet.getSelectedColumn();
+        int row = -2;
+        int col = -2;
+        row = tSheet.getSelectedRow();
+        col = tSheet.getSelectedColumn();
+        int rr = titleSheet.getSelectedRow();
+        int cc = titleSheet.getSelectedColumn();
         System.out.println(extra + "--- if extra is existing ");
         if(extra < 3 || (extra == 3 && col < colSize )){
-        String pullNote = course.getNote(row, col)[0]+"\n Last modification:"+course.getNote(row, col)[1];
-        System.out.println(course.getNote(row, col) +" ---- note info");
-        noteText.setText(pullNote);
+            if(row != -2 && col != -2){
+            String pullNote = course.getNote(row, col)[0]+"\n Last modification:"+course.getNote(row, col)[1];
+            System.out.println(course.getNote(row, col) +" ---- note info");
+            noteText.setText(pullNote);
+            }
         }
 
         //System.out.println(mSheet.getValueAt(row,col));
@@ -332,7 +343,4 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
     public void mouseExited(MouseEvent e) {
 
     }
-//    public static void main(String[] args) {
-//        new GradeSheet_UI();
-//    }
 }

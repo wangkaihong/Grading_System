@@ -51,7 +51,7 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
         importFrom.setLayout(new GridLayout(2,2));
         importFrom.add(new JLabel("Import From"));
         importFrom.add(courses);
-        importFrom.add(new JLabel("Or"));
+        importFrom.add(new JLabel());
         importFrom.add(new JLabel());
         importFrom.setBounds(20,20,600,100);
         contentPane.add(importFrom);
