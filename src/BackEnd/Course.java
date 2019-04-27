@@ -189,7 +189,7 @@ public class Course implements Reportable {
                 //System.out.println(student.toString());
                 students.add(student);
                 //System.out.println(student.toString()+"2");
-                if(extra_credits != null) {
+                if(extra_credits.getExtra_credits() != null) {
                     extra_credits.add_one();
                 }
                 sheet.addRows(1);
@@ -202,7 +202,7 @@ public class Course implements Reportable {
             if(studentType.equals("graduate")) {
                 Student student = new Graduate(firstName, middleInitial, lastName, studentId, emailAddress);
                 students.add(student);
-                if(extra_credits != null) {
+                if(extra_credits.getExtra_credits() != null) {
                     extra_credits.add_one();
                 }
                 sheet.addRows(1);
@@ -232,7 +232,7 @@ public class Course implements Reportable {
                 return 2;
             } else {
                 students.remove(index);
-                if(extra_credits != null) {
+                if(extra_credits.getExtra_credits() != null) {
                     extra_credits.remove(index);
                 }
                 sheet.removeRow(index+1);
@@ -625,10 +625,10 @@ public class Course implements Reportable {
     public int extra() {
         //return 1 if succeeded , return 2 if extra credit is already added, return 3 if unknown error
         try {
-            if (extra_credits != null) {
+            if (extra_credits.getExtra_credits() != null) {
                 return 2;
             }
-            extra_credits = new Extra_credit(students.size());
+            extra_credits.create();
             return 1;
         }
         catch (Exception e) {
