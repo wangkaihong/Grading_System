@@ -231,7 +231,7 @@ public class Grading_System {
         //set Sheet
         Sheet sheet1 = new Sheet(matrixCell);
         //set Course
-        Course course1 = new Course("CS591","Christine","Spring2019",sheet1,listStu,listAssign,criteria1,criteria2,false,null);
+        Course course1 = new Course("CS591","Christine","Spring2019",sheet1,listStu,listAssign,criteria1,criteria2,false,null,false);
         //set Grading_System
         Grading_System gradSys = new Grading_System();
         ArrayList<Course> listCourse = new ArrayList<Course>();
