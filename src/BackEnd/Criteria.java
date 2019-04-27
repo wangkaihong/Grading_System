@@ -12,6 +12,12 @@ public class Criteria {
     public Criteria() {
         weights = new ArrayList<>();
     }
+
+    public Criteria(Criteria previous) {
+        weights = new ArrayList<>();
+        weights.addAll(previous.getWeight());
+    }
+
     public Criteria(double[] add_weights) {
         weights = new ArrayList<>();
         for(int i = 0; i < add_weights.length;i++) {

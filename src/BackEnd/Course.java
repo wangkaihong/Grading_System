@@ -52,7 +52,7 @@ public class Course implements Reportable {
         this.courseName = courseName;
         this.lecturerName = lecturerName;
         this.semester = semester;
-        this.sheet = new Sheet();
+        this.sheet = new Sheet(); // todo
         this.students = student_list;
         this.sheet.addRows(student_list.size());
         if(previous == null) {
@@ -60,10 +60,14 @@ public class Course implements Reportable {
             this.criteria_UG = new Criteria();
             this.criteria_G = new Criteria();
         }
-        else {
-            this.assignments = previous.assignments;
-            this.criteria_UG = previous.criteria_UG;
-            this.criteria_G = previous.criteria_G;
+        else { // deep copy
+            this.assignments = new ArrayList<>();
+            for(int i = 0; i < previous.assignments.size(); i++) {
+                assignments.add(new Assignment(previous.assignments.get(i)));
+            }
+            this.sheet.addColumns(assignments.size());
+            this.criteria_UG = new Criteria(previous.criteria_UG);
+            this.criteria_G = new Criteria(previous.criteria_G);
         }
         this.end = false;
         this.extra_credits = new Extra_credit();
@@ -558,6 +562,8 @@ public class Course implements Reportable {
                 return 2;
             } else {
                 assignments.get(index).setTotal(new_total);
+                FileIO fileIO = new FileIO();
+                fileIO.writeAssignment(assignments,courseName+semester);
                 return 1;
             }
         }
