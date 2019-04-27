@@ -56,8 +56,11 @@ public class ModifyCol_UI extends JFrame implements ActionListener, MouseListene
                     if(table.getValueAt(row,col) == null){
                         table.setValueAt(0,row,col);
                     }else {
-                        String value = (String) table.getValueAt(row, col);
-                        System.out.println(value);
+                        String name = (String) table.getValueAt(row,0);
+                        String totalS = (String)table.getValueAt(row,1);
+                        String way = (String) table.getValueAt(row,4);
+                        double total = Double.parseDouble(totalS);
+                        System.out.println(course.changeAssignment(row,name,total,way) + "---- change assign");
                     }
 
                 }
