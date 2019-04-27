@@ -257,10 +257,10 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
 
             //todo
             if(input == 0) {
-                String[] ret = course.calTotal();
-                for(int i =0; i < ret.length; i++) {
-                    System.out.println(ret[i]);
-                }
+//                String[] ret = course.calTotal();
+//                for(int i =0; i < ret.length; i++) {
+//                    System.out.println(ret[i]);
+//                }
             }
         }
         else if(e.getSource() == complete){

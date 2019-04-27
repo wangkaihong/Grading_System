@@ -11,7 +11,7 @@ public class Sheet {
 
     public Sheet() {
         ArrayList<Cell> temp = new ArrayList<>();
-        for(int i = 0; i < 2; i++) {
+        for(int i = 0; i < 3; i++) {
             temp.add(new Cell());
         }
         cells = new ArrayList<ArrayList<Cell>>();
@@ -89,7 +89,8 @@ public class Sheet {
     public void addColumns(int col_number) {
         for(int i = 0; i < cells.size(); i++) {
             for(int j = 0; j < col_number; j++) {
-                cells.get(i).add(new Cell());
+//                cells.get(i).add(new Cell());
+                cells.get(i).add(cells.get(i).size()-1,new Cell());
             }
         }
     }
