@@ -109,9 +109,8 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                     return (columnIndex != 0) & (columnIndex != 1) & (columnIndex != length - 1);
                 }else{
                     return (columnIndex != 0) & (columnIndex != 1)
-                            & (columnIndex != length - 1)&(columnIndex != length - 1);
+                            & (columnIndex != length - 1)&(columnIndex != length - 2);
                 }
-
 
             }
         };
@@ -133,12 +132,12 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
 
                         System.out.println("change the G weight");
                     }else{
-                        ArrayList assignTotal = course.getAssignments();
-                        assignTotal.set(col, Double.parseDouble(value));
+
+                        System.out.println(course.changeTotal(col-2,Double.parseDouble(value)) + "---changing in total");
                     }
 
 
-                    System.out.println(value + "changing in weight table");
+
 
                 }
             }
