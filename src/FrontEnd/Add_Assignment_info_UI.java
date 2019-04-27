@@ -86,8 +86,9 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
             if (selectNum == -1){
                 dispose();
                 new Add_Assignment_info_UI(grading_system,name,lecturerName,semesterName);
+            } else {
+                new Add_Student_info_UI(grading_system, this.name, this.lecturerName, this.semesterName, selectNum);
             }
-            new Add_Student_info_UI(grading_system,this.name,this.lecturerName,this.semesterName,selectNum);
         } else if (e.getSource() == cancel){
             dispose();
             new Select_Course_UI(grading_system);
