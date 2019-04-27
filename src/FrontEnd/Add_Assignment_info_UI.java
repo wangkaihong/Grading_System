@@ -48,6 +48,7 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
                 }
             }
         });
+        courses.setSelectedItem(null);
         importFrom.setLayout(new GridLayout(2,2));
         importFrom.add(new JLabel("Import From"));
         importFrom.add(courses);
