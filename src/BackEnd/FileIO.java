@@ -76,8 +76,10 @@ public class FileIO {
         //Input an instance of Extra_credit class, write it to JSON file
         System.out.println("Try77");//testtest
         JSONObject obj1 = new JSONObject();
+        ArrayList<String> tempNull = new ArrayList<String>();
         if(extraCredit.getExtra_credits() == null){
-            obj1.put("ExtraCredits","NULL");
+            tempNull.add("NULL");
+            obj1.put("ExtraCredits",tempNull);
         } else {
             obj1.put("ExtraCredits",extraCredit.getExtra_credits());
         }
@@ -102,8 +104,8 @@ public class FileIO {
             //Read JSON file
             Object obj = parser1.parse(reader);
             JSONObject readExtra = (JSONObject) obj;
-            String tempStr = (String)readExtra.get("ExtraCredits");
-            if(tempStr.equals("NULL")){
+            ArrayList<String> tempStr = (ArrayList<String>)readExtra.get("ExtraCredits");
+            if(tempStr.get(0).equals("NULL")){
                 System.out.println("Try106");//testtest
                 res = new Extra_credit(null);
             } else {
