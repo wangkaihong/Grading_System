@@ -295,7 +295,6 @@ public class Course implements Reportable {
         catch (Exception e) {
             return 6;
         }
-
     }
     public int changeAssignment(int index, String name, double total, String scoring_method) {
         //parameters:
@@ -456,7 +455,23 @@ public class Course implements Reportable {
                     table[i][0] = students.get(i - offset_row).getStudentId();
                     table[i][1] = students.get(i - offset_row).getFirstName() + " " + students.get(i - offset_row).getLastName();
                     for (int j = offset_column; j < width - 1; j++) {
-                        table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal());
+                        if(assignments.get(j - offset_column).getScoring_method().equals("raw")) {
+                            table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal());
+                        }
+                        else{
+                            if(assignments.get(j - offset_column).getScoring_method().equals("deduction")) {
+                                table[i][j] = String.valueOf(assignments.get(j - offset_column).getTotal() - (sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal()));
+                            }
+                            else {
+                                if(assignments.get(j - offset_column).getScoring_method().equals("percentage")) {
+                                    table[i][j] = String.valueOf(sheet.getCellScore(i, j));
+                                }
+                                else {
+                                    return null;
+                                }
+
+                            }
+                        }
                     }
                     table[i][width - 1] = String.valueOf(sheet.getCellScore(i, width - 1));
                     table[i][width] = String.valueOf(extra_credits.getExtra_credits().get(i - offset_row));
@@ -480,8 +495,24 @@ public class Course implements Reportable {
                     table[i][0] = students.get(i - offset_row).getStudentId();
                     table[i][1] = students.get(i - offset_row).getFirstName() + " " + students.get(i - offset_row).getLastName();
                     for (int j = offset_column; j < width - 1; j++) {
-                        table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j-offset_column).getTotal());
+                        if(assignments.get(j - offset_column).getScoring_method().equals("raw")) {
+                            table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal());
+                        }
+                        else{
+                            if(assignments.get(j - offset_column).getScoring_method().equals("deduction")) {
+                                table[i][j] = String.valueOf((sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal()) - assignments.get(j - offset_column).getTotal());
+                            }
+                            else {
+                                if(assignments.get(j - offset_column).getScoring_method().equals("percentage")) {
+                                    table[i][j] = String.valueOf(sheet.getCellScore(i, j));
+                                }
+                                else {
+                                    return null;
+                                }
+                            }
+                        }
                     }
+
                     table[i][width - 1] = String.valueOf(sheet.getCellScore(i, width - 1));
                 }
                 return table;
@@ -497,14 +528,41 @@ public class Course implements Reportable {
         // cor2: int: coordinate of column of cell to modify
         // score: String: score to be modified
         //
-        // return 1 if succeeded, return 2 if invalid score type, return 3 if course is ended, return 4 if unknown error
+        // return 1 if succeeded, return 2 if invalid score type, return 3 if course is ended, return 4 if invalid score input, return 5 if unknown error
         if(end) {
             return 3;
         }
         try {
             int real_cor2 = cor2 - 2; // offset first two columns
-            double input = Double.valueOf(score)/assignments.get(real_cor2).getTotal(); // todo calculate portion to the total point
-            sheet.setScore(cor1, cor2, input);
+            if(assignments.get(real_cor2).getScoring_method().equals("raw")) {
+                if(Double.valueOf(score) < 0 || Double.valueOf(score) > assignments.get(real_cor2).getTotal()) {
+                    return 4;
+                }
+                double input = Double.valueOf(score) / assignments.get(real_cor2).getTotal();
+                sheet.setScore(cor1, cor2, input);
+            }
+            else {
+                if (assignments.get(real_cor2).getScoring_method().equals("deduction")) {
+                    if(Double.valueOf(score) > 0 || Double.valueOf(score) < -assignments.get(real_cor2).getTotal()) {
+                        return 4;
+                    }
+                    double input = (Double.valueOf(score) + assignments.get(real_cor2).getTotal()) / assignments.get(real_cor2).getTotal();
+                    sheet.setScore(cor1, cor2, input);
+                }
+                else {
+                    if (assignments.get(real_cor2).getScoring_method().equals("percentage")) {
+                        if(Double.valueOf(score) < 0 || Double.valueOf(score) > 1) {
+                            return 4;
+                        }
+                        double input = Double.valueOf(score);
+                        sheet.setScore(cor1, cor2, input);
+                    }
+                    else {
+                        return 2;
+                    }
+                }
+            }
+
             calTotal();
             FileIO fileIO = new FileIO();
             fileIO.writeCell(sheet.getAllCell(),courseName+semester);
@@ -514,7 +572,7 @@ public class Course implements Reportable {
             return 2;
         }
         catch (Exception e) {
-            return 4;
+            return 5;
         }
     }
     public String[] getNote(int cor1,int cor2) { //
