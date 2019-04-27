@@ -37,6 +37,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
     int extra;
     int colSize;
     Grading_System grading_system;
+    static int end = 0;
     //ArrayList<String> starter = new ArrayList<>();
     //
     //    //String[] columnNames = { "ID", "FirstName","LastName"};
@@ -103,15 +104,18 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         wSheet = new DefaultTableModel(rowDataW, columnNamesW) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                if (extra < 3) {
-                    return (columnIndex != 0) & (columnIndex != 1);
-                }else if(extra ==3){
-                    return (columnIndex != 0) & (columnIndex != 1) & (columnIndex != length - 1);
-                }else{
-                    return (columnIndex != 0) & (columnIndex != 1)
-                            & (columnIndex != length - 1)&(columnIndex != length - 2);
+                if (end != 2){
+                    if (extra < 3) {
+                        return (columnIndex != 0) & (columnIndex != 1);
+                    }else if(extra ==3){
+                        return (columnIndex != 0) & (columnIndex != 1) & (columnIndex != length - 1);
+                    }else{
+                        return (columnIndex != 0) & (columnIndex != 1)
+                                & (columnIndex != length - 1)&(columnIndex != length - 2);
+                    }
+                }else {
+                    return false;
                 }
-
             }
         };
         wSheet.addTableModelListener(new TableModelListener() {
@@ -135,10 +139,6 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
 
                         System.out.println(course.changeTotal(col-2,Double.parseDouble(value)) + "---changing in total");
                     }
-
-
-
-
                 }
             }
         });
@@ -151,7 +151,13 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         mSheet = new DefaultTableModel(rowData, columnNames) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return (columnIndex != 0) & (columnIndex != 1) & (rowIndex != 0);
+                if(end != 2){
+                    return (columnIndex != 0) & (columnIndex != 1) & (rowIndex != 0);
+
+                }else{
+                    return false;
+                }
+
             }
         };
         mSheet.addTableModelListener(new TableModelListener() {
@@ -262,6 +268,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             if(input == 0){
                 tSheet.setEnabled(false);
                 titleSheet.setEnabled(false);
+                end = course.endCourse();
                 System.out.println(course.endCourse() +" ---- end course");
             }
         }
@@ -272,8 +279,8 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to add extra credit?");
             System.out.println("enter extra---");
             if(input == 0 && course.extra() != 2){
-                    dispose();
-                    new GradeSheet_UI(grading_system,course);
+                dispose();
+                new GradeSheet_UI(grading_system,course);
 
             }
         }
@@ -312,21 +319,22 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        noteText.setText(" ");
-        int row = -2;
-        int col = -2;
-        row = tSheet.getSelectedRow();
-        col = tSheet.getSelectedColumn();
+        if(end != 2) {
+            noteText.setText(" ");
+            int row = -2;
+            int col = -2;
+            row = tSheet.getSelectedRow();
+            col = tSheet.getSelectedColumn();
 
-        System.out.println(extra + "--- if extra is existing ");
-        if(extra < 3 || (extra == 3 && col < colSize )){
-            if(row != -2 && col != -2){
-            String pullNote = course.getNote(row, col)[0]+"\n Last modification:"+course.getNote(row, col)[1];
-            System.out.println(course.getNote(row, col) +" ---- note info");
-            noteText.setText(pullNote);
+            System.out.println(extra + "--- if extra is existing ");
+            if (extra < 3 || (extra == 3 && col < colSize)) {
+                if (row != -2 && col != -2) {
+                    String pullNote = course.getNote(row, col)[0] + "\n Last modification:" + course.getNote(row, col)[1];
+                    System.out.println(course.getNote(row, col) + " ---- note info");
+                    noteText.setText(pullNote);
+                }
             }
         }
-
         //System.out.println(mSheet.getValueAt(row,col));
 
     }
