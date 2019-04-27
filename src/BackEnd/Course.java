@@ -642,6 +642,29 @@ public class Course implements Reportable {
         }
     }
 
+    public int modify(int index, double score) {
+        // parameters:
+        // int: index: index in extra credit to be modified
+        // double : score: score to bu added
+        //
+        // return: int: return 1 if succeeded, return 2 if out of index, return 3 if unknown error.
+        if(index >= extra_credits.getExtra_credits().size()) {
+            return 2;
+        }
+        else {
+            try {
+                extra_credits.getExtra_credits().set(index,score);
+                FileIO fileIO = new FileIO();
+                fileIO.writeCell(sheet.getAllCell(),courseName+semester);
+                fileIO.writeExtraCredit(extra_credits,courseName+semester);
+                return 1;
+            }
+            catch (Exception e) {
+                return 3;
+            }
+        }
+    }
+
     public String[] calTotal() {
         //
         //return array of double score if succeeded , return null if unknown error
