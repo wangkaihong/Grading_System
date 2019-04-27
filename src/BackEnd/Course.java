@@ -20,6 +20,7 @@ public class Course implements Reportable {
     private Criteria criteria_UG;
     private Criteria criteria_G;
     private boolean end;
+    private boolean show_Total;
     private Extra_credit extra_credits;
 
     public Course() {
@@ -32,9 +33,10 @@ public class Course implements Reportable {
         this.criteria_UG = null;
         this.criteria_G = null;
         this.end = false;
+        show_Total = false;
         this.extra_credits = new Extra_credit();
     }
-    public Course(String cN, String lN, String s, Sheet sh, ArrayList<Student> stu, ArrayList<Assignment> assign, Criteria c_ug, Criteria c_g, boolean end, Extra_credit extra){
+    public Course(String cN, String lN, String s, Sheet sh, ArrayList<Student> stu, ArrayList<Assignment> assign, Criteria c_ug, Criteria c_g, boolean end, Extra_credit extra, boolean show_total){
         courseName = cN;
         lecturerName = lN;
         semester = s;
@@ -45,6 +47,7 @@ public class Course implements Reportable {
         criteria_G = c_g;
         this.end = end;
         this.extra_credits = extra;
+        show_Total = show_total;
     }
 
 
@@ -70,6 +73,7 @@ public class Course implements Reportable {
             this.criteria_G = new Criteria(previous.criteria_G);
         }
         this.end = false;
+        this.show_Total = false;
         this.extra_credits = new Extra_credit();
     }
 
@@ -140,6 +144,14 @@ public class Course implements Reportable {
     //Add get extra_credit
     public Extra_credit getExtra_credits() {
         return extra_credits;
+    }
+
+    public boolean isShow_Total() {
+        return show_Total;
+    }
+
+    public void setShow_Total(boolean show_Total) {
+        this.show_Total = show_Total;
     }
 
     public void setExtra_credits(Extra_credit extra_credits) {
@@ -384,6 +396,7 @@ public class Course implements Reportable {
                 return 2;
             }
             criteria_UG.changeCriteria(weights);
+            calTotal();
             FileIO fileIO = new FileIO();
             fileIO.writeCriteria(criteria_UG,courseName+semester+"UG");
             return 1;
@@ -409,8 +422,8 @@ public class Course implements Reportable {
             if (sum > 1) {
                 return 2;
             }
-            System.out.println(criteria_G);
             criteria_G.changeCriteria(weights);
+            calTotal();
             FileIO fileIO = new FileIO();
             fileIO.writeCriteria(criteria_G,courseName+semester+"G");
             return 1;
@@ -433,17 +446,19 @@ public class Course implements Reportable {
                 String[][] table = new String[height][width + 1];
                 table[0][0] = "Student ID";
                 table[0][1] = "Student Name";
-                for (int j = 0; j < width - offset_column; j++) {
+                for (int j = 0; j < width - offset_column - 1; j++) {
                     table[0][j + offset_column] = assignments.get(j).getName();
                 }
+                table[0][width - 1] = "Total";
                 table[0][width] = "Extra Credit";
 
                 for (int i = 1; i < height; i++) { // todo
                     table[i][0] = students.get(i - offset_row).getStudentId();
                     table[i][1] = students.get(i - offset_row).getFirstName() + " " + students.get(i - offset_row).getLastName();
-                    for (int j = offset_column; j < width; j++) {
+                    for (int j = offset_column; j < width - 1; j++) {
                         table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal());
                     }
+                    table[i][width - 1] = String.valueOf(sheet.getCellScore(i, width - 1));
                     table[i][width] = String.valueOf(extra_credits.getExtra_credits().get(i - offset_row));
                 }
                 return table;
@@ -456,15 +471,18 @@ public class Course implements Reportable {
                 String[][] table = new String[height][width];
                 table[0][0] = "Student ID";
                 table[0][1] = "Student Name";
-                for (int j = 0; j < width - offset_column; j++) {
+                for (int j = 0; j < width - offset_column - 1; j++) {
                     table[0][j + offset_column] = assignments.get(j).getName();
                 }
+                table[0][width - 1] = "Total";
+
                 for (int i = offset_row; i < height; i++) { //
                     table[i][0] = students.get(i - offset_row).getStudentId();
                     table[i][1] = students.get(i - offset_row).getFirstName() + " " + students.get(i - offset_row).getLastName();
-                    for (int j = offset_column; j < width; j++) {
+                    for (int j = offset_column; j < width - 1; j++) {
                         table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j-offset_column).getTotal());
                     }
+                    table[i][width - 1] = String.valueOf(sheet.getCellScore(i, width - 1));
                 }
                 return table;
             }
@@ -487,6 +505,7 @@ public class Course implements Reportable {
             int real_cor2 = cor2 - 2; // offset first two columns
             double input = Double.valueOf(score)/assignments.get(real_cor2).getTotal(); // todo calculate portion to the total point
             sheet.setScore(cor1, cor2, input);
+            calTotal();
             FileIO fileIO = new FileIO();
             fileIO.writeCell(sheet.getAllCell(),courseName+semester);
             return 1;
@@ -671,35 +690,39 @@ public class Course implements Reportable {
         }
     }
 
-    public String[] calTotal() {
+    public int calTotal() {
         //
-        //return array of double score if succeeded , return null if unknown error
-        String[] res = new String[students.size()];
-        for(int i = 0; i < res.length;i++) {
+        // return 1 if succeeded, return 2 if unknown error
+        double[] res = new double[students.size()];
+        for(int i = 0; i < res.length ;i++) {
             if(students.get(i) instanceof Undergraduate) {
-                ArrayList<Double> row = sheet.getScoreRow(i);
-                if(row.size() - 2 != criteria_UG.getWeight().size()) {
-                    return null;
+                ArrayList<Double> row = sheet.getScoreRow(i + 1);
+                if(row.size() - 3 != criteria_UG.getWeight().size()) {
+                    return 2;
                 }
                 double score = 0;
-                for(int j = 2; j < row.size(); j++) {
+                for(int j = 2; j < row.size() - 1; j++) {
                     score += row.get(j) * criteria_UG.getWeight().get(j - 2);
                 }
-                res[i] = String.valueOf(100 * score);
+                res[i] = (100 * score);
             }
             else {
-                ArrayList<Double> row = sheet.getScoreRow(i);
-                if(row.size() - 2 != criteria_G.getWeight().size()) {
-                    return null;
+                ArrayList<Double> row = sheet.getScoreRow(i + 1);
+                if(row.size() - 3 != criteria_G.getWeight().size()) {
+                    return 2;
                 }
                 double score = 0;
-                for(int j = 2; j < row.size(); j++) {
+                for(int j = 2; j < row.size() - 1; j++) {
                     score += row.get(j) * criteria_G.getWeight().get(j - 2);
                 }
-                res[i] = String.valueOf(100 * score);
+                res[i] = (100 * score);
             }
         }
-        return res;
+        for(int i = 0; i < students.size(); i++) {
+            sheet.setScore(i + 1,sheet.getWidth() - 1,res[i]);
+        }
+        System.out.print("array:"+res[0]+","+res[1]+","+res[2]);
+        return 1;
     }
     public static void main(String[] args) {
         String a = "1a";

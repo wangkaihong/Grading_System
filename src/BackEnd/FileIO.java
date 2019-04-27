@@ -317,24 +317,42 @@ public class FileIO {
                 JSONObject readCellRow = (JSONObject) readCellMatrix.get("jOut2"+Integer.toString(i));
                 Iterator iteRow = readCellRow.keySet().iterator();
                 ArrayList<Cell> listCell = new ArrayList<Cell>();
+                //trybegin
+                int countRead2 = 0;
+                int j = 0;
                 while(iteRow.hasNext()){
-                    String sKeyRow = (String) iteRow.next();
-                    JSONObject tempRead = (JSONObject) readCellRow.get(sKeyRow);
+                    countRead2 = countRead2 + 1;
+                    iteRow.next();
+                }
+                while(j < countRead2){
+                    JSONObject tempRead = (JSONObject) readCellRow.get("jOut1"+Integer.toString(j));
                     noteInfo = (String) tempRead.get("noteInfo");
                     noteDate = (String) tempRead.get("noteDate");
-                    /*
-                    try{DateFormat dateFmt = new SimpleDateFormat("dd/MM/yyyy");
-                            noteDate = dateFmt.parse(strDate);}
-                    catch (java.text.ParseException e){
-                        e.printStackTrace();
-                    }
-                    */
-                    //score = Double.valueOf((String)tempRead.get("score"));
                     score = (double) tempRead.get("score");
                     Note tempNote = new Note(noteInfo, noteDate);
                     Cell tempCell = new Cell(tempNote, score);
                     listCell.add(tempCell);
+                    j = j + 1;
                 }
+                //tryend
+//                while(iteRow.hasNext()){
+//                    String sKeyRow = (String) iteRow.next();
+//                    JSONObject tempRead = (JSONObject) readCellRow.get(sKeyRow);
+//                    noteInfo = (String) tempRead.get("noteInfo");
+//                    noteDate = (String) tempRead.get("noteDate");
+//                    /*
+//                    try{DateFormat dateFmt = new SimpleDateFormat("dd/MM/yyyy");
+//                            noteDate = dateFmt.parse(strDate);}
+//                    catch (java.text.ParseException e){
+//                        e.printStackTrace();
+//                    }
+//                    */
+//                    //score = Double.valueOf((String)tempRead.get("score"));
+//                    score = (double) tempRead.get("score");
+//                    Note tempNote = new Note(noteInfo, noteDate);
+//                    Cell tempCell = new Cell(tempNote, score);
+//                    listCell.add(tempCell);
+//                }
                 matrixCell.add(listCell);
                 i = i + 1;
             }
@@ -360,6 +378,7 @@ public class FileIO {
             obj1.put("lecturerName",course.getLecturerName());
             obj1.put("semester",course.getSemester());
             obj1.put("end",course.isEnd());
+            obj1.put("show_total",course.isShow_Total());
             //testtest
             //write cell matrix instead of sheet
             writeCell(course.getSheet().getAllCell(), course.getCourseName()+course.getSemester());
@@ -395,6 +414,7 @@ public class FileIO {
         ArrayList<Student> students;
         ArrayList<Assignment> assignments;
         boolean end;
+        boolean show_total;
         Extra_credit extra_credit;
         //ArrayList<Criteria> criteria;
         Criteria criUG;
@@ -416,6 +436,7 @@ public class FileIO {
                 lecturerName = (String) tempRead.get("lecturerName");
                 semester = (String) tempRead.get("semester");
                 end = (boolean) tempRead.get("end");
+                show_total = (boolean) tempRead.get("show_total");
                 extra_credit = readExtraCredit(courseName+semester);
                 //read cell matrix and use it to construct a sheet
                 sheet = new Sheet(readCell(courseName+semester));
@@ -423,7 +444,7 @@ public class FileIO {
                 assignments = readAssignment(courseName+semester);
                 criUG = readCriteria(courseName+semester+"UG");
                 criG = readCriteria(courseName+semester+"G");
-                Course course = new Course(courseName,lecturerName,semester,sheet,students,assignments,criUG,criG,end,extra_credit);
+                Course course = new Course(courseName,lecturerName,semester,sheet,students,assignments,criUG,criG,end,extra_credit,show_total);
                 listCourse.add(course);
                 i = i + 1;
             }
