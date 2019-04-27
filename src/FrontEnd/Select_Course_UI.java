@@ -45,6 +45,7 @@ public class Select_Course_UI extends JFrame implements ActionListener {
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     getSelect = courses.getSelectedIndex();
+                    System.out.println("getSelect"+getSelect);//testtest
                 }
             }
         });
