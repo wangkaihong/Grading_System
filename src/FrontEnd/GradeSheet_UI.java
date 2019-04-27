@@ -86,7 +86,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             j++;
         }
 
-        colSize = ass.size()+2;
+        colSize = ass.size() +2;
         String[][] rowDataW = new String[3][colSize];
         rowDataW[0][0] = "Weight_Undergraduate";
         rowDataW[1][0] = "Weight_Graduate";
@@ -103,7 +103,16 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         wSheet = new DefaultTableModel(rowDataW, columnNamesW) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return (columnIndex != 0) & (columnIndex != 1);
+                if (extra < 3) {
+                    return (columnIndex != 0) & (columnIndex != 1);
+                }else if(extra ==3){
+                    return (columnIndex != 0) & (columnIndex != 1) & (columnIndex != length - 1);
+                }else{
+                    return (columnIndex != 0) & (columnIndex != 1)
+                            & (columnIndex != length - 1)&(columnIndex != length - 1);
+                }
+
+
             }
         };
         wSheet.addTableModelListener(new TableModelListener() {
@@ -223,7 +232,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         setResizable(false);
         setVisible(true);
         tSheet.addMouseListener(this);
-        titleSheet.addMouseListener(this);
+
 
         //System.out.println(course.getStudents().get(0) + "  student");
     }
@@ -309,8 +318,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         int col = -2;
         row = tSheet.getSelectedRow();
         col = tSheet.getSelectedColumn();
-        int rr = titleSheet.getSelectedRow();
-        int cc = titleSheet.getSelectedColumn();
+
         System.out.println(extra + "--- if extra is existing ");
         if(extra < 3 || (extra == 3 && col < colSize )){
             if(row != -2 && col != -2){
