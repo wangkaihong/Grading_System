@@ -14,6 +14,12 @@ public class Assignment {
         this.scoring_method = "";
     }
 
+    public Assignment(Assignment previous) {
+        this.name = previous.name;
+        this.total = previous.total;
+        this.scoring_method = previous.scoring_method;
+    }
+
     public Assignment(String name, double total, String scoring_method) {
         this.name = name;
         this.total = total;
