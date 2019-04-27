@@ -146,6 +146,14 @@ public class Course implements Reportable {
         return extra_credits;
     }
 
+    public boolean isShow_Total() {
+        return show_Total;
+    }
+
+    public void setShow_Total(boolean show_Total) {
+        this.show_Total = show_Total;
+    }
+
     public void setExtra_credits(Extra_credit extra_credits) {
         this.extra_credits = extra_credits;
     }
