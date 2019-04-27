@@ -21,7 +21,7 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
     JButton next = new JButton("Next");
     JButton returnBack = new JButton("Return");
     JButton cancel = new JButton("Cancel");
-    JButton escape = new JButton("Escape");
+    JButton skip = new JButton("Skip");
     
 
     private Course course = new Course();
@@ -61,12 +61,12 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
 
 
 
-        escape.addActionListener(this);
+        skip.addActionListener(this);
         next.addActionListener(this);
         returnBack.addActionListener(this);
         cancel.addActionListener(this);
         buttons.setLayout(new GridLayout(1,3));
-        buttons.add(escape);
+        buttons.add(skip);
         buttons.add(next);
         buttons.add(returnBack);
         buttons.add(cancel);
@@ -95,7 +95,7 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
         } else if (e.getSource() == returnBack){
             dispose();
             new Add_Class_UI(grading_system);
-        } else if (e.getSource() == escape){
+        } else if (e.getSource() == skip){
             dispose();
             new Add_Student_info_UI(grading_system,this.name,this.lecturerName,this.semesterName, -1);
         }
