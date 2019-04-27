@@ -20,6 +20,7 @@ public class Course implements Reportable {
     private Criteria criteria_UG;
     private Criteria criteria_G;
     private boolean end;
+    private boolean show_Total;
     private Extra_credit extra_credits;
 
     public Course() {
@@ -32,6 +33,7 @@ public class Course implements Reportable {
         this.criteria_UG = null;
         this.criteria_G = null;
         this.end = false;
+        show_Total = false;
         this.extra_credits = new Extra_credit();
     }
     public Course(String cN, String lN, String s, Sheet sh, ArrayList<Student> stu, ArrayList<Assignment> assign, Criteria c_ug, Criteria c_g, boolean end, Extra_credit extra){
@@ -45,6 +47,7 @@ public class Course implements Reportable {
         criteria_G = c_g;
         this.end = end;
         this.extra_credits = extra;
+        show_Total = false;
     }
 
 
@@ -70,6 +73,7 @@ public class Course implements Reportable {
             this.criteria_G = new Criteria(previous.criteria_G);
         }
         this.end = false;
+        this.show_Total = false;
         this.extra_credits = new Extra_credit();
     }
 
