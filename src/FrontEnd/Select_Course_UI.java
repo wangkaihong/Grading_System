@@ -40,12 +40,13 @@ public class Select_Course_UI extends JFrame implements ActionListener {
         String defaultMessage ="please select";
         ComboBoxEditor editor= courses.getEditor();
         courses.configureEditor(editor,defaultMessage);
+        courses.setSelectedItem(null);
         courses.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     getSelect = courses.getSelectedIndex();
-                    System.out.println("getSelect"+getSelect);//testtest
+                    System.out.println(getSelect);
                 }
             }
         });
