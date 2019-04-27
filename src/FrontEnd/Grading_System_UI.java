@@ -8,9 +8,6 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class Grading_System_UI extends JFrame implements ActionListener{
-    JPanel loginButton = new JPanel();
-    JPanel loginLabel = new JPanel();
-    JPanel inputArea = new JPanel();
     JButton login = new JButton("Login");
     JLabel log = new JLabel("Login");
 
