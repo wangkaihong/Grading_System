@@ -54,6 +54,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         /*assignment list*/
         ArrayList<Assignment> ass = course.getAssignments();
 
+        System.out.println("test_course"+course.getCourseName());
         String[][] rowData = course.getTable();
         System.out.println(rowData + " --- loading getTable");
         int length = rowData[0].length;
