@@ -82,6 +82,7 @@ public class Select_Course_UI extends JFrame implements ActionListener {
             new Add_Class_UI(grading_system);
         } else if (e.getSource() == enter) {
             if (getSelect == -1){
+                dispose();
                 new Select_Course_UI(grading_system);
             }
             for (int i = 0; i < course.length; i++) {
