@@ -14,20 +14,14 @@ import java.util.ArrayList;
 
 public class Add_Assignment_info_UI extends JFrame implements ActionListener {
     JPanel importFrom = new JPanel();
-    JPanel addAssignment = new JPanel();
+
     JPanel buttons = new JPanel();
-    JPanel weights = new JPanel();
 
     JComboBox courses = new JComboBox(Select_Course_UI.course);
-    JTextField assignmentName = new JTextField();
-    JTextField weight = new JTextField();
     JButton next = new JButton("Next");
     JButton returnBack = new JButton("Return");
     JButton cancel = new JButton("Cancel");
-
-
-    public static ArrayList<JTextField> name_fields = new ArrayList<>();
-    public static ArrayList<JTextField> weight_fields = new ArrayList<>();
+    
 
     private Course course = new Course();
     public Grading_System grading_system;
@@ -62,16 +56,8 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
         importFrom.setBounds(20,20,600,100);
         contentPane.add(importFrom);
 
-        addAssignment.setLayout(new GridLayout(1,2));
-        weights.setLayout(new GridLayout(1,2));
-        addAssignment.add(new JLabel("Input Assignment name: "));
-        addAssignment.add(assignmentName);
-        weights.add(new JLabel("Weight"));
-        weights.add(weight);
-        addAssignment.setBounds(20,130,400,30);
-        weights.setBounds(420,130,200,30);
-        contentPane.add(addAssignment);
-        contentPane.add(weights);
+
+
 
 
         next.addActionListener(this);
@@ -94,8 +80,6 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == next){
             dispose();
-            name_fields.add(assignmentName);
-            weight_fields.add(weight);
             new Add_Student_info_UI(grading_system,this.name,this.lecturerName,this.semesterName,selectNum);
         } else if (e.getSource() == cancel){
             dispose();
