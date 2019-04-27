@@ -6,6 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
 import BackEnd.*;
 
 public class Add_Student_single_UI extends JFrame implements ActionListener {
@@ -77,6 +80,7 @@ public class Add_Student_single_UI extends JFrame implements ActionListener {
         setSize(640, 360);
         setResizable(false);
         setVisible(true);
+
 
     }
     public void actionPerformed(ActionEvent e){

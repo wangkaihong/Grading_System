@@ -38,16 +38,12 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
     int colSize;
     Grading_System grading_system;
     static int end = 0; //q? static or not
-    //ArrayList<String> starter = new ArrayList<>();
-    //
-    //    //String[] columnNames = { "ID", "FirstName","LastName"};
-    //    //
-    //    //JLabel lSheet1 = new JLabel("Select Students Info：");
-    //    //String[] listInfo = new String[]{"FirstName", "ID", "Email"};
+
 
     public GradeSheet_UI(Grading_System grading_system, Course course) {
         this.grading_system = grading_system;
         this.course = course;
+        this.revalidate();
 
         setTitle("Grade Sheet");
         Container contentPane = this.getContentPane();
@@ -147,7 +143,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         // Set the size of scroll panel window
         titleSheet.setPreferredScrollableViewportSize(new Dimension(400, 300));
         //spSheet = new JScrollPane(tSheet);
-        JScrollPane wp = new JScrollPane(titleSheet);
+
         mSheet = new DefaultTableModel(rowData, columnNames) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -185,7 +181,15 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         // Set the size of scroll panel window
         tSheet.setPreferredScrollableViewportSize(new Dimension(400, 300));
         //spSheet = new JScrollPane(tSheet);
+
+        tSheet.getTableHeader().setReorderingAllowed(false);
+        //tSheet.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         JScrollPane jp = new JScrollPane(tSheet);
+        jp.createHorizontalScrollBar();
+        titleSheet.getTableHeader().setReorderingAllowed(false);
+        //titleSheet.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        JScrollPane wp = new JScrollPane(titleSheet);
+
 
         pFunc6.setLayout(new FlowLayout());
         pFunc2.setLayout(new FlowLayout());
@@ -288,11 +292,14 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         else if(e.getSource() == addStudent){
             new Add_Student_single_UI(grading_system,course);
             dispose();
+
         }
         else if(e.getSource() == removeStudent){
             int select = tSheet.getSelectedRow();
             if(select == -1){
                 JOptionPane.showMessageDialog(null,"Please select a student");
+            }else if(select == 0){
+
             }else{
                 mSheet.removeRow(select);
                 System.out.println(course.removeStudent(select-1)+" --- RemoveStudent");

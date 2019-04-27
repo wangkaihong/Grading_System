@@ -84,6 +84,7 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
         setTitle("Add New Assignment");
         setResizable(false);
         setVisible(true);
+
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -105,12 +106,9 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
             String totalS = totalPoint.getText();
             String us = weightedU.getText();
             String gs = weightedG.getText();
-            double total = Double.parseDouble(totalPoint.getText());
-            double weightU = Double.parseDouble(weightedU.getText());
-            double weightG = Double.parseDouble(weightedG.getText());
             String scoring  = this.G1.getSelection().getActionCommand();
 
-            if(scoring.isEmpty() || name.isEmpty()|| totalS.isEmpty() ||(us.isEmpty() || us.isEmpty())){
+            if(scoring.isEmpty() || name.isEmpty()|| totalS.isEmpty() ||(us.isEmpty() || gs.isEmpty())){
                 JOptionPane.showMessageDialog(null,"Please fill all necessary blank");
 
             }
@@ -119,9 +117,9 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
             }else if(gs.isEmpty() && us.isEmpty() != true){
                 gs = us;
             }else {
-                //todo here or modiCol??
-                //System.out.println(course.addAssignment(name, total, scoring));
-                //trytry
+                double total = Double.parseDouble(totalPoint.getText());
+                double weightU = Double.parseDouble(weightedU.getText());
+                double weightG = Double.parseDouble(weightedG.getText());
                 FileIO fileIO = new FileIO();
                 ArrayList<Assignment> tempAddAssignList = fileIO.readTempAddAssign(course.getCourseName()+course.getSemester());
                 Assignment tempAddAssign = new Assignment(name,total,scoring);
