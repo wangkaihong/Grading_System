@@ -32,7 +32,7 @@ public class Grading_System {
     public String[] getCourseList() {
         String[] list = new String[courses.size()];
         for(int i = 0; i < list.length;i++) {
-            list[i] = courses.get(i).getCourseName();
+            list[i] = courses.get(i).getCourseName()+" "+courses.get(i).getSemester();
         }
         return list;
     }
@@ -61,7 +61,7 @@ public class Grading_System {
              previous = courses.get(previous_Course_ind);
         }
         for(int i = 0;i < courses.size();i++) {
-            if(courseName.equals(courses.get(i).getCourseName())) {
+            if((courseName+" "+semester).equals(courses.get(i).getCourseName()+" "+courses.get(i).getSemester())) {
                 System.out.println("Course name conflict!");
                 return 2;
             }
