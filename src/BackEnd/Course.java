@@ -632,6 +632,9 @@ public class Course implements Reportable {
             for(int i = 0; i < students.size();i++) {
                 extra_credits.add_one();
             }
+            FileIO fileIO = new FileIO();
+            fileIO.writeCell(sheet.getAllCell(),courseName+semester);
+            fileIO.writeExtraCredit(extra_credits,courseName+semester);
             return 1;
         }
         catch (Exception e) {
