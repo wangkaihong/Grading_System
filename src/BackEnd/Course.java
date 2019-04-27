@@ -629,6 +629,9 @@ public class Course implements Reportable {
                 return 2;
             }
             extra_credits.create();
+            for(int i = 0; i < students.size();i++) {
+                extra_credits.add_one();
+            }
             return 1;
         }
         catch (Exception e) {
