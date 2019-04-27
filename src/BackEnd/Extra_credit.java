@@ -8,6 +8,10 @@ import java.util.ArrayList;
 public class Extra_credit {
     private ArrayList<Double> extra_credits;
 
+    public Extra_credit() {
+        this.extra_credits = new ArrayList<>();
+    }
+
     public Extra_credit(ArrayList<Double> extra_credits) {
         this.extra_credits = extra_credits;
     }
@@ -21,6 +25,10 @@ public class Extra_credit {
 
     public void add_one() {
         extra_credits.add(0.0);
+    }
+
+    public boolean isEmpty() {
+        return extra_credits.size() == 0;
     }
 
     public int modify(int index, double score) {

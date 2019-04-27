@@ -32,7 +32,7 @@ public class Course implements Reportable {
         this.criteria_UG = null;
         this.criteria_G = null;
         this.end = false;
-        this.extra_credits = null;
+        this.extra_credits = new Extra_credit();
     }
     public Course(String cN, String lN, String s, Sheet sh, ArrayList<Student> stu, ArrayList<Assignment> assign, Criteria c_ug, Criteria c_g, boolean end, Extra_credit extra){
         courseName = cN;
@@ -66,7 +66,7 @@ public class Course implements Reportable {
             this.criteria_G = previous.criteria_G;
         }
         this.end = false;
-        this.extra_credits = null;
+        this.extra_credits = new Extra_credit();
     }
 
 
