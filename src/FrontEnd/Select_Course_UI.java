@@ -24,7 +24,7 @@ public class Select_Course_UI extends JFrame implements ActionListener {
     JButton add = new JButton("Create New Course");
     JButton logout = new JButton("Log out");
 
-    static int getSelect;
+    int getSelect = -1;
     Grading_System grading_system;
     static Course coursetest = new Course();
 
@@ -81,6 +81,9 @@ public class Select_Course_UI extends JFrame implements ActionListener {
             dispose();
             new Add_Class_UI(grading_system);
         } else if (e.getSource() == enter) {
+            if (getSelect == -1){
+                new Select_Course_UI(grading_system);
+            }
             for (int i = 0; i < course.length; i++) {
                 if (getSelect == i) {
                     System.out.println("courseI"+grading_system.getCourses().get(i).getCourseName());//testtest
