@@ -262,7 +262,7 @@ public class Course implements Reportable {
             return 4;
         }
     }
-    public int addAssignment(String name, double total, String scoring_method) {
+    public int addAssignment(String name, double total, String scoring_method, boolean is_exam) {
         // parameters:
         // name: String: name of the assignment
         // total: double: total score of the assignment
@@ -284,8 +284,14 @@ public class Course implements Reportable {
             if (!scoring_method.equals("deduction") && !scoring_method.equals("raw") && !scoring_method.equals("percentage")) {
                 return 4;
             }
-            Assignment assignment = new Assignment(name, total, scoring_method);
-            assignments.add(assignment);
+            if(is_exam) {
+                Assignment assignment = new Exam(name, total, scoring_method);
+                assignments.add(assignment);
+            }
+            else {
+                Assignment assignment = new Assignment(name, total, scoring_method);
+                assignments.add(assignment);
+            }
             sheet.addColumns(1);
             FileIO fileIO = new FileIO();
             fileIO.writeAssignment(assignments,courseName+semester);
