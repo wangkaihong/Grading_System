@@ -247,11 +247,23 @@ public class Course implements Reportable {
             if (index >= students.size() || index < 0) {
                 return 2;
             } else {
-                students.remove(index);
-                if(extra_credits.getExtra_credits() != null) {
-                    extra_credits.remove(index);
+                boolean examed = false;
+                ArrayList<Double> row = sheet.getScoreRow(index + 1);
+                for(int i = 0; i < assignments.size(); i++) {
+                    if(assignments.get(i) instanceof Exam && row.get(i + 2) > 0) {
+                        examed = true;
+                    }
                 }
-                sheet.removeRow(index+1);
+                if(examed) {
+                    students.get(index).setRemovedAfterExam(true);
+                }
+                else {
+                    students.remove(index);
+                    if (extra_credits.getExtra_credits() != null) {
+                        extra_credits.remove(index);
+                    }
+                    sheet.removeRow(index + 1);
+                }
                 FileIO fileIO = new FileIO();
                 fileIO.writeCell(sheet.getAllCell(),courseName+semester);
                 fileIO.writeStudentInfo(students,courseName+semester);
