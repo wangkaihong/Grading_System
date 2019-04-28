@@ -124,11 +124,11 @@ public class Grading_System {
                     throw new InvalidStudentFileException();
                 }
                 if(arr[5].contains("U")) {
-                    stduent_list.add(new Undergraduate(arr[0], arr[1], arr[2], arr[3], arr[4]));
+                    stduent_list.add(new Undergraduate(arr[0], arr[1], arr[2], arr[3], arr[4], false));
                 }
                 else {
                     if(arr[5].contains("G")) {
-                        stduent_list.add(new Graduate(arr[0], arr[1], arr[2], arr[3], arr[4]));
+                        stduent_list.add(new Graduate(arr[0], arr[1], arr[2], arr[3], arr[4],false));
                     }
                     else {
                         throw new InvalidStudentFileException();
@@ -178,8 +178,8 @@ public class Grading_System {
         */
         //set Student
 
-        Student stu1 = new Undergraduate("Jack","St","Martin","12345","jacksl@ggmail.com");
-        Student stu2 = new Graduate("Alice","Von","Ludwika","67890","alicevl@ggmail.com");
+        Student stu1 = new Undergraduate("Jack","St","Martin","12345","jacksl@ggmail.com",false);
+        Student stu2 = new Graduate("Alice","Von","Ludwika","67890","alicevl@ggmail.com",false);
         ArrayList<Student> listStu = new ArrayList<Student>();
         listStu.add(stu1);
         listStu.add(stu2);

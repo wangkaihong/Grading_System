@@ -134,6 +134,7 @@ public class FileIO {
             obj1.put("thirdName",stu.getLastName());
             obj1.put("studentId",stu.getStudentId());
             obj1.put("emailAddress",stu.getEmailAddress());
+            obj1.put("isRemovedAfterExam",stu.isRemovedAfterExam());
             if(stu instanceof Undergraduate){
                 obj1.put("Type","U");
             } else if (stu instanceof Graduate){
@@ -160,6 +161,7 @@ public class FileIO {
         String tName;
         String email;
         String id;
+        boolean removedAfterExam;
         try (FileReader reader = new FileReader(filename+"Student.json"))
         {
             //Read JSON file
@@ -180,12 +182,13 @@ public class FileIO {
                 tName = (String) tempRead.get("thirdName");
                 id = (String) tempRead.get("studentId");
                 email = (String) tempRead.get("emailAddress");
+                removedAfterExam = (boolean) tempRead.get("isRemovedAfterExam");
                 String stuType = (String) tempRead.get("Type");
                 if (stuType.equals("U")){
-                    Undergraduate s = new Undergraduate(fName,sName,tName,id,email);
+                    Undergraduate s = new Undergraduate(fName,sName,tName,id,email,removedAfterExam);
                     listStudent.add(s);
                 } else if (stuType.equals("G")){
-                    Graduate s = new Graduate(fName,sName,tName,id,email);
+                    Graduate s = new Graduate(fName,sName,tName,id,email,removedAfterExam);
                     listStudent.add(s);
                 } else {
                 }
@@ -211,6 +214,11 @@ public class FileIO {
             obj1.put("name",assign.getName());
             obj1.put("total",assign.getTotal());
             obj1.put("scoring_method",assign.getScoring_method());
+            if(assign instanceof Exam){
+                obj1.put("Type","Exam");
+            } else {
+                obj1.put("Type","Others");
+            }
 
             out1.put("jOut"+Integer.toString(count1),obj1);
 
@@ -249,8 +257,16 @@ public class FileIO {
                 name = (String) tempRead.get("name");
                 total = (double)tempRead.get("total");
                 scoring_method = (String) tempRead.get("scoring_method");
-                Assignment assign = new Assignment(name, total, scoring_method);
-                listAssign.add(assign);
+                String assignType = (String) tempRead.get("Type");
+                if(assignType.equals("Exam")){
+                    Exam assign = new Exam(name, total, scoring_method);
+                    listAssign.add(assign);
+                } else if(assignType.equals("Others")){
+                    Assignment assign = new Assignment(name, total, scoring_method);
+                    listAssign.add(assign);
+                } else {
+                    System.out.println("Error! Invalid Assignment Type");
+                }
                 i = i + 1;
             }
 

@@ -201,7 +201,7 @@ public class Course implements Reportable {
         }
         try {
             if(studentType.equals("undergraduate")) {
-                Student student = new Undergraduate(firstName, middleInitial, lastName, studentId, emailAddress);
+                Student student = new Undergraduate(firstName, middleInitial, lastName, studentId, emailAddress, false);
                 //System.out.println(student.toString());
                 students.add(student);
                 //System.out.println(student.toString()+"2");
@@ -216,7 +216,7 @@ public class Course implements Reportable {
                 return 1;
             }
             if(studentType.equals("graduate")) {
-                Student student = new Graduate(firstName, middleInitial, lastName, studentId, emailAddress);
+                Student student = new Graduate(firstName, middleInitial, lastName, studentId, emailAddress,false);
                 students.add(student);
                 if(extra_credits.getExtra_credits() != null) {
                     extra_credits.add_one();
@@ -247,11 +247,23 @@ public class Course implements Reportable {
             if (index >= students.size() || index < 0) {
                 return 2;
             } else {
-                students.remove(index);
-                if(extra_credits.getExtra_credits() != null) {
-                    extra_credits.remove(index);
+                boolean examed = false;
+                ArrayList<Double> row = sheet.getScoreRow(index + 1);
+                for(int i = 0; i < assignments.size(); i++) {
+                    if(assignments.get(i) instanceof Exam && row.get(i + 2) > 0) {
+                        examed = true;
+                    }
                 }
-                sheet.removeRow(index+1);
+                if(examed) {
+                    students.get(index).setRemovedAfterExam(true);
+                }
+                else {
+                    students.remove(index);
+                    if (extra_credits.getExtra_credits() != null) {
+                        extra_credits.remove(index);
+                    }
+                    sheet.removeRow(index + 1);
+                }
                 FileIO fileIO = new FileIO();
                 fileIO.writeCell(sheet.getAllCell(),courseName+semester);
                 fileIO.writeStudentInfo(students,courseName+semester);
@@ -262,7 +274,7 @@ public class Course implements Reportable {
             return 4;
         }
     }
-    public int addAssignment(String name, double total, String scoring_method) {
+    public int addAssignment(String name, double total, String scoring_method, boolean is_exam) {
         // parameters:
         // name: String: name of the assignment
         // total: double: total score of the assignment
@@ -284,8 +296,14 @@ public class Course implements Reportable {
             if (!scoring_method.equals("deduction") && !scoring_method.equals("raw") && !scoring_method.equals("percentage")) {
                 return 4;
             }
-            Assignment assignment = new Assignment(name, total, scoring_method);
-            assignments.add(assignment);
+            if(is_exam) {
+                Assignment assignment = new Exam(name, total, scoring_method);
+                assignments.add(assignment);
+            }
+            else {
+                Assignment assignment = new Assignment(name, total, scoring_method);
+                assignments.add(assignment);
+            }
             sheet.addColumns(1);
             FileIO fileIO = new FileIO();
             fileIO.writeAssignment(assignments,courseName+semester);
@@ -732,12 +750,17 @@ public class Course implements Reportable {
             System.out.println("Invalid Assignment Name");
             return null;
         }
+        int i = -1;
+        int listSize = 0;
         for(Double tempD : this.sheet.getScoreColumn(assignIndex+2)){
-            listScore.add(tempD);
-            sumD = sumD + tempD;
+            if(i >= 0 && this.getStudents().get(i).isRemovedAfterExam() == false){
+                listScore.add(tempD);
+                sumD = sumD + tempD;
+                listSize = listSize + 1;
+            }
+            i = i + 1;
         }
-        listScore.remove(0);
-        int listSize = listScore.size();
+        //listScore.remove(0);
         Collections.sort(listScore);
         min = Collections.min(listScore);
         max = Collections.max(listScore);
