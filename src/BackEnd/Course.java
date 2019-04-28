@@ -201,7 +201,7 @@ public class Course implements Reportable {
         }
         try {
             if(studentType.equals("undergraduate")) {
-                Student student = new Undergraduate(firstName, middleInitial, lastName, studentId, emailAddress);
+                Student student = new Undergraduate(firstName, middleInitial, lastName, studentId, emailAddress, false);
                 //System.out.println(student.toString());
                 students.add(student);
                 //System.out.println(student.toString()+"2");
@@ -216,7 +216,7 @@ public class Course implements Reportable {
                 return 1;
             }
             if(studentType.equals("graduate")) {
-                Student student = new Graduate(firstName, middleInitial, lastName, studentId, emailAddress);
+                Student student = new Graduate(firstName, middleInitial, lastName, studentId, emailAddress,false);
                 students.add(student);
                 if(extra_credits.getExtra_credits() != null) {
                     extra_credits.add_one();
@@ -732,12 +732,17 @@ public class Course implements Reportable {
             System.out.println("Invalid Assignment Name");
             return null;
         }
+        int i = -1;
+        int listSize = 0;
         for(Double tempD : this.sheet.getScoreColumn(assignIndex+2)){
-            listScore.add(tempD);
-            sumD = sumD + tempD;
+            if(i >= 0 && this.getStudents().get(i).isRemovedAfterExam() == false){
+                listScore.add(tempD);
+                sumD = sumD + tempD;
+                listSize = listSize + 1;
+            }
+            i = i + 1;
         }
         listScore.remove(0);
-        int listSize = listScore.size();
         Collections.sort(listScore);
         min = Collections.min(listScore);
         max = Collections.max(listScore);

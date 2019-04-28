@@ -9,6 +9,7 @@ public abstract class Student {
     private String lastName;
     private String studentId;
     private String emailAddress;
+    private boolean removedAfterExam;
 
     public Student() {
         this.firstName = null;
@@ -16,14 +17,16 @@ public abstract class Student {
         this.lastName = null;
         this.studentId = null;
         this.emailAddress = null;
+        this.removedAfterExam = false;
     }
 
-    public Student(String firstName, String middleInitial, String lastName, String studentId, String emailAddress) {
+    public Student(String firstName, String middleInitial, String lastName, String studentId, String emailAddress, boolean removedAfterExam) {
         this.firstName = firstName;
         this.middleInitial = middleInitial;
         this.lastName = lastName;
         this.studentId = studentId;
         this.emailAddress = emailAddress;
+        this.removedAfterExam = removedAfterExam;
     }
 
     public String getFirstName() {
@@ -66,4 +69,7 @@ public abstract class Student {
         this.emailAddress = emailAddress;
     }
 
+    public boolean isRemovedAfterExam() {return this.removedAfterExam;}
+
+    public void setRemovedAfterExam(boolean removedAfterExam) {this.removedAfterExam = removedAfterExam;}
 }
