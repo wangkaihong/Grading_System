@@ -13,12 +13,11 @@ import BackEnd.*;
 
 public class GradeSheet_UI extends JFrame implements ActionListener, MouseListener{
     JPanel pSheet = new JPanel();
-    //JScrollPane spSheet;
     JButton addStudent = new JButton("+ Add Student");
     JButton removeStudent = new JButton("- Remove Student");
     JButton addColumn = new JButton("Alter Assignment");
     JButton back = new JButton("Return Class List");
-    JButton grade = new JButton("Total Score");
+    JButton grade = new JButton();
     JButton complete = new JButton("End Course");
     JButton report = new JButton("BackEnd.Report");
     JButton exCredit = new JButton("Extra Credit");
@@ -29,22 +28,31 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
     JPanel pFunc6 = new JPanel();
     JPanel pFunc2 = new JPanel();
     JTextArea noteText = new JTextArea();
-    static DefaultTableModel mSheet;
+    DefaultTableModel mSheet;
     JTable tSheet;
-    static DefaultTableModel wSheet;
+    DefaultTableModel wSheet;
     JTable titleSheet;
     Course course;
+    String[][] rowData;
     int extra;
     int colSize;
     Grading_System grading_system;
     static int end = 0; //q? static or not
+    static int tGrade = 0;
+    static String gName = "Show.TotalGrade";
+
 
 
     public GradeSheet_UI(Grading_System grading_system, Course course) {
         this.grading_system = grading_system;
         this.course = course;
+        grade.setText(gName);
 
-
+        if(tGrade ==1 ){
+            course.setShow_Total(true);
+        }else{
+            course.setShow_Total(false);
+        }
 
         setTitle("Grade Sheet");
         Container contentPane = this.getContentPane();
@@ -53,9 +61,8 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         ArrayList<Assignment> ass = course.getAssignments();
 
 
-
         System.out.println("test_course"+course.getCourseName());
-        String[][] rowData = course.getTable();
+        rowData = course.getTable();
         System.out.println(rowData + " --- loading getTable");
         int length = rowData[0].length;
 
@@ -74,17 +81,21 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         String[] columnNames = new String[length];
         columnNames[0] = "ID";
         columnNames[1] = "Name";
-        extra = length - ass.size();
+        extra = length - ass.size() - tGrade;
         System.out.println(extra + " --- if 3 extra good");
-        if(extra == 4){
+        System.out.println(course.isShow_Total() + " --- if has total" + tGrade);
+        if(extra == 3 && tGrade ==1){
             columnNames[length-1] = "Extra_credit";
             columnNamesW[length-1] = "Extra_credit";
             columnNames[length-2] = "Total";
             columnNamesW[length-2] = "    ";
         }
-        else{
+        else if(tGrade ==1){
             columnNames[length-1] = "Total";
             columnNamesW[length-1] = "    ";
+        }else if(extra == 3){
+            columnNames[length-1] = "Extra_credit";
+            columnNamesW[length-1] = "Extra_credit";
         }
         int j = 2;
         for(Assignment a: ass){
@@ -110,13 +121,14 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 if (end != 2){
-                    if (extra < 3) {
-                        return (columnIndex != 0) & (columnIndex != 1);
-                    }else if(extra == 3){
-                        return (columnIndex != 0) & (columnIndex != 1) & (columnIndex != length - 1);
-                    }else{
+                    if(tGrade == 1 && extra == 3){
                         return (columnIndex != 0) & (columnIndex != 1)
                                 & (columnIndex != length - 1)&(columnIndex != length - 2);
+                    }
+                    else if(extra == 3 || tGrade == 1){
+                        return (columnIndex != 0) & (columnIndex != 1) & (columnIndex != length - 1);
+                    }else{
+                        return (columnIndex != 0) & (columnIndex != 1);
                     }
                 }else {
                     return false;
@@ -177,8 +189,17 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 if(end != 2){
-                    return (columnIndex != 0) & (columnIndex != 1) & (rowIndex != 0);
+                    if(tGrade ==1 && extra ==3){
+                        return (columnIndex != 0) & (columnIndex != 1)
+                                & (rowIndex != 0) & (columnIndex != length-2);
 
+                    }else if(tGrade ==1){
+                        return (columnIndex != 0) & (columnIndex != 1)
+                                & (rowIndex != 0)& (columnIndex != length-1);
+
+                    }else{
+                        return (columnIndex != 0) & (columnIndex != 1) & (rowIndex != 0);
+                    }
                 }else{
                     return false;
                 }
@@ -289,15 +310,23 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             new ModifyCol_UI(grading_system,course);
         }
         else if(e.getSource() == grade){
-            int input = JOptionPane.showConfirmDialog(null, "Are you sure to get final grade?");
-
-            //todo
-            if(input == 0) {
-//                String[] ret = course.calTotal();
-//                for(int i =0; i < ret.length; i++) {
-//                    System.out.println(ret[i]);
-//                }
+            System.out.println(grade.getText() + "---" + tGrade + "---"+course.isShow_Total());
+            if(grade.getText().equals("Show.TotalGrade")) {
+                gName = "Hide.TotalGrade";
+                tGrade = 1;
+                //course.setShow_Total(true);
+                //rowData = course.getTable();
+            }else{
+                gName = "Show.TotalGrade";
+                tGrade = 0;
+                //course.setShow_Total(false);
+                //rowData = course.getTable();
             }
+            new GradeSheet_UI(grading_system,course);
+            dispose();
+            //mSheet.fireTableDataChanged();
+            //this.revalidate();
+            System.out.println(grade.getText() + "---" + tGrade + "---"+course.isShow_Total());
         }
         else if(e.getSource() == complete){
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to end this course?");
@@ -351,10 +380,10 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         }
     }
 
-    public static void addRows(String id, String name){
-        mSheet.addRow(new Object[]{id,name});
-
-    }
+//    public static void addRows(String id, String name){
+//        mSheet.addRow(new Object[]{id,name});
+//
+//    }
 
     private double totalSum(double[] arr){
         double res = 0;

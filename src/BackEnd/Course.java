@@ -788,7 +788,7 @@ public class Course implements Reportable {
             }
             i = i + 1;
         }
-        listScore.remove(0);
+        //listScore.remove(0);
         Collections.sort(listScore);
         min = Collections.min(listScore);
         max = Collections.max(listScore);
