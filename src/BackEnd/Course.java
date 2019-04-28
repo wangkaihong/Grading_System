@@ -471,7 +471,14 @@ public class Course implements Reportable {
                     table[0][width] = "Extra Credit";
 
                     for (int i = 1; i < height; i++) { // todo
-                        table[i][0] = students.get(i - offset_row).getStudentId();
+                        String student_type;
+                        if(students.get(i - offset_row) instanceof Undergraduate) {
+                            student_type = "U";
+                        }
+                        else {
+                            student_type = "G";
+                        }
+                        table[i][0] = student_type + ":"+ students.get(i - offset_row).getStudentId();
                         table[i][1] = students.get(i - offset_row).getFirstName() + " " + students.get(i - offset_row).getLastName();
                         for (int j = offset_column; j < width - 1; j++) {
                             if (assignments.get(j - offset_column).getScoring_method().equals("raw")) {
@@ -507,7 +514,14 @@ public class Course implements Reportable {
                     table[0][width - 1] = "Total";
 
                     for (int i = offset_row; i < height; i++) { //
-                        table[i][0] = students.get(i - offset_row).getStudentId();
+                        String student_type;
+                        if(students.get(i - offset_row) instanceof Undergraduate) {
+                            student_type = "U";
+                        }
+                        else {
+                            student_type = "G";
+                        }
+                        table[i][0] = student_type + ":"+ students.get(i - offset_row).getStudentId();
                         table[i][1] = students.get(i - offset_row).getFirstName() + " " + students.get(i - offset_row).getLastName();
                         for (int j = offset_column; j < width - 1; j++) {
                             if (assignments.get(j - offset_column).getScoring_method().equals("raw")) {
@@ -546,7 +560,14 @@ public class Course implements Reportable {
                     table[0][width - 1] = "Extra Credit";
 
                     for (int i = 1; i < height; i++) { // todo
-                        table[i][0] = students.get(i - offset_row).getStudentId();
+                        String student_type;
+                        if(students.get(i - offset_row) instanceof Undergraduate) {
+                            student_type = "U";
+                        }
+                        else {
+                            student_type = "G";
+                        }
+                        table[i][0] = student_type + ":"+ students.get(i - offset_row).getStudentId();
                         table[i][1] = students.get(i - offset_row).getFirstName() + " " + students.get(i - offset_row).getLastName();
                         for (int j = offset_column; j < width - 1; j++) {
                             if (assignments.get(j - offset_column).getScoring_method().equals("raw")) {
@@ -581,7 +602,14 @@ public class Course implements Reportable {
                     }
 
                     for (int i = offset_row; i < height; i++) { //
-                        table[i][0] = students.get(i - offset_row).getStudentId();
+                        String student_type;
+                        if(students.get(i - offset_row) instanceof Undergraduate) {
+                            student_type = "U";
+                        }
+                        else {
+                            student_type = "G";
+                        }
+                        table[i][0] = student_type + ":"+ students.get(i - offset_row).getStudentId();
                         table[i][1] = students.get(i - offset_row).getFirstName() + " " + students.get(i - offset_row).getLastName();
                         for (int j = offset_column; j < width - 1; j++) {
                             if (assignments.get(j - offset_column).getScoring_method().equals("raw")) {
