@@ -214,6 +214,11 @@ public class FileIO {
             obj1.put("name",assign.getName());
             obj1.put("total",assign.getTotal());
             obj1.put("scoring_method",assign.getScoring_method());
+            if(assign instanceof Exam){
+                obj1.put("Type","Exam");
+            } else {
+                obj1.put("Type","Others");
+            }
 
             out1.put("jOut"+Integer.toString(count1),obj1);
 
@@ -252,8 +257,16 @@ public class FileIO {
                 name = (String) tempRead.get("name");
                 total = (double)tempRead.get("total");
                 scoring_method = (String) tempRead.get("scoring_method");
-                Assignment assign = new Assignment(name, total, scoring_method);
-                listAssign.add(assign);
+                String assignType = (String) tempRead.get("Type");
+                if(assignType.equals("Exam")){
+                    Exam assign = new Exam(name, total, scoring_method);
+                    listAssign.add(assign);
+                } else if(assignType.equals("Others")){
+                    Assignment assign = new Assignment(name, total, scoring_method);
+                    listAssign.add(assign);
+                } else {
+                    System.out.println("Error! Invalid Assignment Type");
+                }
                 i = i + 1;
             }
 

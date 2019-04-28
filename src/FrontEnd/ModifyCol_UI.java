@@ -125,7 +125,7 @@ public class ModifyCol_UI extends JFrame implements ActionListener, MouseListene
                 ArrayList<Assignment> tempAddAssignList = fileIO.readTempAddAssign(course.getCourseName()+course.getSemester());
                 if(tempAddAssignList.size() != 0){
                     for(Assignment assign : tempAddAssignList){
-                        course.addAssignment(assign.getName(), assign.getTotal(), assign.getScoring_method());
+                        course.addAssignment(assign.getName(), assign.getTotal(), assign.getScoring_method(), true);
                     }
                 } else {
                     System.out.println("Invalid Assignments");
