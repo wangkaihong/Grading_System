@@ -53,12 +53,6 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             grade.setText("Show.TotalGrade");
         }
 
-//        if(tGrade ==1 ){
-//            course.setShow_Total(true);
-//        }else{
-//            course.setShow_Total(false);
-//        }
-
         setTitle("Grade Sheet");
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
@@ -348,7 +342,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
 
         pFunc6.setLayout(new FlowLayout());
         pFunc2.setLayout(new FlowLayout());
-        pB6.setLayout(new GridLayout(2,3));
+        pB6.setLayout(new GridLayout(2,4));
         pB2.setLayout(new GridLayout(2,1));
         pBnote.setLayout(new GridLayout(1,1));
         //set color of button
@@ -363,10 +357,10 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         pB6.add(addStudent);
         pB6.add(addColumn);
         pB6.add(report);
+        pB6.add(studentInfo);
         pB6.add(removeStudent);
         pB6.add(exCredit);
         pB6.add(grade);
-        pB6.add(studentInfo);
         pBnote.add(addNote);
         pB2.add(complete);
         pB2.add(back);
@@ -392,9 +386,9 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         contentPane.add(pBnote);
         contentPane.add(pFunc6);
         contentPane.add(pFunc2);
-        studentInfo.addActionListener(this);
         addStudent.addActionListener(this);
         removeStudent.addActionListener(this);
+        studentInfo.addActionListener(this);
         back.addActionListener(this);
         addColumn.addActionListener(this);
         grade.addActionListener(this);
@@ -541,7 +535,9 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             if(select == -1){
                 JOptionPane.showMessageDialog(null,"Please select a student");
             }else{
-            new showStudent_UI(grading_system,course,tSheet.getSelectedRow());}
+                new showStudent_UI(grading_system,course,select);
+            }
+
         }
 //        else{
 //            int selectR = tSheet.getSelectedRow();
