@@ -26,10 +26,11 @@ public class GetReport_UI extends JFrame implements ActionListener{
         Container contentPane = this.getContentPane();
         //String assignmentList[] = (String[]) courseBE.getAssignments().toArray();
         ArrayList<Assignment> assignments = courseBE.getAssignments();
-        String assignmentList[] = new String[assignments.size()];
-        for( int i =0; i < assignmentList.length;i++) {
+        String assignmentList[] = new String[assignments.size() + 1];
+        for( int i =0; i < assignments.size(); i++) {
             assignmentList[i] = assignments.get(i).getName();
         }
+        assignmentList[assignments.size()] = "total";
 
         JComboBox assignment = new JComboBox(assignmentList);
 
