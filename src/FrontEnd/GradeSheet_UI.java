@@ -39,9 +39,6 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
     int extra;
     int colSize;
     Grading_System grading_system;
-    static int end = 0; //q? static or not
-    static int tGrade = 0;
-    static String gName = "Show.TotalGrade";
 
 
 
@@ -53,12 +50,6 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         }
         else {
             grade.setText("Show.TotalGrade");
-        }
-
-        if(tGrade ==1 ){
-            course.setShow_Total(true);
-        }else{
-            course.setShow_Total(false);
         }
 
         setTitle("Grade Sheet");
@@ -166,8 +157,13 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                         if (row == 0) {
                             for (int i = 0; i < size; i++) {
                                 Object wsu = wSheet.getValueAt(0, i + 2);
-                                weightChange[i] = Double.valueOf((String) wsu);
-
+                                double v = Double.valueOf((String) wsu);
+                                if(v < 0 || v > 1) {
+                                    JOptionPane.showMessageDialog(null, "Invalid input!");
+                                    wSheet.setValueAt("0.0", row, col);
+                                    return;
+                                }
+                                weightChange[i] = v;
                             }
                             if (totalSum(weightChange) <= 1) {
 //                            System.out.println(course.changeCriteria_UG(weightChange) + "--- changed weight for underg");
@@ -200,7 +196,14 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                         } else if (row == 1) {
                             for (int i = 0; i < size; i++) {
                                 Object wsu = wSheet.getValueAt(1, i + 2);
-                                weightChange[i] = Double.valueOf((String) wsu);
+                                double v = Double.valueOf((String) wsu);
+                                if(v < 0 || v > 1) {
+                                    JOptionPane.showMessageDialog(null, "Invalid input!");
+                                    wSheet.setValueAt("0.0", row, col);
+                                    return;
+                                }
+                                weightChange[i] = v;
+
                             }
                             if (totalSum(weightChange) <= 1) {
                                 int state = course.changeCriteria_G(weightChange);
@@ -429,7 +432,6 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             dispose();
             //mSheet.fireTableDataChanged();
             //this.revalidate();
-            System.out.println(grade.getText() + "---" + tGrade + "---"+course.isShow_Total());
         }
         else if(e.getSource() == complete){
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to end this course?");
@@ -573,7 +575,6 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                     noteTime.setText("<html><p>Last modification:</p>" + pullTime + "</html>");
                 }
             }
-//            else if(tGrade == 1)
         }
         //System.out.println(mSheet.getValueAt(row,col));
 
