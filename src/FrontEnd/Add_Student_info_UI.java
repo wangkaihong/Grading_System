@@ -69,21 +69,29 @@ public class Add_Student_info_UI extends JFrame implements ActionListener {
             dispose();
             new Select_Course_UI(grading_system);
         } else if(e.getSource() == ok){
-            dispose();
             filePath = file_path.getText();
-            System.out.println("FILEPATH is"+filePath);//testtest
-            System.out.println(filePath.equals(""));//testtest
-            grading_system.addCourse(name,lecturerName,semesterName,filePath,course_ind);
-            new Select_Course_UI(grading_system);
+            if (filePath.equals("")){
+                dispose();
+                JOptionPane.showMessageDialog(null,"Please import students file");
+                new Add_Student_info_UI(grading_system,name,lecturerName,semesterName,course_ind);
+            } else {
+                dispose();
+//                grading_system.addCourse(name, lecturerName, semesterName, filePath, course_ind);
+                System.out.println(grading_system.addCourse(name,lecturerName,semesterName,filePath,course_ind));
+                new Select_Course_UI(grading_system);
+            }
         } else if(e.getSource() == returnBack){
             dispose();
             new Add_Assignment_info_UI(grading_system,name, lecturerName, semesterName);
         } else if(e.getSource() == browse) {
             javax.swing.JFileChooser jFileChooser1 = new JFileChooser();
-            jFileChooser1.showOpenDialog(null);
-            File f = jFileChooser1.getSelectedFile();
-            String fname = f.getAbsolutePath();
-            file_path.setText(fname);
+            try {
+                jFileChooser1.showOpenDialog(null);
+                File f = jFileChooser1.getSelectedFile();
+                String fname = f.getAbsolutePath();
+                file_path.setText(fname);
+            }catch (Exception except) {
+            }
         }
     }
 

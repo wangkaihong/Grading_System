@@ -30,7 +30,9 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
     JButton confirm = new JButton("Confirm");
     JButton ret = new JButton("Cancel");
     JLabel sameWeight = new JLabel("Please check if Weights are same: ");
+    JLabel examOrNot = new JLabel("Please check if this assignment is an exam");
     JCheckBox copy = new JCheckBox();
+    JCheckBox exam = new JCheckBox();
     Course course;
     Grading_System grading_system;
 
@@ -43,7 +45,7 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
         layout.setHgap(100);
         layout.setVgap(30);
         contentPane.setLayout(layout);
-        p.setLayout(new GridLayout(5,2));
+        p.setLayout(new GridLayout(6,2));
         radioPanel.setLayout(new GridLayout(1, 3));
         radioPanel.add(raw);
         radioPanel.add(deduction);
@@ -64,8 +66,11 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
         p.add(weightedG);
         p.add(sameWeight);
         p.add(copy);
+        p.add(examOrNot);
+        p.add(exam);
         func.add(confirm);
         copy.addActionListener(this);
+        exam.addActionListener(this);
         this.deduction.setActionCommand("deduction");
         this.percentage.setActionCommand("percentage");
         this.raw.setActionCommand("raw");

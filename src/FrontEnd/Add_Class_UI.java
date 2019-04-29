@@ -73,13 +73,22 @@ public class Add_Class_UI extends JFrame implements ActionListener {
             name = nameInput.getText();
             lecturerName = lecturerInput.getText();
             semesterName = semesterInput.getText();
-            for (int i = 0; i < Select_Course_UI.course.length; i++){
-                if (Select_Course_UI.course[i] == null){
-                    Select_Course_UI.course[i] = name;
-                    break;
+            String nameCheck, lecturerCheck, semesterCheck;
+            nameCheck = name.replaceAll(" ","");
+            lecturerCheck = lecturerName.replaceAll(" ","");
+            semesterCheck = semesterName.replaceAll(" ","");
+            if (nameCheck.length() != 0 && lecturerCheck.length() != 0 && semesterCheck.length() != 0){
+                for (int i = 0; i < Select_Course_UI.course.length; i++){
+                    if (Select_Course_UI.course[i] == null){
+                        Select_Course_UI.course[i] = name;
+                        break;
+                    }
                 }
+                new Add_Assignment_info_UI(grading_system,name, lecturerName, semesterName);
+            } else {
+                JOptionPane.showMessageDialog(null,"Please input useful information");
+                new Add_Class_UI(grading_system);
             }
-            new Add_Assignment_info_UI(grading_system,name, lecturerName, semesterName);
         } else if(e.getSource() == cancel){
             dispose();
             new Select_Course_UI(grading_system);
