@@ -126,9 +126,39 @@ public class ModifyCol_UI extends JFrame implements ActionListener, MouseListene
                 if(tempAddAssignList.size() != 0){
                     for(Assignment assign : tempAddAssignList){
                         if(assign instanceof Exam){
-                            course.addAssignment(assign.getName(), assign.getTotal(), assign.getScoring_method(), true);
+                            int state = course.addAssignment(assign.getName(), assign.getTotal(), assign.getScoring_method(), true);
+                            if(state == 2) {
+                                JOptionPane.showMessageDialog(null, "Invalid name!");
+                            }
+                            if(state == 3) {
+                                JOptionPane.showMessageDialog(null, "Invalid total score!");
+                            }
+                            if(state == 4) {
+                                JOptionPane.showMessageDialog(null, "Invalid scoring way!");
+                            }
+                            if(state == 5) {
+                                JOptionPane.showMessageDialog(null, "Invalid operation, course is ended!");
+                            }
+                            if(state == 6) {
+                                JOptionPane.showMessageDialog(null, "Unknown error!");
+                            }
                         } else {
-                            course.addAssignment(assign.getName(), assign.getTotal(), assign.getScoring_method(), false);
+                            int state = course.addAssignment(assign.getName(), assign.getTotal(), assign.getScoring_method(), false);
+                            if(state == 2) {
+                                JOptionPane.showMessageDialog(null, "Invalid name!");
+                            }
+                            if(state == 3) {
+                                JOptionPane.showMessageDialog(null, "Invalid total score!");
+                            }
+                            if(state == 4) {
+                                JOptionPane.showMessageDialog(null, "Invalid scoring way!");
+                            }
+                            if(state == 5) {
+                                JOptionPane.showMessageDialog(null, "Invalid operation, course is ended!");
+                            }
+                            if(state == 6) {
+                                JOptionPane.showMessageDialog(null, "Unknown error!");
+                            }
                         }
                     }
                 } else {
