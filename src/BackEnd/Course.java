@@ -667,7 +667,7 @@ public class Course implements Reportable {
         // cor2: int: coordinate of column of cell to modify
         // score: String: score to be modified
         //
-        // return 1 if succeeded, return 2 if invalid score type, return 3 if course is ended, return 4 if invalid score input, return 5 if unknown error
+        // return 1 if succeeded, return 2 if invalid score type, return 3 if course is ended, return 4 if invalid score input, return 5 if invalid input data type, return 6 if unknown error
         if(end) {
             return 3;
         }
@@ -708,10 +708,10 @@ public class Course implements Reportable {
             return 1;
         }
         catch (NumberFormatException e) {
-            return 2;
+            return 5;
         }
         catch (Exception e) {
-            return 5;
+            return 6;
         }
     }
     public String[] getNote(int cor1,int cor2) { //
