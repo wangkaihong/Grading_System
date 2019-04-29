@@ -600,7 +600,6 @@ public class Course implements Reportable {
                     for (int j = 0; j < width - offset_column - 1; j++) {
                         table[0][j + offset_column] = assignments.get(j).getName();
                     }
-
                     for (int i = offset_row; i < height; i++) { //
                         String student_type;
                         if(students.get(i - offset_row) instanceof Undergraduate) {
