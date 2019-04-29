@@ -37,7 +37,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
     int extra;
     int colSize;
     Grading_System grading_system;
-    int end = 0; //q? static or not
+    static int end = 0; //q? static or not
     static int tGrade = 0;
     static String gName = "Show.TotalGrade";
 
@@ -62,7 +62,6 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
 
 
         System.out.println("test_course"+course.getCourseName());
-        System.out.println(end + "--- 2 is ended");
         rowData = course.getTable();
         System.out.println(rowData + " --- loading getTable");
         int length = rowData[0].length;
@@ -380,6 +379,11 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             System.out.println(mSheet.getValueAt(selectR,selectC));
         }
     }
+
+//    public static void addRows(String id, String name){
+//        mSheet.addRow(new Object[]{id,name});
+//
+//    }
 
     private double totalSum(double[] arr){
         double res = 0;

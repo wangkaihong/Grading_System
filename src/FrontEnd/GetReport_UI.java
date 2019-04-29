@@ -33,6 +33,7 @@ public class GetReport_UI extends JFrame implements ActionListener{
         assignmentList[assignments.size()] = "total";
 
         JComboBox assignment = new JComboBox(assignmentList);
+        assignment.setSelectedItem(null);
 
         selectReport.add(select);
         selectReport.add(assignment);
