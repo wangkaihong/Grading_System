@@ -68,7 +68,14 @@ public class Course implements Reportable {
             for(int i = 0; i < previous.assignments.size(); i++) {
                 assignments.add(new Assignment(previous.assignments.get(i)));
             }
-            this.sheet.addColumns(assignments.size());
+            for(int i = 0; i < assignments.size(); i++) {
+                if(assignments.get(i).getScoring_method().equals("deduction")) {
+                    this.sheet.addColumns(1, 1);
+                }
+                else {
+                    this.sheet.addColumns(1, 0);
+                }
+            }
             this.criteria_UG = new Criteria(previous.criteria_UG);
             this.criteria_G = new Criteria(previous.criteria_G);
         }
@@ -209,6 +216,11 @@ public class Course implements Reportable {
                     extra_credits.add_one();
                 }
                 sheet.addRows(1);
+                for(int i = 0; i < assignments.size(); i++) {
+                    if(assignments.get(i).getScoring_method().equals("deduction")) {
+                        sheet.getAllCell().get(sheet.getAllCell().size() - 1).get(i + 2).setScore(1);
+                    }
+                }
                 FileIO fileIO = new FileIO();
                 fileIO.writeCell(sheet.getAllCell(),courseName+semester);
                 fileIO.writeStudentInfo(students,courseName+semester);
@@ -222,6 +234,11 @@ public class Course implements Reportable {
                     extra_credits.add_one();
                 }
                 sheet.addRows(1);
+                for(int i = 0; i < assignments.size(); i++) {
+                    if(assignments.get(i).getScoring_method().equals("deduction")) {
+                        sheet.getAllCell().get(sheet.getAllCell().size() - 1).get(i + 2).setScore(1);
+                    }
+                }
                 FileIO fileIO = new FileIO();
                 fileIO.writeStudentInfo(students,courseName+semester);
                 return 1;
@@ -304,7 +321,12 @@ public class Course implements Reportable {
                 Assignment assignment = new Assignment(name, total, scoring_method);
                 assignments.add(assignment);
             }
-            sheet.addColumns(1);
+            if(scoring_method.equals("deduction")) {
+                sheet.addColumns(1,1);
+            }
+            else {
+                sheet.addColumns(1,0);
+            }
             FileIO fileIO = new FileIO();
             fileIO.writeAssignment(assignments,courseName+semester);
             fileIO.writeCell(sheet.getAllCell(),courseName+semester);
@@ -600,7 +622,6 @@ public class Course implements Reportable {
                     for (int j = 0; j < width - offset_column - 1; j++) {
                         table[0][j + offset_column] = assignments.get(j).getName();
                     }
-
                     for (int i = offset_row; i < height; i++) { //
                         String student_type;
                         if(students.get(i - offset_row) instanceof Undergraduate) {
