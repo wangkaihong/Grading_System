@@ -12,7 +12,8 @@ import BackEnd.*;
 
 public class ModifyCol_UI extends JFrame implements ActionListener, MouseListener {
     JPanel pTable = new JPanel(new BorderLayout());
-    JPanel pFuncs = new JPanel(new GridLayout(1,5));
+    JPanel pFs = new JPanel(new FlowLayout());
+    JPanel pFuncs = new JPanel(new GridLayout(3,1));
     JPanel pWaring = new JPanel();
     ImageIcon icon = new ImageIcon("exclamation.jpg");
     JLabel img = new JLabel(icon);
@@ -72,6 +73,7 @@ public class ModifyCol_UI extends JFrame implements ActionListener, MouseListene
         pFuncs.add(confirm);
         pFuncs.add(addRow);
         pFuncs.add(back);
+        pFs.add(pFuncs);
         pWaring.add(img);
         pWaring.add(warn);
         back.addActionListener(this);
@@ -79,16 +81,16 @@ public class ModifyCol_UI extends JFrame implements ActionListener, MouseListene
         addRow.addActionListener(this);
         tSheet.addMouseListener(this);
         pTable.setBounds(50,50,600,500);
-        pFuncs.setBounds(675,400,300,50);
+        pFs.setBounds(600,350,400,200);
         pWaring.setBounds(650,200,300,200);
         //pWaring.setVisible(false);
         contentPane.add(pTable);
-        contentPane.add(pFuncs);
+        contentPane.add(pFs);
         contentPane.add(pWaring);
         pWaring.setVisible(false);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setSize(1000, 600);
-        this.setTitle("Modify Column");
+        this.setTitle("Modify Assignment");
         this.setVisible(true);
     }
     public void actionPerformed(ActionEvent e) {
