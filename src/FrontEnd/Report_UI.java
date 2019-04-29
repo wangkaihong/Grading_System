@@ -37,7 +37,11 @@ public class Report_UI extends JFrame implements ActionListener {
             assignmentList[i] = assignments.get(i).getName();
         }
 
-        title = new JLabel(assignmentList[GetReport_UI.getSelect]);
+        if(GetReport_UI.getSelect >= assignmentList.length){
+            title = new JLabel("total");
+        } else {
+            title = new JLabel(assignmentList[GetReport_UI.getSelect]);
+        }
         assignmentLabel.setLayout(new GridLayout(1,1));
         title.setFont(new Font("Serif",Font.PLAIN,30));
         assignmentLabel.add(title);
