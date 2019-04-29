@@ -126,18 +126,64 @@ public class ModifyCol_UI extends JFrame implements ActionListener, MouseListene
                 if(tempAddAssignList.size() != 0){
                     for(Assignment assign : tempAddAssignList){
                         if(assign instanceof Exam){
-                            course.addAssignment(assign.getName(), assign.getTotal(), assign.getScoring_method(), true);
+                            int state = course.addAssignment(assign.getName(), assign.getTotal(), assign.getScoring_method(), true);
+                            if(state == 2) {
+                                JOptionPane.showMessageDialog(null, "Invalid name!");
+                            }
+                            if(state == 3) {
+                                JOptionPane.showMessageDialog(null, "Invalid total score!");
+                            }
+                            if(state == 4) {
+                                JOptionPane.showMessageDialog(null, "Invalid scoring way!");
+                            }
+                            if(state == 5) {
+                                JOptionPane.showMessageDialog(null, "Invalid operation, course is ended!");
+                            }
+                            if(state == 6) {
+                                JOptionPane.showMessageDialog(null, "Unknown error!");
+                            }
                         } else {
-                            course.addAssignment(assign.getName(), assign.getTotal(), assign.getScoring_method(), false);
+                            int state = course.addAssignment(assign.getName(), assign.getTotal(), assign.getScoring_method(), false);
+                            if(state == 2) {
+                                JOptionPane.showMessageDialog(null, "Invalid name!");
+                            }
+                            if(state == 3) {
+                                JOptionPane.showMessageDialog(null, "Invalid total score!");
+                            }
+                            if(state == 4) {
+                                JOptionPane.showMessageDialog(null, "Invalid scoring way!");
+                            }
+                            if(state == 5) {
+                                JOptionPane.showMessageDialog(null, "Invalid operation, course is ended!");
+                            }
+                            if(state == 6) {
+                                JOptionPane.showMessageDialog(null, "Unknown error!");
+                            }
                         }
                     }
                 } else {
                     System.out.println("Invalid Assignments");
                 }
-                System.out.println(course.changeCriteria_G(weightGpush) + "add Gweight");
-                System.out.println(course.changeCriteria_UG(weightUpush) + "add Uweight");
+//                System.out.println(course.changeCriteria_G(weightGpush) + "add Gweight");
+//                System.out.println(course.changeCriteria_UG(weightUpush) + "add Uweight");
+                int state1 = course.changeCriteria_G(weightGpush);
+                int state2 = course.changeCriteria_UG(weightUpush);
+                if(state1 == 2 || state2 == 2) {
+                    JOptionPane.showMessageDialog(null,"Sum of weights exceeds 1!");
+                }
+                else {
+                    if (state1 == 3 || state2 == 3) {
+                        JOptionPane.showMessageDialog(null, "Invalid operation, course is ended!");
+                    }
+                    else {
+                        if(state1 == 4 || state2 == 4) {
+                            JOptionPane.showMessageDialog(null,"Unknown error!");
+                        }
+                    }
+                }
                 dispose();
                 new GradeSheet_UI(grading_system, course);
+
             }else{
                 JOptionPane.showMessageDialog(null,"Total weights is invalid!");
             }

@@ -75,9 +75,47 @@ public class Add_Student_info_UI extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null,"Please import students file");
                 new Add_Student_info_UI(grading_system,name,lecturerName,semesterName,course_ind);
             } else {
-                dispose();
-                System.out.println(grading_system.addCourse(name, lecturerName, semesterName, filePath, course_ind));
-                new Select_Course_UI(grading_system);
+                int state = grading_system.addCourse(name, lecturerName, semesterName, filePath, course_ind);
+                if(state == 1) {
+                    dispose();
+                    new Select_Course_UI(grading_system);
+                }
+                if(state == 2) {
+                    JOptionPane.showMessageDialog(null,"Course name have conflict!");
+                }
+                if(state == 3) {
+                    dispose();
+                    JOptionPane.showMessageDialog(null,"Chosen Course is invalid!");
+                }
+                if(state == 4) {
+                    dispose();
+                    JOptionPane.showMessageDialog(null,"Course name cannot be empty!");
+                }
+                if(state == 5) {
+                    dispose();
+                    JOptionPane.showMessageDialog(null,"Lecturer name cannot be empty!");
+                }
+                if(state == 6) {
+                    dispose();
+                    JOptionPane.showMessageDialog(null,"Semester cannot be empty!");
+                }
+                if(state == 7) {
+                    dispose();
+                    JOptionPane.showMessageDialog(null,"Student information file name cannot be empty!");
+                }
+                if(state == 8) {
+                    dispose();
+                    JOptionPane.showMessageDialog(null,"Invalid format in student information file!");
+                }
+                if(state == 9) {
+                    dispose();
+                    JOptionPane.showMessageDialog(null,"Student information file not found!");
+                }
+                if(state == 10) {
+                    dispose();
+                    JOptionPane.showMessageDialog(null,"Unknown error!");
+                }
+
             }
         } else if(e.getSource() == returnBack){
             dispose();

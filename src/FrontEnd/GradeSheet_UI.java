@@ -37,22 +37,23 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
     int extra;
     int colSize;
     Grading_System grading_system;
-    static int end = 0; //q? static or not
-    static int tGrade = 0;
-    static String gName = "Show.TotalGrade";
-
-
+//    static int end = 0; //q? static or not
 
     public GradeSheet_UI(Grading_System grading_system, Course course) {
         this.grading_system = grading_system;
         this.course = course;
-        grade.setText(gName);
-
-        if(tGrade ==1 ){
-            course.setShow_Total(true);
-        }else{
-            course.setShow_Total(false);
+        if(course.isShow_Total()) {
+            grade.setText("Hide.TotalGrade");
         }
+        else {
+            grade.setText("Show.TotalGrade");
+        }
+
+//        if(tGrade ==1 ){
+//            course.setShow_Total(true);
+//        }else{
+//            course.setShow_Total(false);
+//        }
 
         setTitle("Grade Sheet");
         Container contentPane = this.getContentPane();
@@ -81,16 +82,20 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         String[] columnNames = new String[length];
         columnNames[0] = "ID";
         columnNames[1] = "Name";
-        extra = length - ass.size() - tGrade;
+        if(course.isShow_Total()) {
+            extra = length - ass.size() - 1;
+        }
+        else {
+            extra = length - ass.size();
+        }
         System.out.println(extra + " --- if 3 extra good");
-        System.out.println(course.isShow_Total() + " --- if has total" + tGrade);
-        if(extra == 3 && tGrade ==1){
+        if(extra == 3 && course.isShow_Total()){
             columnNames[length-1] = "Extra_credit";
             columnNamesW[length-1] = "Extra_credit";
             columnNames[length-2] = "Total";
             columnNamesW[length-2] = "    ";
         }
-        else if(tGrade ==1){
+        else if(course.isShow_Total()){
             columnNames[length-1] = "Total";
             columnNamesW[length-1] = "    ";
         }else if(extra == 3){
@@ -120,12 +125,12 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         wSheet = new DefaultTableModel(rowDataW, columnNamesW) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                if (end != 2){
-                    if(tGrade == 1 && extra == 3){
+                if (!course.isEnd()){
+                    if(course.isShow_Total() && extra == 3){
                         return (columnIndex != 0) & (columnIndex != 1)
                                 & (columnIndex != length - 1)&(columnIndex != length - 2);
                     }
-                    else if(extra == 3 || tGrade == 1){
+                    else if(extra == 3 || course.isShow_Total()){
                         return (columnIndex != 0) & (columnIndex != 1) & (columnIndex != length - 1);
                     }else{
                         return (columnIndex != 0) & (columnIndex != 1);
@@ -151,13 +156,32 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                             weightChange[i] = Double.valueOf((String) wsu);
                         }
                         if(totalSum(weightChange) <=1){
-                            System.out.println(course.changeCriteria_UG(weightChange) + "--- changed weight for underg");
+//                            System.out.println(course.changeCriteria_UG(weightChange) + "--- changed weight for underg");
+                            int state = course.changeCriteria_UG(weightChange);
+                            if(state == 2) {
+                                JOptionPane.showMessageDialog(null,"Sum of weights exceeds 1!");
+                            }
+                            if(state == 3) {
+                                JOptionPane.showMessageDialog(null,"Invalid operation, course is ended!");
+                            }
+                            if(state == 4) {
+                                JOptionPane.showMessageDialog(null,"Unknown error!");
+                            }
                         }else{
                             //show notification
                             JOptionPane.showMessageDialog(null,"Total weights is invalid!");
                             wSheet.setValueAt("0",row,col);
                             weightChange[col-2] = 0;
-                            course.changeCriteria_UG(weightChange);
+                            int state = course.changeCriteria_UG(weightChange);
+                            if(state == 2) {
+                                JOptionPane.showMessageDialog(null,"Sum of weights exceeds 1!");
+                            }
+                            if(state == 3) {
+                                JOptionPane.showMessageDialog(null,"Invalid operation, course is ended!");
+                            }
+                            if(state == 4) {
+                                JOptionPane.showMessageDialog(null,"Unknown error!");
+                            }
                         }
                     }else if(row ==1){
                         for(int i = 0 ; i < size ;i++){
@@ -165,13 +189,31 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                             weightChange[i] = Double.valueOf((String) wsu);
                         }
                         if(totalSum(weightChange) <=1){
-                            System.out.println(course.changeCriteria_G(weightChange) + "--- changed weight for G");
+                            int state = course.changeCriteria_G(weightChange);
+                            if(state == 2) {
+                                JOptionPane.showMessageDialog(null,"Sum of weights exceeds 1!");
+                            }
+                            if(state == 3) {
+                                JOptionPane.showMessageDialog(null,"Invalid operation, course is ended!");
+                            }
+                            if(state == 4) {
+                                JOptionPane.showMessageDialog(null,"Unknown error!");
+                            }
                         }else{
                             //show notification
                             JOptionPane.showMessageDialog(null,"Total weights is invalid!");
                             wSheet.setValueAt("0",row,col);
                             weightChange[col-2] = 0;
-                            course.changeCriteria_G(weightChange);
+                            int state = course.changeCriteria_G(weightChange);
+                            if(state == 2) {
+                                JOptionPane.showMessageDialog(null,"Sum of weights exceeds 1!");
+                            }
+                            if(state == 3) {
+                                JOptionPane.showMessageDialog(null,"Invalid operation, course is ended!");
+                            }
+                            if(state == 4) {
+                                JOptionPane.showMessageDialog(null,"Unknown error!");
+                            }
                         }
                     }else{
                         System.out.println(course.changeTotal(col-2,Double.parseDouble(value)) + "---changing in total");
@@ -188,12 +230,12 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         mSheet = new DefaultTableModel(rowData, columnNames) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                if(end != 2){
-                    if(tGrade ==1 && extra ==3){
+                if(!course.isEnd()){
+                    if(course.isShow_Total() && extra ==3){
                         return (columnIndex != 0) & (columnIndex != 1)
                                 & (rowIndex != 0) & (columnIndex != length-2);
 
-                    }else if(tGrade ==1){
+                    }else if(course.isShow_Total()){
                         return (columnIndex != 0) & (columnIndex != 1)
                                 & (rowIndex != 0)& (columnIndex != length-1);
 
@@ -215,10 +257,32 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                     String value = (String) mSheet.getValueAt(row,col);
                     if(extra == 3 && e.getColumn() == columnNames.length -1){
                         double val = Double.parseDouble(value);
-                        course.modify(row - 1,val);
+                        int state = course.modify(row - 1,val);
+                        if(state == 2) {
+                            JOptionPane.showMessageDialog(null,"Extra credits out of index!");
+                        }
+                        if(state == 3) {
+                            JOptionPane.showMessageDialog(null,"Invalid operation, course is ended!");
+                        }
+                        if(state == 4) {
+                            JOptionPane.showMessageDialog(null,"Unknown error!");
+                        }
+
                         System.out.println(value +" ----change or add Extra credit");
                     }else{
-                        course.setScore(row, col,value);
+                        int state = course.setScore(row, col,value);
+                        if(state == 2) {
+                            JOptionPane.showMessageDialog(null,"Invalid scoring way!");
+                        }
+                        if(state == 3) {
+                            JOptionPane.showMessageDialog(null,"Invalid operation, course is ended!");
+                        }
+                        if(state == 4) {
+                            JOptionPane.showMessageDialog(null,"Invalid score!");
+                        }
+                        if(state == 5) {
+                            JOptionPane.showMessageDialog(null,"Unknown error!");
+                        }
                         System.out.println(value +" ----change or add score");
                     }
                 }
@@ -306,63 +370,105 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         }
         else if(e.getSource() == addColumn){
 //            mSheet.addColumn("New Column");
-            dispose();
-            new ModifyCol_UI(grading_system,course);
+            if(course.isEnd()) {
+                JOptionPane.showMessageDialog(null,"Invalid operation, course is ended");
+            }
+            else {
+                dispose();
+                new ModifyCol_UI(grading_system, course);
+            }
         }
         else if(e.getSource() == grade){
-            System.out.println(grade.getText() + "---" + tGrade + "---"+course.isShow_Total());
             if(grade.getText().equals("Show.TotalGrade")) {
-                gName = "Hide.TotalGrade";
-                tGrade = 1;
-                //course.setShow_Total(true);
-                //rowData = course.getTable();
+                course.setShow_Total(true);
+                FileIO fileIO = new FileIO();
+                fileIO.writeCourse(grading_system.getCourses());
             }else{
-                gName = "Show.TotalGrade";
-                tGrade = 0;
-                //course.setShow_Total(false);
-                //rowData = course.getTable();
+                course.setShow_Total(false);
+                FileIO fileIO = new FileIO();
+                fileIO.writeCourse(grading_system.getCourses());
             }
             new GradeSheet_UI(grading_system,course);
             dispose();
-            //mSheet.fireTableDataChanged();
-            //this.revalidate();
-            System.out.println(grade.getText() + "---" + tGrade + "---"+course.isShow_Total());
         }
         else if(e.getSource() == complete){
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to end this course?");
             if(input == 0){
                 tSheet.setEnabled(false);
                 titleSheet.setEnabled(false);
-                course.endCourse();
-                end = course.endCourse();
-                System.out.println(course.endCourse() +" ---- end course");
+                int state = course.endCourse();
+                if(state == 1) {
+                    FileIO fileIO = new FileIO();
+                    fileIO.writeCourse(grading_system.getCourses());
+                    System.out.println(course.endCourse() + " ---- end course");
+                }
+                if(state == 2) {
+                    JOptionPane.showMessageDialog(null,"Course is already ended!");
+                }
+                if(state == 3) {
+                    JOptionPane.showMessageDialog(null,"Unknown error!");
+                }
             }
         }
         else if(e.getSource() == report){
             new GetReport_UI(grading_system,course);
         }
         else if(e.getSource() == exCredit){
-            int input = JOptionPane.showConfirmDialog(null, "Are you sure to add extra credit?");
-            System.out.println("enter extra---");
-            if(input == 0 && course.extra() != 2){
-                dispose();
-                new GradeSheet_UI(grading_system,course);
-
+            if(course.isEnd()) {
+                JOptionPane.showMessageDialog(null,"Invalid operation, course is ended!");
+            }
+            else {
+                int input = JOptionPane.showConfirmDialog(null, "Are you sure to add extra credit?");
+                System.out.println("enter extra---");
+                int state = course.extra();
+                if (input == 0) {
+                    if (state == 1) {
+                        dispose();
+                        new GradeSheet_UI(grading_system, course);
+                    }
+                    if (state == 2) {
+                        JOptionPane.showMessageDialog(null, "Extra credits are already added!");
+                    }
+                    if (state == 3) {
+                        JOptionPane.showMessageDialog(null, "Unknown error!");
+                    }
+                }
             }
         }
         else if(e.getSource() == addStudent){
-            new Add_Student_single_UI(grading_system,course);
-            dispose();
-
+            if(course.isEnd()) {
+                JOptionPane.showMessageDialog(null,"Invalid operation, course is ended!");
+            }
+            else {
+                new Add_Student_single_UI(grading_system, course);
+                dispose();
+            }
         }
         else if(e.getSource() == removeStudent){
             int select = tSheet.getSelectedRow();
             if(select == -1){
                 JOptionPane.showMessageDialog(null,"Please select a student");
-            }else if(select != 0){
-                mSheet.removeRow(select);
-                System.out.println(course.removeStudent(select-1)+" --- RemoveStudent");
-
+            }
+            else {
+                if (select != 0) {
+                    int state = course.removeStudent(select - 1);
+                    if(state == 1) {
+                        mSheet.removeRow(select);
+                    }
+                    if(state == 2) {
+                        JOptionPane.showMessageDialog(null,"Cannot find such student");
+                    }
+                    if(state == 3) {
+                        JOptionPane.showMessageDialog(null,"Invalid operation, course is ended");
+                    }
+                    if(state == 4) {
+                        JOptionPane.showMessageDialog(null,"Unknown error");
+                    }
+//                    System.out.println(course.removeStudent(select - 1) + " --- RemoveStudent");
+                }
+                else {
+                    JOptionPane.showMessageDialog(null,"Cannot delete this row");
+                }
             }
         }
         else if(e.getSource() == addNote){
@@ -370,14 +476,20 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             int row = tSheet.getSelectedRow();
             String noteS = noteText.getText();
             if(col != -1 && row != -1) {
-                System.out.println(course.setNote(row, col, noteS));
+                int state = course.setNote(row, col, noteS);
+                if(state == 2) {
+                    JOptionPane.showMessageDialog(null,"Invalid operation, course is ended");
+                }
+                if(state == 3) {
+                    JOptionPane.showMessageDialog(null,"Unknown error");
+                }
             }
         }
-        else{
-            int selectR = tSheet.getSelectedRow();
-            int selectC = tSheet.getSelectedColumn();
-            System.out.println(mSheet.getValueAt(selectR,selectC));
-        }
+//        else{
+//            int selectR = tSheet.getSelectedRow();
+//            int selectC = tSheet.getSelectedColumn();
+//            System.out.println(mSheet.getValueAt(selectR,selectC));
+//        }
     }
 
 //    public static void addRows(String id, String name){
@@ -395,8 +507,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println(end+ "-----2 is end");
-        if(end != 2) {
+        if(!course.isEnd()) {
             noteText.setText(" ");
             int row = -2;
             int col = -2;
