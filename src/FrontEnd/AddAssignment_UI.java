@@ -1,9 +1,6 @@
 package FrontEnd;
 
-import BackEnd.Assignment;
-import BackEnd.Course;
-import BackEnd.Grading_System;
-import BackEnd.FileIO;
+import BackEnd.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,6 +32,8 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
     JCheckBox exam = new JCheckBox();
     Course course;
     Grading_System grading_system;
+
+    boolean isExam;
 
 
     public AddAssignment_UI(Grading_System grading_system, Course course){
@@ -89,7 +88,7 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
         setTitle("Add New Assignment");
         setResizable(false);
         setVisible(true);
-
+        this.isExam = false;
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -100,6 +99,11 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
                 weightedG.setText(weightedU.getText());
             }
         }
+        //trytry
+        if(exam.isSelected()){
+            isExam = true;
+        }
+        //trytry
         //if(e.getSource() == copy)
         if(e.getSource() == ret) {
             dispose();
@@ -127,10 +131,14 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
                 double weightG = Double.parseDouble(weightedG.getText());
                 FileIO fileIO = new FileIO();
                 ArrayList<Assignment> tempAddAssignList = fileIO.readTempAddAssign(course.getCourseName()+course.getSemester());
-                Assignment tempAddAssign = new Assignment(name,total,scoring);
-                tempAddAssignList.add(tempAddAssign);
+                if(isExam){
+                    Exam tempAddAssign = new Exam(name,total,scoring);
+                    tempAddAssignList.add(tempAddAssign);
+                } else {
+                    Assignment tempAddAssign = new Assignment(name,total,scoring);
+                    tempAddAssignList.add(tempAddAssign);
+                }
                 fileIO.writeTempAddAssign(tempAddAssignList,course.getCourseName()+course.getSemester());
-                //trytry
                 /*add criteria??? */
                 ModifyCol_UI.addRows(name, totalS, us, gs, scoring);
                 dispose();
