@@ -36,13 +36,13 @@ public class ModifyCol_UI extends JFrame implements ActionListener, MouseListene
         ArrayList<Assignment> tempNullList = new ArrayList<Assignment>();
         fileIO.writeTempAddAssign(tempNullList,course.getCourseName()+course.getSemester());
         //todo need to add assignment type
-        String[] columnNames =  {"Name", "Total", "Weighted_UG", "Weighted_G","Scoring Way"};
+        String[] columnNames =  {"Name", "Total", "Weighted_UG", "Weighted_G","Scoring Way","Exam"};
         String[][] rowData = course.getAssignmentInformation();
         //item data
         table = new DefaultTableModel(rowData, columnNames) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return (columnIndex != 4);
+                return (columnIndex != 4)& (columnIndex != 5);
             }
 
         };
@@ -189,8 +189,8 @@ public class ModifyCol_UI extends JFrame implements ActionListener, MouseListene
             }
         }
     }
-    public static void addRows(String name, String total, String weight, String weightG, String scoring){
-        table.addRow(new Object[]{name,total,weight,weightG,scoring});
+    public static void addRows(String name, String total, String weight, String weightG, String scoring, Boolean exam){
+        table.addRow(new Object[]{name,total,weight,weightG,scoring,exam.toString()});
 
     }
     private double sum(double[] arr){

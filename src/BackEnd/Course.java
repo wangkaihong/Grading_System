@@ -754,13 +754,14 @@ public class Course implements Reportable {
         // none
         //
         // return: 2d String array of information about name, total score, weight for UG, weight for G, scoring method
-        String[][] table = new String[assignments.size()][5];
+        String[][] table = new String[assignments.size()][6];
         for(int i = 0; i < assignments.size();i++) {
             table[i][0] = assignments.get(i).getName();
             table[i][1] = String.valueOf(assignments.get(i).getTotal());
             table[i][2] = String.valueOf(criteria_UG.getWeight().get(i));
             table[i][3] = String.valueOf(criteria_G.getWeight().get(i)); //todo
             table[i][4] = assignments.get(i).getScoring_method();
+            table[i][5] = Boolean.toString(assignments.get(i) instanceof Exam);
         }
         return table;
     }
