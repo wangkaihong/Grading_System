@@ -42,7 +42,7 @@ public class ModifyCol_UI extends JFrame implements ActionListener, MouseListene
         table = new DefaultTableModel(rowData, columnNames) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return (columnIndex != 4);
+                return (columnIndex != 4)& (columnIndex != 5);
             }
 
         };
@@ -190,7 +190,12 @@ public class ModifyCol_UI extends JFrame implements ActionListener, MouseListene
         }
     }
     public static void addRows(String name, String total, String weight, String weightG, String scoring, Boolean exam){
-        table.addRow(new Object[]{name,total,weight,weightG,scoring,exam.toString()});
+        //table.addRow(new Object[]{name,total,weight,weightG,scoring,exam.toString()});
+        if(exam){
+            table.addRow(new Object[]{name,total,weight,weightG,scoring,"Yes"});
+        }else{
+            table.addRow(new Object[]{name,total,weight,weightG,scoring,"No"});
+        }
 
     }
     private double sum(double[] arr){
