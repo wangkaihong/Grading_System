@@ -12,7 +12,7 @@ import BackEnd.*;
 
 
 public class GradeSheet_UI extends JFrame implements ActionListener, MouseListener{
-    JPanel pSheet = new JPanel();
+    JPanel pNote = new JPanel();
     JButton addStudent = new JButton("+ Add Student");
     JButton removeStudent = new JButton("- Remove Student");
     JButton addColumn = new JButton("Alter Assignment");
@@ -23,6 +23,8 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
     JButton exCredit = new JButton("Extra Credit");
     JButton addNote = new JButton("Save Note");
     JLabel note = new JLabel("Notes");
+    JLabel noteTime = new JLabel();
+    JPanel pBnote = new JPanel();
     JPanel pB6 = new JPanel();
     JPanel pB2 = new JPanel();
     JPanel pFunc6 = new JPanel();
@@ -37,7 +39,11 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
     int extra;
     int colSize;
     Grading_System grading_system;
-//    static int end = 0; //q? static or not
+    static int end = 0; //q? static or not
+    static int tGrade = 0;
+    static String gName = "Show.TotalGrade";
+
+
 
     public GradeSheet_UI(Grading_System grading_system, Course course) {
         this.grading_system = grading_system;
@@ -49,11 +55,11 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             grade.setText("Show.TotalGrade");
         }
 
-//        if(tGrade ==1 ){
-//            course.setShow_Total(true);
-//        }else{
-//            course.setShow_Total(false);
-//        }
+        if(tGrade ==1 ){
+            course.setShow_Total(true);
+        }else{
+            course.setShow_Total(false);
+        }
 
         setTitle("Grade Sheet");
         Container contentPane = this.getContentPane();
@@ -109,17 +115,20 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         }
 
         colSize = ass.size() +2;
-        String[][] rowDataW = new String[3][colSize];
+        String[][] rowDataW = new String[4][colSize];
         rowDataW[0][0] = "Weight_Undergraduate";
         rowDataW[1][0] = "Weight_Graduate";
         rowDataW[2][0] = "Total";
+        rowDataW[3][0] = "Scoring_way";
         ArrayList<Double> weight_ug = course.getCriteria_UG().getWeight();
         ArrayList<Double> weight_g = course.getCriteria_G().getWeight();
         for(int c = 2; c < colSize; c++){
             rowDataW[0][c] = weight_ug.get(c-2).toString();
             rowDataW[1][c] = weight_g.get(c-2).toString();
             Double temp = ass.get(c-2).getTotal();
+            String temp2 = ass.get(c-2).getScoring_method();
             rowDataW[2][c] = temp.toString();
+            rowDataW[3][c] = temp2;
         }
         //course.getAssignmentInformation();
         wSheet = new DefaultTableModel(rowDataW, columnNamesW) {
@@ -128,12 +137,15 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                 if (!course.isEnd()){
                     if(course.isShow_Total() && extra == 3){
                         return (columnIndex != 0) & (columnIndex != 1)
-                                & (columnIndex != length - 1)&(columnIndex != length - 2);
+                                & (columnIndex != length - 1)&(columnIndex != length - 2)
+                                & (rowIndex != 3);
                     }
+
                     else if(extra == 3 || course.isShow_Total()){
                         return (columnIndex != 0) & (columnIndex != 1) & (columnIndex != length - 1);
                     }else{
-                        return (columnIndex != 0) & (columnIndex != 1);
+                        return (columnIndex != 0) & (columnIndex != 1)
+                                & (rowIndex != 3);
                     }
                 }else {
                     return false;
@@ -310,38 +322,47 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
 
         pFunc6.setLayout(new FlowLayout());
         pFunc2.setLayout(new FlowLayout());
-        pB6.setLayout(new GridLayout(3,2));
-        pB2.setLayout(new GridLayout(3,1));
+        pB6.setLayout(new GridLayout(2,3));
+        pB2.setLayout(new GridLayout(2,1));
+        pBnote.setLayout(new GridLayout(1,1));
         //set color of button
         complete.setForeground(Color.RED);
         grade.setForeground(Color.BLUE);
+        //noteTime.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        //noteTime.setBackground(Color.WHITE);
+        noteTime.setOpaque(true);
         noteText.setLineWrap(true);
         JScrollPane notePane = new JScrollPane(noteText);
 
         pB6.add(addStudent);
-        pB6.add(removeStudent);
         pB6.add(addColumn);
         pB6.add(report);
+        pB6.add(removeStudent);
         pB6.add(exCredit);
         pB6.add(grade);
-        pB2.add(addNote);
+        pBnote.add(addNote);
         pB2.add(complete);
         pB2.add(back);
 
         pFunc6.add(pB6);
         pFunc2.add(pB2);
-        wp.setBounds(50,50,600,75);
-        jp.setBounds(50,125,600,400);
-        note.setBounds(700,125,200,50);
-        notePane.setBounds(670,175,280,350);
-        pFunc6.setBounds(100,550,400,100);
-        pFunc2.setBounds(700,550,200, 100);
+
+        wp.setBounds(50,50,800,85);
+        jp.setBounds(50,135,800,400);
+        note.setBounds(900,40,200,50);
+        notePane.setBounds(875,90,275,300);
+        noteTime.setBounds(875, 390,275,50);
+        pBnote.setBounds(875,450,265,30);
+        pFunc6.setBounds(100,550,700,100);
+        pFunc2.setBounds(900,550,200, 100);
 
         contentPane.add(jp);
         contentPane.add(wp);
         contentPane.add(notePane);
         //contentPane.add(noteText);
         contentPane.add(note);
+        contentPane.add(noteTime);
+        contentPane.add(pBnote);
         contentPane.add(pFunc6);
         contentPane.add(pFunc2);
         addStudent.addActionListener(this);
@@ -354,7 +375,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         exCredit.addActionListener(this);
         addNote.addActionListener(this);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(1000, 700);
+        setSize(1200, 700);
         setResizable(false);
         setVisible(true);
         tSheet.addMouseListener(this);
@@ -390,6 +411,9 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             }
             new GradeSheet_UI(grading_system,course);
             dispose();
+            //mSheet.fireTableDataChanged();
+            //this.revalidate();
+            System.out.println(grade.getText() + "---" + tGrade + "---"+course.isShow_Total());
         }
         else if(e.getSource() == complete){
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to end this course?");
@@ -509,19 +533,31 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
     public void mouseClicked(MouseEvent e) {
         if(!course.isEnd()) {
             noteText.setText(" ");
+            noteTime.setText(" ");
             int row = -2;
             int col = -2;
             row = tSheet.getSelectedRow();
             col = tSheet.getSelectedColumn();
 
             System.out.println(extra + "--- if extra is existing ");
-            if (extra < 3 || (extra == 3 && col < colSize)) {
+            if (extra < 3  ) {
                 if (row != -2 && col != -2) {
-                    String pullNote = course.getNote(row, col)[0] + "\n Last modification:" + course.getNote(row, col)[1];
+                    String pullNote = course.getNote(row, col)[0];
+                    String pullTime = course.getNote(row,col)[1];
                     System.out.println(course.getNote(row, col) + " ---- note info");
                     noteText.setText(pullNote);
+                    noteTime.setText("<html><p>Last modification:</p>" + pullTime + "</html>");
+                }
+            }else if(extra == 3 && col != tSheet.getColumnCount()-1){
+                if (row != -2 && col != -2) {
+                    String pullNote = course.getNote(row, col)[0];
+                    String pullTime = course.getNote(row,col)[1];
+                    System.out.println(course.getNote(row, col) + " ---- note info");
+                    noteText.setText(pullNote);
+                    noteTime.setText("<html><p>Last modification:</p>" + pullTime + "</html>");
                 }
             }
+//            else if(tGrade == 1)
         }
         //System.out.println(mSheet.getValueAt(row,col));
 
