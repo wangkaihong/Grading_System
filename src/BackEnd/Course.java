@@ -339,7 +339,7 @@ public class Course implements Reportable {
     }
     public int changeAssignment(int index, String name, double total, String scoring_method) {
         //parameters:
-        // index: int: index of assigment you would like to change in the arraylist of assignments
+        // index: int: index of assignment you would like to change in the arraylist of assignments
         // name: String: name of the assignment
         // total: double: total score of the assignment
         // scoring_method: String: scoring method of the assignment
@@ -799,6 +799,8 @@ public class Course implements Reportable {
         if (assignIndex == -1){
             System.out.println("Invalid Assignment Name");
             return null;
+        } else if(assignIndex == this.getAssignments().size() + 1){
+            return reportTotalToUI();
         }
         int i = -1;
         int listSize = 0;
@@ -829,6 +831,44 @@ public class Course implements Reportable {
         res[0][2] = String.valueOf(ave);
         res[0][3] = String.valueOf(med);
 
+        return res;
+    }
+
+    public String[][] reportTotalToUI(){
+        String[][] res = new String[1][4];
+        double min = 0;
+        double max = 0;
+        double ave = 0;
+        double med = 0;
+        ArrayList<Double> listScore = new ArrayList<Double>();
+        double sumD = 0;
+        int i = -1;
+        int listSize = 0;
+        for(Double tempD : this.sheet.getScoreColumn(this.sheet.getAllCell().get(0).size()-1)){
+            if(i >= 0 && this.getStudents().get(i).isRemovedAfterExam() == false){
+                listScore.add(tempD);
+                sumD = sumD + tempD;
+                listSize = listSize + 1;
+            }
+            i = i + 1;
+        }
+        Collections.sort(listScore);
+        min = Collections.min(listScore);
+        max = Collections.max(listScore);
+        if(listSize <= 2){
+            ave = 0;
+        } else {
+            ave = (sumD - min - max) / (listSize - 2);
+        }
+        if(listSize % 2 == 0){
+            med = (listScore.get(listSize/2) + listScore.get(listSize/2-1)) / 2;
+        } else{
+            med = listScore.get(listSize/2);
+        }
+        res[0][0] = String.valueOf(min);
+        res[0][1] = String.valueOf(max);
+        res[0][2] = String.valueOf(ave);
+        res[0][3] = String.valueOf(med);
         return res;
     }
 
