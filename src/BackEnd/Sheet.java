@@ -86,11 +86,11 @@ public class Sheet {
         }
     }
 
-    public void addColumns(int col_number) {
+    public void addColumns(int col_number, double score) {
         for(int i = 0; i < cells.size(); i++) {
             for(int j = 0; j < col_number; j++) {
 //                cells.get(i).add(new Cell());
-                cells.get(i).add(cells.get(i).size()-1,new Cell());
+                cells.get(i).add(cells.get(i).size()-1,new Cell(score));
             }
         }
     }

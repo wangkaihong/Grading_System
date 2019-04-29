@@ -68,7 +68,14 @@ public class Course implements Reportable {
             for(int i = 0; i < previous.assignments.size(); i++) {
                 assignments.add(new Assignment(previous.assignments.get(i)));
             }
-            this.sheet.addColumns(assignments.size());
+            for(int i = 0; i < assignments.size(); i++) {
+                if(assignments.get(i).getScoring_method().equals("deduction")) {
+                    this.sheet.addColumns(1, 1);
+                }
+                else {
+                    this.sheet.addColumns(1, 0);
+                }
+            }
             this.criteria_UG = new Criteria(previous.criteria_UG);
             this.criteria_G = new Criteria(previous.criteria_G);
         }
@@ -304,7 +311,12 @@ public class Course implements Reportable {
                 Assignment assignment = new Assignment(name, total, scoring_method);
                 assignments.add(assignment);
             }
-            sheet.addColumns(1);
+            if(scoring_method.equals("deduction")) {
+                sheet.addColumns(1,1);
+            }
+            else {
+                sheet.addColumns(1,0);
+            }
             FileIO fileIO = new FileIO();
             fileIO.writeAssignment(assignments,courseName+semester);
             fileIO.writeCell(sheet.getAllCell(),courseName+semester);
