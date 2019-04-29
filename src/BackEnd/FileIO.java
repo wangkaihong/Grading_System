@@ -4,6 +4,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.json.simple.JSONObject;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
@@ -38,12 +39,19 @@ public class FileIO {
     then read instances iteratively and construct an arraylist as output.
     */
 
+    private String filePath = "./file";
+
+    public FileIO(){
+        File folderFile = new File("file");
+        folderFile.mkdirs();
+    }
+
     public void writeCriteria(Criteria cri, String filename){
         //Input an instance of Criteria class, write it to JSON file
         JSONObject obj1 = new JSONObject();
         obj1.put("Weights",cri.getWeight());
 
-        try(FileWriter fw1 = new FileWriter(filename+"Criteria.json")){
+        try(FileWriter fw1 = new FileWriter(filePath+"\\"+filename+"Criteria.json")){
             fw1.write(obj1.toJSONString());
             fw1.flush();
 
@@ -57,7 +65,7 @@ public class FileIO {
         //from JSON file name
         JSONParser parser1 = new JSONParser();
         ArrayList<Double> listWeights = new ArrayList<Double>();
-        try (FileReader reader = new FileReader(filename+"Criteria.json")){
+        try (FileReader reader = new FileReader(filePath+"\\"+filename+"Criteria.json")){
             //Read JSON file
             Object obj = parser1.parse(reader);
             JSONObject readCriteria = (JSONObject) obj;
@@ -85,7 +93,7 @@ public class FileIO {
         }
         System.out.println("Try80");//testtest
 
-        try(FileWriter fw1 = new FileWriter(filename+"ExtraCredit.json")){
+        try(FileWriter fw1 = new FileWriter(filePath+"\\"+filename+"ExtraCredit.json")){
             fw1.write(obj1.toJSONString());
             fw1.flush();
 
@@ -100,7 +108,7 @@ public class FileIO {
         JSONParser parser1 = new JSONParser();
         ArrayList<Double> listExtraCredits = new ArrayList<Double>();
         Extra_credit res = new Extra_credit(null);
-        try (FileReader reader = new FileReader(filename+"ExtraCredit.json")){
+        try (FileReader reader = new FileReader(filePath+"\\"+filename+"ExtraCredit.json")){
             //Read JSON file
             Object obj = parser1.parse(reader);
             JSONObject readExtra = (JSONObject) obj;
@@ -145,7 +153,7 @@ public class FileIO {
             count1 = count1 + 1;
         }
 
-        try(FileWriter fw1 = new FileWriter(filename+"Student.json")){
+        try(FileWriter fw1 = new FileWriter(filePath+"\\"+filename+"Student.json")){
             fw1.write(out1.toJSONString());
             fw1.flush();
         } catch (IOException e) {
@@ -162,7 +170,7 @@ public class FileIO {
         String email;
         String id;
         boolean removedAfterExam;
-        try (FileReader reader = new FileReader(filename+"Student.json"))
+        try (FileReader reader = new FileReader(filePath+"\\"+filename+"Student.json"))
         {
             //Read JSON file
             Object obj = parser1.parse(reader);
@@ -225,7 +233,7 @@ public class FileIO {
             count1 = count1 + 1;
         }
 
-        try(FileWriter fw1 = new FileWriter(filename+"Assignment.json")){
+        try(FileWriter fw1 = new FileWriter(filePath+"\\"+filename+"Assignment.json")){
             fw1.write(out1.toJSONString());
             fw1.flush();
         } catch (IOException e) {
@@ -239,7 +247,7 @@ public class FileIO {
         String name;
         double total;
         String scoring_method;
-        try (FileReader reader = new FileReader(filename+"Assignment.json"))
+        try (FileReader reader = new FileReader(filePath+"\\"+filename+"Assignment.json"))
         {
             //Read JSON file
             Object obj = parser1.parse(reader);
@@ -302,7 +310,7 @@ public class FileIO {
             out2.put("jOut2"+Integer.toString(count1),out1);
             count1 = count1 + 1;
         }
-        try(FileWriter fw1 = new FileWriter(filename+"Cell.json")){
+        try(FileWriter fw1 = new FileWriter(filePath+"\\"+filename+"Cell.json")){
             fw1.write(out2.toJSONString());
             fw1.flush();
         } catch (IOException e) {
@@ -318,7 +326,7 @@ public class FileIO {
         String noteDate;
         double score;
 
-        try (FileReader reader = new FileReader(filename+"Cell.json")){
+        try (FileReader reader = new FileReader(filePath+"\\"+filename+"Cell.json")){
             //Read JSON file
             Object obj = parser1.parse(reader);
             JSONObject readCellMatrix = (JSONObject) obj;
@@ -412,7 +420,7 @@ public class FileIO {
             count1 = count1 + 1;
         }
 
-        try(FileWriter fw1 = new FileWriter("CourseList.json")){
+        try(FileWriter fw1 = new FileWriter(filePath+"\\"+"CourseList.json")){
             fw1.write(out1.toJSONString());
             fw1.flush();
         } catch (IOException e) {
@@ -435,7 +443,7 @@ public class FileIO {
         //ArrayList<Criteria> criteria;
         Criteria criUG;
         Criteria criG;
-        try (FileReader reader = new FileReader("CourseList.json")){
+        try (FileReader reader = new FileReader(filePath+"\\"+"CourseList.json")){
             //Read JSON file
             Object obj = parser1.parse(reader);
             JSONObject readCourse = (JSONObject) obj;
@@ -466,7 +474,7 @@ public class FileIO {
             }
         } catch (FileNotFoundException e) {
             //e.printStackTrace();
-            try(FileWriter fw1 = new FileWriter("CourseList.json")){
+            try(FileWriter fw1 = new FileWriter(filePath+"\\"+"CourseList.json")){
                 //fw1.write(out1.toJSONString());
                 fw1.flush();
             } catch (IOException e1) {
@@ -499,7 +507,7 @@ public class FileIO {
             count1 = count1 + 1;
         }
 
-        try(FileWriter fw1 = new FileWriter(filename+"TempAddAssign.json")){
+        try(FileWriter fw1 = new FileWriter(filePath+"\\"+filename+"TempAddAssign.json")){
             fw1.write(out1.toJSONString());
             fw1.flush();
         } catch (IOException e) {
@@ -513,7 +521,7 @@ public class FileIO {
         String name;
         double total;
         String scoring_method;
-        try (FileReader reader = new FileReader(filename+"TempAddAssign.json"))
+        try (FileReader reader = new FileReader(filePath+"\\"+filename+"TempAddAssign.json"))
         {
             //Read JSON file
             Object obj = parser1.parse(reader);
