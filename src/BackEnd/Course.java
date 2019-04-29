@@ -2,6 +2,7 @@ package BackEnd;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -891,6 +892,7 @@ public class Course implements Reportable {
         //
         // return 1 if succeeded, return 2 if unknown error
         double[] res = new double[students.size()];
+        DecimalFormat df  = new DecimalFormat("###.00");
         for(int i = 0; i < res.length ;i++) {
             if(students.get(i) instanceof Undergraduate) {
                 ArrayList<Double> row = sheet.getScoreRow(i + 1);
@@ -901,7 +903,7 @@ public class Course implements Reportable {
                 for(int j = 2; j < row.size() - 1; j++) {
                     score += row.get(j) * criteria_UG.getWeight().get(j - 2);
                 }
-                res[i] = (100 * score);
+                res[i] = Double.valueOf(df.format(100 * score));
             }
             else {
                 ArrayList<Double> row = sheet.getScoreRow(i + 1);
@@ -912,7 +914,7 @@ public class Course implements Reportable {
                 for(int j = 2; j < row.size() - 1; j++) {
                     score += row.get(j) * criteria_G.getWeight().get(j - 2);
                 }
-                res[i] = (100 * score);
+                res[i] = Double.valueOf(df.format(100 * score));
             }
         }
         for(int i = 0; i < students.size(); i++) {
