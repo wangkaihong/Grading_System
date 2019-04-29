@@ -71,6 +71,8 @@ public class Add_Student_info_UI extends JFrame implements ActionListener {
         } else if(e.getSource() == ok){
             dispose();
             filePath = file_path.getText();
+            System.out.println("FILEPATH is"+filePath);//testtest
+            System.out.println(filePath.equals(""));//testtest
             grading_system.addCourse(name,lecturerName,semesterName,filePath,course_ind);
             new Select_Course_UI(grading_system);
         } else if(e.getSource() == returnBack){
