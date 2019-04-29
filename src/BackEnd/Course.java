@@ -257,13 +257,13 @@ public class Course implements Reportable {
         // parameters:
         // index: int: index of student in the arraylist you would like to remove
         //
-        // return 1 if succeeded , return 2 if student not found, return 3 if course is ended, return 4 if unknown error
+        // return 1 if succeeded, return 2 if succeeded, return 3 if student not found, return 4 if course is ended, return 5 if unknown error
         if(end) {
-            return 3;
+            return 4;
         }
         try {
             if (index >= students.size() || index < 0) {
-                return 2;
+                return 3;
             } else {
                 boolean examed = false;
                 ArrayList<Double> row = sheet.getScoreRow(index + 1);
@@ -274,6 +274,10 @@ public class Course implements Reportable {
                 }
                 if(examed) {
                     students.get(index).setRemovedAfterExam(true);
+                    FileIO fileIO = new FileIO();
+                    fileIO.writeCell(sheet.getAllCell(),courseName+semester);
+                    fileIO.writeStudentInfo(students,courseName+semester);
+                    return 2;
                 }
                 else {
                     students.remove(index);
@@ -281,15 +285,15 @@ public class Course implements Reportable {
                         extra_credits.remove(index);
                     }
                     sheet.removeRow(index + 1);
+                    FileIO fileIO = new FileIO();
+                    fileIO.writeCell(sheet.getAllCell(),courseName+semester);
+                    fileIO.writeStudentInfo(students,courseName+semester);
+                    return 1;
                 }
-                FileIO fileIO = new FileIO();
-                fileIO.writeCell(sheet.getAllCell(),courseName+semester);
-                fileIO.writeStudentInfo(students,courseName+semester);
-                return 1;
             }
         }
         catch (Exception e) {
-            return 4;
+            return 5;
         }
     }
     public int addAssignment(String name, double total, String scoring_method, boolean is_exam) {

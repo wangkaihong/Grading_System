@@ -479,13 +479,13 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                     if(state == 1) {
                         mSheet.removeRow(select);
                     }
-                    if(state == 2) {
+                    if(state == 3) {
                         JOptionPane.showMessageDialog(null,"Cannot find such student");
                     }
-                    if(state == 3) {
+                    if(state == 4) {
                         JOptionPane.showMessageDialog(null,"Invalid operation, course is ended");
                     }
-                    if(state == 4) {
+                    if(state == 5) {
                         JOptionPane.showMessageDialog(null,"Unknown error");
                     }
 //                    System.out.println(course.removeStudent(select - 1) + " --- RemoveStudent");
