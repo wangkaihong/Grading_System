@@ -316,7 +316,7 @@ public class Course implements Reportable {
     }
     public int changeAssignment(int index, String name, double total, String scoring_method) {
         //parameters:
-        // index: int: index of assigment you would like to change in the arraylist of assignments
+        // index: int: index of assignment you would like to change in the arraylist of assignments
         // name: String: name of the assignment
         // total: double: total score of the assignment
         // scoring_method: String: scoring method of the assignment
