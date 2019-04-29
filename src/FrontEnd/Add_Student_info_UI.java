@@ -78,10 +78,13 @@ public class Add_Student_info_UI extends JFrame implements ActionListener {
             new Add_Assignment_info_UI(grading_system,name, lecturerName, semesterName);
         } else if(e.getSource() == browse) {
             javax.swing.JFileChooser jFileChooser1 = new JFileChooser();
-            jFileChooser1.showOpenDialog(null);
-            File f = jFileChooser1.getSelectedFile();
-            String fname = f.getAbsolutePath();
-            file_path.setText(fname);
+            try {
+                jFileChooser1.showOpenDialog(null);
+                File f = jFileChooser1.getSelectedFile();
+                String fname = f.getAbsolutePath();
+                file_path.setText(fname);
+            }catch (Exception except) {
+            }
         }
     }
 
