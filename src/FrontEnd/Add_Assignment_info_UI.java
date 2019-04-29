@@ -13,7 +13,8 @@ import java.util.ArrayList;
 
 
 public class Add_Assignment_info_UI extends JFrame implements ActionListener {
-    JPanel importFrom = new JPanel();
+    JPanel importLabel = new JPanel();
+    JPanel importBox = new JPanel();
 
     JPanel buttons = new JPanel();
 
@@ -50,13 +51,15 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
             }
         });
         courses.setSelectedItem(null);
-        importFrom.setLayout(new GridLayout(2,2));
-        importFrom.add(new JLabel("Import From"));
-        importFrom.add(courses);
-        importFrom.add(new JLabel());
-        importFrom.add(new JLabel());
-        importFrom.setBounds(20,20,600,100);
-        contentPane.add(importFrom);
+        courses.setPreferredSize(new Dimension(350, 30));
+
+        importLabel.add(new JLabel("Import From: "));
+        importBox.add(courses);
+
+        importLabel.setBounds(100,105,100,30);
+        importBox.setBounds(150,100,500,30);
+        contentPane.add(importLabel);
+        contentPane.add(importBox);
 
 
 
