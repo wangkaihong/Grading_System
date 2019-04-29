@@ -37,22 +37,25 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
     int extra;
     int colSize;
     Grading_System grading_system;
-    static int end = 0; //q? static or not
-    static int tGrade = 0;
-    static String gName = "Show.TotalGrade";
+//    static int end = 0; //q? static or not
 
 
 
     public GradeSheet_UI(Grading_System grading_system, Course course) {
         this.grading_system = grading_system;
         this.course = course;
-        grade.setText(gName);
-
-        if(tGrade ==1 ){
-            course.setShow_Total(true);
-        }else{
-            course.setShow_Total(false);
+        if(course.isShow_Total()) {
+            grade.setText("Hide.TotalGrade");
         }
+        else {
+            grade.setText("Show.TotalGrade");
+        }
+
+//        if(tGrade ==1 ){
+//            course.setShow_Total(true);
+//        }else{
+//            course.setShow_Total(false);
+//        }
 
         setTitle("Grade Sheet");
         Container contentPane = this.getContentPane();
@@ -81,16 +84,20 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         String[] columnNames = new String[length];
         columnNames[0] = "ID";
         columnNames[1] = "Name";
-        extra = length - ass.size() - tGrade;
+        if(course.isShow_Total()) {
+            extra = length - ass.size() - 1;
+        }
+        else {
+            extra = length - ass.size();
+        }
         System.out.println(extra + " --- if 3 extra good");
-        System.out.println(course.isShow_Total() + " --- if has total" + tGrade);
-        if(extra == 3 && tGrade ==1){
+        if(extra == 3 && course.isShow_Total()){
             columnNames[length-1] = "Extra_credit";
             columnNamesW[length-1] = "Extra_credit";
             columnNames[length-2] = "Total";
             columnNamesW[length-2] = "    ";
         }
-        else if(tGrade ==1){
+        else if(course.isShow_Total()){
             columnNames[length-1] = "Total";
             columnNamesW[length-1] = "    ";
         }else if(extra == 3){
@@ -120,12 +127,12 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         wSheet = new DefaultTableModel(rowDataW, columnNamesW) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                if (end != 2){
-                    if(tGrade == 1 && extra == 3){
+                if (!course.isEnd()){
+                    if(course.isShow_Total() && extra == 3){
                         return (columnIndex != 0) & (columnIndex != 1)
                                 & (columnIndex != length - 1)&(columnIndex != length - 2);
                     }
-                    else if(extra == 3 || tGrade == 1){
+                    else if(extra == 3 || course.isShow_Total()){
                         return (columnIndex != 0) & (columnIndex != 1) & (columnIndex != length - 1);
                     }else{
                         return (columnIndex != 0) & (columnIndex != 1);
@@ -188,12 +195,12 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         mSheet = new DefaultTableModel(rowData, columnNames) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                if(end != 2){
-                    if(tGrade ==1 && extra ==3){
+                if(!course.isEnd()){
+                    if(course.isShow_Total() && extra ==3){
                         return (columnIndex != 0) & (columnIndex != 1)
                                 & (rowIndex != 0) & (columnIndex != length-2);
 
-                    }else if(tGrade ==1){
+                    }else if(course.isShow_Total()){
                         return (columnIndex != 0) & (columnIndex != 1)
                                 & (rowIndex != 0)& (columnIndex != length-1);
 
@@ -310,15 +317,17 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             new ModifyCol_UI(grading_system,course);
         }
         else if(e.getSource() == grade){
-            System.out.println(grade.getText() + "---" + tGrade + "---"+course.isShow_Total());
             if(grade.getText().equals("Show.TotalGrade")) {
-                gName = "Hide.TotalGrade";
-                tGrade = 1;
+                course.setShow_Total(true);
+                FileIO fileIO = new FileIO();
+                fileIO.writeCourse(grading_system.getCourses());
                 //course.setShow_Total(true);
                 //rowData = course.getTable();
             }else{
-                gName = "Show.TotalGrade";
-                tGrade = 0;
+                course.setShow_Total(false);
+                FileIO fileIO = new FileIO();
+                fileIO.writeCourse(grading_system.getCourses());
+
                 //course.setShow_Total(false);
                 //rowData = course.getTable();
             }
@@ -326,7 +335,6 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             dispose();
             //mSheet.fireTableDataChanged();
             //this.revalidate();
-            System.out.println(grade.getText() + "---" + tGrade + "---"+course.isShow_Total());
         }
         else if(e.getSource() == complete){
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to end this course?");
@@ -334,7 +342,9 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                 tSheet.setEnabled(false);
                 titleSheet.setEnabled(false);
                 course.endCourse();
-                end = course.endCourse();
+                FileIO fileIO = new FileIO();
+                fileIO.writeCourse(grading_system.getCourses());
+//                end = course.endCourse();
                 System.out.println(course.endCourse() +" ---- end course");
             }
         }
@@ -395,8 +405,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println(end+ "-----2 is end");
-        if(end != 2) {
+        if(!course.isEnd()) {
             noteText.setText(" ");
             int row = -2;
             int col = -2;
