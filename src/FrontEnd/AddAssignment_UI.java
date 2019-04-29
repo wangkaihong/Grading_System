@@ -29,6 +29,7 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
     JLabel sameWeight = new JLabel("Please check if Weights are same: ");
     JLabel examOrNot = new JLabel("Please check if this assignment is an exam");
     JCheckBox copy = new JCheckBox();
+    //todo check box not safe
     JCheckBox exam = new JCheckBox();
     Course course;
     Grading_System grading_system;
@@ -140,7 +141,7 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
                 }
                 fileIO.writeTempAddAssign(tempAddAssignList,course.getCourseName()+course.getSemester());
                 /*add criteria??? */
-                ModifyCol_UI.addRows(name, totalS, us, gs, scoring);
+                ModifyCol_UI.addRows(name, totalS, us, gs, scoring,isExam);
                 dispose();
                 //=new ModifyCol_UI(grading_system,course);
                 System.out.print("scoring way is :" + scoring);

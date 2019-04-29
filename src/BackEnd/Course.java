@@ -2,6 +2,7 @@ package BackEnd;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -256,13 +257,13 @@ public class Course implements Reportable {
         // parameters:
         // index: int: index of student in the arraylist you would like to remove
         //
-        // return 1 if succeeded , return 2 if student not found, return 3 if course is ended, return 4 if unknown error
+        // return 1 if succeeded, return 2 if succeeded, return 3 if student not found, return 4 if course is ended, return 5 if unknown error
         if(end) {
-            return 3;
+            return 4;
         }
         try {
             if (index >= students.size() || index < 0) {
-                return 2;
+                return 3;
             } else {
                 boolean examed = false;
                 ArrayList<Double> row = sheet.getScoreRow(index + 1);
@@ -273,6 +274,10 @@ public class Course implements Reportable {
                 }
                 if(examed) {
                     students.get(index).setRemovedAfterExam(true);
+                    FileIO fileIO = new FileIO();
+                    fileIO.writeCell(sheet.getAllCell(),courseName+semester);
+                    fileIO.writeStudentInfo(students,courseName+semester);
+                    return 2;
                 }
                 else {
                     students.remove(index);
@@ -280,15 +285,15 @@ public class Course implements Reportable {
                         extra_credits.remove(index);
                     }
                     sheet.removeRow(index + 1);
+                    FileIO fileIO = new FileIO();
+                    fileIO.writeCell(sheet.getAllCell(),courseName+semester);
+                    fileIO.writeStudentInfo(students,courseName+semester);
+                    return 1;
                 }
-                FileIO fileIO = new FileIO();
-                fileIO.writeCell(sheet.getAllCell(),courseName+semester);
-                fileIO.writeStudentInfo(students,courseName+semester);
-                return 1;
             }
         }
         catch (Exception e) {
-            return 4;
+            return 5;
         }
     }
     public int addAssignment(String name, double total, String scoring_method, boolean is_exam) {
@@ -662,7 +667,7 @@ public class Course implements Reportable {
         // cor2: int: coordinate of column of cell to modify
         // score: String: score to be modified
         //
-        // return 1 if succeeded, return 2 if invalid score type, return 3 if course is ended, return 4 if invalid score input, return 5 if unknown error
+        // return 1 if succeeded, return 2 if invalid score type, return 3 if course is ended, return 4 if invalid score input, return 5 if invalid input data type, return 6 if unknown error
         if(end) {
             return 3;
         }
@@ -703,10 +708,10 @@ public class Course implements Reportable {
             return 1;
         }
         catch (NumberFormatException e) {
-            return 2;
+            return 5;
         }
         catch (Exception e) {
-            return 5;
+            return 6;
         }
     }
     public String[] getNote(int cor1,int cor2) { //
@@ -749,13 +754,14 @@ public class Course implements Reportable {
         // none
         //
         // return: 2d String array of information about name, total score, weight for UG, weight for G, scoring method
-        String[][] table = new String[assignments.size()][5];
+        String[][] table = new String[assignments.size()][6];
         for(int i = 0; i < assignments.size();i++) {
             table[i][0] = assignments.get(i).getName();
             table[i][1] = String.valueOf(assignments.get(i).getTotal());
             table[i][2] = String.valueOf(criteria_UG.getWeight().get(i));
             table[i][3] = String.valueOf(criteria_G.getWeight().get(i)); //todo
             table[i][4] = assignments.get(i).getScoring_method();
+            table[i][5] = Boolean.toString(assignments.get(i) instanceof Exam);
         }
         return table;
     }
@@ -804,7 +810,7 @@ public class Course implements Reportable {
         int i = -1;
         int listSize = 0;
         for(Double tempD : this.sheet.getScoreColumn(assignIndex+2)){
-            if(i >= 0 && this.getStudents().get(i).isRemovedAfterExam() == false){
+            if(i >= 0 && !this.getStudents().get(i).isRemovedAfterExam()){
                 listScore.add(tempD);
                 sumD = sumD + tempD;
                 listSize = listSize + 1;
@@ -844,7 +850,7 @@ public class Course implements Reportable {
         int i = -1;
         int listSize = 0;
         for(Double tempD : this.sheet.getScoreColumn(this.sheet.getAllCell().get(0).size()-1)){
-            if(i >= 0 && this.getStudents().get(i).isRemovedAfterExam() == false){
+            if(i >= 0 && !this.getStudents().get(i).isRemovedAfterExam()){
                 listScore.add(tempD);
                 sumD = sumD + tempD;
                 listSize = listSize + 1;
@@ -909,7 +915,10 @@ public class Course implements Reportable {
         // int: index: index in extra credit to be modified
         // double : score: score to bu added
         //
-        // return: int: return 1 if succeeded, return 2 if out of index, return 3 if unknown error.
+        // return: int: return 1 if succeeded, return 2 if out of index, return 3 if course is ended, return 4 if unknown error.
+        if(isEnd()) {
+            return 3;
+        }
         if(index >= extra_credits.getExtra_credits().size()) {
             return 2;
         }
@@ -922,7 +931,7 @@ public class Course implements Reportable {
                 return 1;
             }
             catch (Exception e) {
-                return 3;
+                return 4;
             }
         }
     }
@@ -931,6 +940,7 @@ public class Course implements Reportable {
         //
         // return 1 if succeeded, return 2 if unknown error
         double[] res = new double[students.size()];
+        DecimalFormat df  = new DecimalFormat("###.00");
         for(int i = 0; i < res.length ;i++) {
             if(students.get(i) instanceof Undergraduate) {
                 ArrayList<Double> row = sheet.getScoreRow(i + 1);
@@ -941,7 +951,7 @@ public class Course implements Reportable {
                 for(int j = 2; j < row.size() - 1; j++) {
                     score += row.get(j) * criteria_UG.getWeight().get(j - 2);
                 }
-                res[i] = (100 * score);
+                res[i] = Double.valueOf(df.format(100 * score));
             }
             else {
                 ArrayList<Double> row = sheet.getScoreRow(i + 1);
@@ -952,7 +962,7 @@ public class Course implements Reportable {
                 for(int j = 2; j < row.size() - 1; j++) {
                     score += row.get(j) * criteria_G.getWeight().get(j - 2);
                 }
-                res[i] = (100 * score);
+                res[i] = Double.valueOf(df.format(100 * score));
             }
         }
         for(int i = 0; i < students.size(); i++) {
