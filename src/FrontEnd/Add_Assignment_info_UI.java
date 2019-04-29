@@ -82,11 +82,10 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == next){
-            dispose();
             if (selectNum == -1){
-                JOptionPane.showMessageDialog(null,"If you don't want to import assignments from previous class, please click Skip");
-                new Add_Assignment_info_UI(grading_system,name,lecturerName,semesterName);
+                JOptionPane.showMessageDialog(null,"Please select a course to import or click skip");
             } else {
+                dispose();
                 new Add_Student_info_UI(grading_system, this.name, this.lecturerName, this.semesterName, selectNum);
             }
         } else if (e.getSource() == cancel){
