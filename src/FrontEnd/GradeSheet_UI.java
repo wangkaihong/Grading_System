@@ -14,6 +14,7 @@ import BackEnd.*;
 public class GradeSheet_UI extends JFrame implements ActionListener, MouseListener{
     JPanel pNote = new JPanel();
     JButton addStudent = new JButton("+ Add Student");
+    JButton studentInfo = new JButton("Student Info");
     JButton removeStudent = new JButton("- Remove Student");
     JButton addColumn = new JButton("Alter Assignment");
     JButton back = new JButton("Return Class List");
@@ -39,9 +40,6 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
     int extra;
     int colSize;
     Grading_System grading_system;
-    static int end = 0; //q? static or not
-    static int tGrade = 0;
-    static String gName = "Show.TotalGrade";
 
 
 
@@ -55,11 +53,11 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             grade.setText("Show.TotalGrade");
         }
 
-        if(tGrade ==1 ){
-            course.setShow_Total(true);
-        }else{
-            course.setShow_Total(false);
-        }
+//        if(tGrade ==1 ){
+//            course.setShow_Total(true);
+//        }else{
+//            course.setShow_Total(false);
+//        }
 
         setTitle("Grade Sheet");
         Container contentPane = this.getContentPane();
@@ -322,7 +320,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
 
         pFunc6.setLayout(new FlowLayout());
         pFunc2.setLayout(new FlowLayout());
-        pB6.setLayout(new GridLayout(2,3));
+        pB6.setLayout(new GridLayout(2,4));
         pB2.setLayout(new GridLayout(2,1));
         pBnote.setLayout(new GridLayout(1,1));
         //set color of button
@@ -340,6 +338,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         pB6.add(removeStudent);
         pB6.add(exCredit);
         pB6.add(grade);
+        pB6.add(studentInfo);
         pBnote.add(addNote);
         pB2.add(complete);
         pB2.add(back);
@@ -365,6 +364,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         contentPane.add(pBnote);
         contentPane.add(pFunc6);
         contentPane.add(pFunc2);
+        studentInfo.addActionListener(this);
         addStudent.addActionListener(this);
         removeStudent.addActionListener(this);
         back.addActionListener(this);
@@ -413,7 +413,6 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             dispose();
             //mSheet.fireTableDataChanged();
             //this.revalidate();
-            System.out.println(grade.getText() + "---" + tGrade + "---"+course.isShow_Total());
         }
         else if(e.getSource() == complete){
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to end this course?");
@@ -508,6 +507,13 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                     JOptionPane.showMessageDialog(null,"Unknown error");
                 }
             }
+        }
+        else if(e.getSource() == studentInfo){
+            int select = tSheet.getSelectedRow();
+            if(select == -1){
+                JOptionPane.showMessageDialog(null,"Please select a student");
+            }else{
+            new showStudent_UI(grading_system,course,tSheet.getSelectedRow());}
         }
 //        else{
 //            int selectR = tSheet.getSelectedRow();
