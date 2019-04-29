@@ -314,11 +314,11 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                             mSheet.setValueAt("0.0",row,col);
                             JOptionPane.showMessageDialog(null,"Unknown error!");
                         }
-                        mSheet.fireTableDataChanged();//trytry
+
                         System.out.println(value +" ----change or add score");
                     }
                 }
-
+                mSheet.fireTableDataChanged();//trytry
             }
 
         });
@@ -422,7 +422,6 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         else if(e.getSource() == grade){
             if(grade.getText().equals("Show.TotalGrade")) {
                 course.setShow_Total(true);
-                System.out.println("ISSHOW"+course.isShow_Total());//testtest
                 FileIO fileIO = new FileIO();
                 fileIO.writeCourse(grading_system.getCourses());
             }else{
