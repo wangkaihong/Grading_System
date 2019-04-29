@@ -39,8 +39,6 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
     Grading_System grading_system;
 //    static int end = 0; //q? static or not
 
-
-
     public GradeSheet_UI(Grading_System grading_system, Course course) {
         this.grading_system = grading_system;
         this.course = course;
@@ -158,13 +156,32 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                             weightChange[i] = Double.valueOf((String) wsu);
                         }
                         if(totalSum(weightChange) <=1){
-                            System.out.println(course.changeCriteria_UG(weightChange) + "--- changed weight for underg");
+//                            System.out.println(course.changeCriteria_UG(weightChange) + "--- changed weight for underg");
+                            int state = course.changeCriteria_UG(weightChange);
+                            if(state == 2) {
+                                JOptionPane.showMessageDialog(null,"Sum of weights exceeds 1!");
+                            }
+                            if(state == 3) {
+                                JOptionPane.showMessageDialog(null,"Invalid operation, course is ended!");
+                            }
+                            if(state == 4) {
+                                JOptionPane.showMessageDialog(null,"Unknown error!");
+                            }
                         }else{
                             //show notification
                             JOptionPane.showMessageDialog(null,"Total weights is invalid!");
                             wSheet.setValueAt("0",row,col);
                             weightChange[col-2] = 0;
-                            course.changeCriteria_UG(weightChange);
+                            int state = course.changeCriteria_UG(weightChange);
+                            if(state == 2) {
+                                JOptionPane.showMessageDialog(null,"Sum of weights exceeds 1!");
+                            }
+                            if(state == 3) {
+                                JOptionPane.showMessageDialog(null,"Invalid operation, course is ended!");
+                            }
+                            if(state == 4) {
+                                JOptionPane.showMessageDialog(null,"Unknown error!");
+                            }
                         }
                     }else if(row ==1){
                         for(int i = 0 ; i < size ;i++){
@@ -172,13 +189,31 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                             weightChange[i] = Double.valueOf((String) wsu);
                         }
                         if(totalSum(weightChange) <=1){
-                            System.out.println(course.changeCriteria_G(weightChange) + "--- changed weight for G");
+                            int state = course.changeCriteria_G(weightChange);
+                            if(state == 2) {
+                                JOptionPane.showMessageDialog(null,"Sum of weights exceeds 1!");
+                            }
+                            if(state == 3) {
+                                JOptionPane.showMessageDialog(null,"Invalid operation, course is ended!");
+                            }
+                            if(state == 4) {
+                                JOptionPane.showMessageDialog(null,"Unknown error!");
+                            }
                         }else{
                             //show notification
                             JOptionPane.showMessageDialog(null,"Total weights is invalid!");
                             wSheet.setValueAt("0",row,col);
                             weightChange[col-2] = 0;
-                            course.changeCriteria_G(weightChange);
+                            int state = course.changeCriteria_G(weightChange);
+                            if(state == 2) {
+                                JOptionPane.showMessageDialog(null,"Sum of weights exceeds 1!");
+                            }
+                            if(state == 3) {
+                                JOptionPane.showMessageDialog(null,"Invalid operation, course is ended!");
+                            }
+                            if(state == 4) {
+                                JOptionPane.showMessageDialog(null,"Unknown error!");
+                            }
                         }
                     }else{
                         System.out.println(course.changeTotal(col-2,Double.parseDouble(value)) + "---changing in total");
@@ -222,10 +257,32 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                     String value = (String) mSheet.getValueAt(row,col);
                     if(extra == 3 && e.getColumn() == columnNames.length -1){
                         double val = Double.parseDouble(value);
-                        course.modify(row - 1,val);
+                        int state = course.modify(row - 1,val);
+                        if(state == 2) {
+                            JOptionPane.showMessageDialog(null,"Extra credits out of index!");
+                        }
+                        if(state == 3) {
+                            JOptionPane.showMessageDialog(null,"Invalid operation, course is ended!");
+                        }
+                        if(state == 4) {
+                            JOptionPane.showMessageDialog(null,"Unknown error!");
+                        }
+
                         System.out.println(value +" ----change or add Extra credit");
                     }else{
-                        course.setScore(row, col,value);
+                        int state = course.setScore(row, col,value);
+                        if(state == 2) {
+                            JOptionPane.showMessageDialog(null,"Invalid scoring way!");
+                        }
+                        if(state == 3) {
+                            JOptionPane.showMessageDialog(null,"Invalid operation, course is ended!");
+                        }
+                        if(state == 4) {
+                            JOptionPane.showMessageDialog(null,"Invalid score!");
+                        }
+                        if(state == 5) {
+                            JOptionPane.showMessageDialog(null,"Unknown error!");
+                        }
                         System.out.println(value +" ----change or add score");
                     }
                 }

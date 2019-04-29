@@ -805,7 +805,7 @@ public class Course implements Reportable {
         int i = -1;
         int listSize = 0;
         for(Double tempD : this.sheet.getScoreColumn(assignIndex+2)){
-            if(i >= 0 && this.getStudents().get(i).isRemovedAfterExam() == false){
+            if(i >= 0 && !this.getStudents().get(i).isRemovedAfterExam()){
                 listScore.add(tempD);
                 sumD = sumD + tempD;
                 listSize = listSize + 1;
@@ -845,7 +845,7 @@ public class Course implements Reportable {
         int i = -1;
         int listSize = 0;
         for(Double tempD : this.sheet.getScoreColumn(this.sheet.getAllCell().get(0).size()-1)){
-            if(i >= 0 && this.getStudents().get(i).isRemovedAfterExam() == false){
+            if(i >= 0 && !this.getStudents().get(i).isRemovedAfterExam()){
                 listScore.add(tempD);
                 sumD = sumD + tempD;
                 listSize = listSize + 1;
@@ -910,7 +910,10 @@ public class Course implements Reportable {
         // int: index: index in extra credit to be modified
         // double : score: score to bu added
         //
-        // return: int: return 1 if succeeded, return 2 if out of index, return 3 if unknown error.
+        // return: int: return 1 if succeeded, return 2 if out of index, return 3 if course is ended, return 4 if unknown error.
+        if(isEnd()) {
+            return 3;
+        }
         if(index >= extra_credits.getExtra_credits().size()) {
             return 2;
         }
@@ -923,7 +926,7 @@ public class Course implements Reportable {
                 return 1;
             }
             catch (Exception e) {
-                return 3;
+                return 4;
             }
         }
     }
