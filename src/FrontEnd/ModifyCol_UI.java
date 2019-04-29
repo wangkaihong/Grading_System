@@ -35,7 +35,7 @@ public class ModifyCol_UI extends JFrame implements ActionListener, MouseListene
         FileIO fileIO = new FileIO();
         ArrayList<Assignment> tempNullList = new ArrayList<Assignment>();
         fileIO.writeTempAddAssign(tempNullList,course.getCourseName()+course.getSemester());
-
+        //todo need to add assignment type
         String[] columnNames =  {"Name", "Total", "Weighted_UG", "Weighted_G","Scoring Way"};
         String[][] rowData = course.getAssignmentInformation();
         //item data

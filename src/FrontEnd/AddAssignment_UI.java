@@ -29,6 +29,7 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
     JLabel sameWeight = new JLabel("Please check if Weights are same: ");
     JLabel examOrNot = new JLabel("Please check if this assignment is an exam");
     JCheckBox copy = new JCheckBox();
+    //todo check box not safe
     JCheckBox exam = new JCheckBox();
     Course course;
     Grading_System grading_system;
