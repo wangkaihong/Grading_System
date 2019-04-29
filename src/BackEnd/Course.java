@@ -216,6 +216,11 @@ public class Course implements Reportable {
                     extra_credits.add_one();
                 }
                 sheet.addRows(1);
+                for(int i = 0; i < assignments.size(); i++) {
+                    if(assignments.get(i).getScoring_method().equals("deduction")) {
+                        sheet.getAllCell().get(sheet.getAllCell().size() - 1).get(i + 2).setScore(1);
+                    }
+                }
                 FileIO fileIO = new FileIO();
                 fileIO.writeCell(sheet.getAllCell(),courseName+semester);
                 fileIO.writeStudentInfo(students,courseName+semester);
@@ -229,6 +234,11 @@ public class Course implements Reportable {
                     extra_credits.add_one();
                 }
                 sheet.addRows(1);
+                for(int i = 0; i < assignments.size(); i++) {
+                    if(assignments.get(i).getScoring_method().equals("deduction")) {
+                        sheet.getAllCell().get(sheet.getAllCell().size() - 1).get(i + 2).setScore(1);
+                    }
+                }
                 FileIO fileIO = new FileIO();
                 fileIO.writeStudentInfo(students,courseName+semester);
                 return 1;

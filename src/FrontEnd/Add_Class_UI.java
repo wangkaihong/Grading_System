@@ -69,7 +69,6 @@ public class Add_Class_UI extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == next){
-            dispose();
             name = nameInput.getText();
             lecturerName = lecturerInput.getText();
             semesterName = semesterInput.getText();
@@ -84,6 +83,7 @@ public class Add_Class_UI extends JFrame implements ActionListener {
                         break;
                     }
                 }
+                dispose();
                 new Add_Assignment_info_UI(grading_system,name, lecturerName, semesterName);
             } else {
                 JOptionPane.showMessageDialog(null,"Please input useful information");
