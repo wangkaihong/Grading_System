@@ -313,66 +313,105 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         }
         else if(e.getSource() == addColumn){
 //            mSheet.addColumn("New Column");
-            dispose();
-            new ModifyCol_UI(grading_system,course);
+            if(course.isEnd()) {
+                JOptionPane.showMessageDialog(null,"Invalid operation, course is ended");
+            }
+            else {
+                dispose();
+                new ModifyCol_UI(grading_system, course);
+            }
         }
         else if(e.getSource() == grade){
             if(grade.getText().equals("Show.TotalGrade")) {
                 course.setShow_Total(true);
                 FileIO fileIO = new FileIO();
                 fileIO.writeCourse(grading_system.getCourses());
-                //course.setShow_Total(true);
-                //rowData = course.getTable();
             }else{
                 course.setShow_Total(false);
                 FileIO fileIO = new FileIO();
                 fileIO.writeCourse(grading_system.getCourses());
-
-                //course.setShow_Total(false);
-                //rowData = course.getTable();
             }
             new GradeSheet_UI(grading_system,course);
             dispose();
-            //mSheet.fireTableDataChanged();
-            //this.revalidate();
         }
         else if(e.getSource() == complete){
             int input = JOptionPane.showConfirmDialog(null, "Are you sure to end this course?");
             if(input == 0){
                 tSheet.setEnabled(false);
                 titleSheet.setEnabled(false);
-                course.endCourse();
-                FileIO fileIO = new FileIO();
-                fileIO.writeCourse(grading_system.getCourses());
-//                end = course.endCourse();
-                System.out.println(course.endCourse() +" ---- end course");
+                int state = course.endCourse();
+                if(state == 1) {
+                    FileIO fileIO = new FileIO();
+                    fileIO.writeCourse(grading_system.getCourses());
+                    System.out.println(course.endCourse() + " ---- end course");
+                }
+                if(state == 2) {
+                    JOptionPane.showMessageDialog(null,"Course is already ended!");
+                }
+                if(state == 3) {
+                    JOptionPane.showMessageDialog(null,"Unknown error!");
+                }
             }
         }
         else if(e.getSource() == report){
             new GetReport_UI(grading_system,course);
         }
         else if(e.getSource() == exCredit){
-            int input = JOptionPane.showConfirmDialog(null, "Are you sure to add extra credit?");
-            System.out.println("enter extra---");
-            if(input == 0 && course.extra() != 2){
-                dispose();
-                new GradeSheet_UI(grading_system,course);
-
+            if(course.isEnd()) {
+                JOptionPane.showMessageDialog(null,"Invalid operation, course is ended!");
+            }
+            else {
+                int input = JOptionPane.showConfirmDialog(null, "Are you sure to add extra credit?");
+                System.out.println("enter extra---");
+                int state = course.extra();
+                if (input == 0) {
+                    if (state == 1) {
+                        dispose();
+                        new GradeSheet_UI(grading_system, course);
+                    }
+                    if (state == 2) {
+                        JOptionPane.showMessageDialog(null, "Extra credits are already added!");
+                    }
+                    if (state == 3) {
+                        JOptionPane.showMessageDialog(null, "Unknown error!");
+                    }
+                }
             }
         }
         else if(e.getSource() == addStudent){
-            new Add_Student_single_UI(grading_system,course);
-            dispose();
-
+            if(course.isEnd()) {
+                JOptionPane.showMessageDialog(null,"Invalid operation, course is ended!");
+            }
+            else {
+                new Add_Student_single_UI(grading_system, course);
+                dispose();
+            }
         }
         else if(e.getSource() == removeStudent){
             int select = tSheet.getSelectedRow();
             if(select == -1){
                 JOptionPane.showMessageDialog(null,"Please select a student");
-            }else if(select != 0){
-                mSheet.removeRow(select);
-                System.out.println(course.removeStudent(select-1)+" --- RemoveStudent");
-
+            }
+            else {
+                if (select != 0) {
+                    int state = course.removeStudent(select - 1);
+                    if(state == 1) {
+                        mSheet.removeRow(select);
+                    }
+                    if(state == 2) {
+                        JOptionPane.showMessageDialog(null,"Cannot find such student");
+                    }
+                    if(state == 3) {
+                        JOptionPane.showMessageDialog(null,"Invalid operation, course is ended");
+                    }
+                    if(state == 4) {
+                        JOptionPane.showMessageDialog(null,"Unknown error");
+                    }
+//                    System.out.println(course.removeStudent(select - 1) + " --- RemoveStudent");
+                }
+                else {
+                    JOptionPane.showMessageDialog(null,"Cannot delete this row");
+                }
             }
         }
         else if(e.getSource() == addNote){
@@ -380,14 +419,20 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             int row = tSheet.getSelectedRow();
             String noteS = noteText.getText();
             if(col != -1 && row != -1) {
-                System.out.println(course.setNote(row, col, noteS));
+                int state = course.setNote(row, col, noteS);
+                if(state == 2) {
+                    JOptionPane.showMessageDialog(null,"Invalid operation, course is ended");
+                }
+                if(state == 3) {
+                    JOptionPane.showMessageDialog(null,"Unknown error");
+                }
             }
         }
-        else{
-            int selectR = tSheet.getSelectedRow();
-            int selectC = tSheet.getSelectedColumn();
-            System.out.println(mSheet.getValueAt(selectR,selectC));
-        }
+//        else{
+//            int selectR = tSheet.getSelectedRow();
+//            int selectC = tSheet.getSelectedColumn();
+//            System.out.println(mSheet.getValueAt(selectR,selectC));
+//        }
     }
 
 //    public static void addRows(String id, String name){

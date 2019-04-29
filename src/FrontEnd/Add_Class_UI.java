@@ -86,8 +86,7 @@ public class Add_Class_UI extends JFrame implements ActionListener {
                 dispose();
                 new Add_Assignment_info_UI(grading_system,name, lecturerName, semesterName);
             } else {
-                JOptionPane.showMessageDialog(null,"Please input useful information");
-                new Add_Class_UI(grading_system);
+                JOptionPane.showMessageDialog(null,"Please input valid information");
             }
         } else if(e.getSource() == cancel){
             dispose();
