@@ -100,9 +100,6 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
                 weightedG.setText(weightedU.getText());
             }
         }
-        if (exam.isSelected()){
-
-        }
         //if(e.getSource() == copy)
         if(e.getSource() == ret) {
             dispose();

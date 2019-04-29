@@ -69,10 +69,15 @@ public class Add_Student_info_UI extends JFrame implements ActionListener {
             dispose();
             new Select_Course_UI(grading_system);
         } else if(e.getSource() == ok){
-            dispose();
             filePath = file_path.getText();
-            grading_system.addCourse(name,lecturerName,semesterName,filePath,course_ind);
-            new Select_Course_UI(grading_system);
+            if (filePath.equals("")){
+                dispose();
+                new Add_Student_info_UI(grading_system,name,lecturerName,semesterName,course_ind);
+            } else {
+                dispose();
+                grading_system.addCourse(name, lecturerName, semesterName, filePath, course_ind);
+                new Select_Course_UI(grading_system);
+            }
         } else if(e.getSource() == returnBack){
             dispose();
             new Add_Assignment_info_UI(grading_system,name, lecturerName, semesterName);
