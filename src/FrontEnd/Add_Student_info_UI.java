@@ -71,7 +71,6 @@ public class Add_Student_info_UI extends JFrame implements ActionListener {
         } else if(e.getSource() == ok){
             filePath = file_path.getText();
             if (filePath.equals("")){
-                dispose();
                 JOptionPane.showMessageDialog(null,"Please import students file");
                 new Add_Student_info_UI(grading_system,name,lecturerName,semesterName,course_ind);
             } else {
