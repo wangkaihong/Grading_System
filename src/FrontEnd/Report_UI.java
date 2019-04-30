@@ -62,8 +62,11 @@ public class Report_UI extends JFrame implements ActionListener {
 //        contentPane.add(reportTable);
 
         String[][] analysisData = new String[4][2];
+
+        Report rep = course.getReport(GetReport_UI.getSelect);
+        String[][] content = rep.getContent();
         for (int i = 0; i < 4;i ++) {
-            analysisData[i][1] =course.reportAssignToUI(GetReport_UI.getSelect)[0][i];
+            analysisData[i][1] =content[0][i];
         }
         analysisData[0][0] = "min";
         analysisData[1][0] = "max";

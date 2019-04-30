@@ -3,7 +3,7 @@ package BackEnd;
 /**
  * Created by wangkaihong on 2019/4/9.
  */
-public class Cell implements Reportable {
+public class Cell {
     private Note note;
     private double score;
 
@@ -39,8 +39,5 @@ public class Cell implements Reportable {
 
     public void setScore(double score) {
         this.score = score;
-    }
-    public Report getReport() {
-        return null;
     }
 }

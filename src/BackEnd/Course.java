@@ -1,5 +1,7 @@
 package BackEnd;
 
+import com.sun.org.apache.regexp.internal.RE;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
@@ -375,52 +377,7 @@ public class Course implements Reportable {
             return 7;
         }
     }
-    //    public int addCriteria_UG(double[] weights) {
-//        //parameters:
-//        // weights: double[]: Array of double representing weights
-//        //
-//        //return 1 if succeeded , return 2 if sum of weights is greater than 1, return 3 if course is ended, return 4 if unknown error
-//        if(end) {
-//            return 3;
-//        }
-//        try {
-//            double sum = 0;
-//            for (int i = 0; i < weights.length; i++) {
-//                sum += weights[i];
-//            }
-//            if (sum > 1) {
-//                return 2;
-//            }
-//            this.criteria_UG = new Criteria(weights);
-//            return 1;
-//        }
-//        catch (Exception e) {
-//            return 4;
-//        }
-//    }
-//    public int addCriteria_G(double[] weights) {
-//        //parameters:
-//        // weights: double[]: Array of double representing weights
-//        //
-//        //return 1 if succeeded , return 2 if sum of weights is greater than 1, return 3 if course is ended, return 4 if unknown error
-//        if(end) {
-//            return 3;
-//        }
-//        try {
-//            double sum = 0;
-//            for (int i = 0; i < weights.length; i++) {
-//                sum += weights[i];
-//            }
-//            if (sum > 1) {
-//                return 2;
-//            }
-//            this.criteria_G = new Criteria(weights);
-//            return 1;
-//        }
-//        catch (Exception e) {
-//            return 4;
-//        }
-//    }
+
     public int changeCriteria_UG(double[] weights) {
         //parameters:
         // weights: double[]: Array of double representing weights
@@ -874,62 +831,60 @@ public class Course implements Reportable {
             return 4;
         }
     }
-    public Report getReport() {
+    public Report getReport(int assignIndex) {
         // tbd
-        return null;
-    }
+        {
+            String[][] res = new String[1][4];
+            ArrayList<Double> listScore = new ArrayList<Double>();
+            double min = 0;
+            double max = 0;
+            double ave = 0;
+            double med = 0;
+            double sumD = 0;
 
-    public String[][] reportAssignToUI(int assignIndex){
-        String[][] res = new String[1][4];
-        ArrayList<Double> listScore = new ArrayList<Double>();
-        double min = 0;
-        double max = 0;
-        double ave = 0;
-        double med = 0;
-        double sumD = 0;
+            DecimalFormat df  = new DecimalFormat("#.0000");
 
-        DecimalFormat df  = new DecimalFormat("#.0000");
-
-        if (assignIndex == -1){
-            System.out.println("Invalid Assignment Name");
-            return null;
-        } else if(assignIndex == this.getAssignments().size() + 1){
-            return reportTotalToUI();
-        }
-
-        int i = -1;
-        int listSize = 0;
-        for(Double tempD : this.sheet.getScoreColumn(assignIndex+2)){
-            if(i >= 0 && !this.getStudents().get(i).isRemovedAfterExam()){
-                listScore.add(tempD);
-                sumD = sumD + tempD;
-                listSize = listSize + 1;
+            if (assignIndex == -1){
+                System.out.println("Invalid Assignment Name");
+                return null;
+            } else if(assignIndex == this.getAssignments().size() + 1){
+                return reportTotalToUI();
             }
-            i = i + 1;
-        }
-        //listScore.remove(0);
-        Collections.sort(listScore);
-        min = Collections.min(listScore);
-        max = Collections.max(listScore);
-        if(listSize <= 2){
-            ave = 0;
-        } else {
-            ave = (sumD - min - max) / (listSize - 2);
-        }
-        if(listSize % 2 == 0){
-            med = (listScore.get(listSize/2) + listScore.get(listSize/2-1)) / 2;
-        } else{
-            med = listScore.get(listSize/2);
-        }
-        res[0][0] = String.valueOf(df.format(min));
-        res[0][1] = String.valueOf(df.format(max));
-        res[0][2] = String.valueOf(df.format(ave));
-        res[0][3] = String.valueOf(df.format(med));
 
-        return res;
-    }
+            int i = -1;
+            int listSize = 0;
+            for(Double tempD : this.sheet.getScoreColumn(assignIndex+2)){
+                if(i >= 0 && !this.getStudents().get(i).isRemovedAfterExam()){
+                    listScore.add(tempD);
+                    sumD = sumD + tempD;
+                    listSize = listSize + 1;
+                }
+                i = i + 1;
+            }
+            //listScore.remove(0);
+            Collections.sort(listScore);
+            min = Collections.min(listScore);
+            max = Collections.max(listScore);
+            if(listSize <= 2){
+                ave = 0;
+            } else {
+                ave = (sumD - min - max) / (listSize - 2);
+            }
+            if(listSize % 2 == 0){
+                med = (listScore.get(listSize/2) + listScore.get(listSize/2-1)) / 2;
+            } else{
+                med = listScore.get(listSize/2);
+            }
+            res[0][0] = String.valueOf(df.format(min));
+            res[0][1] = String.valueOf(df.format(max));
+            res[0][2] = String.valueOf(df.format(ave));
+            res[0][3] = String.valueOf(df.format(med));
 
-    public String[][] reportTotalToUI(){
+            Report rep = new Report(res);
+            return rep;
+        }    }
+
+    public Report reportTotalToUI(){
         DecimalFormat df  = new DecimalFormat("#.00");
         String[][] res = new String[1][4];
         double min = 0;
@@ -965,7 +920,9 @@ public class Course implements Reportable {
         res[0][1] = String.valueOf(df.format(max));
         res[0][2] = String.valueOf(df.format(ave));
         res[0][3] = String.valueOf(df.format(med));
-        return res;
+
+        Report rep = new Report(res);
+        return rep;
     }
 
     public int endCourse() {

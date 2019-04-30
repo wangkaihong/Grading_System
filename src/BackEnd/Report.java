@@ -1,7 +1,9 @@
 package BackEnd;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 
 /**
  * Created by wangkaihong on 2019/4/9.
@@ -11,82 +13,31 @@ public class Report {
     * Return statistic data of 1-each assignment, 2-each course to Report_UI
     * including Min, Max, Average(lowest and highest score removed), Median
     */
-    private String report;
-    private ArrayList<Assignment> assignments;
-    private Sheet sheet;
+    private String[][] content;
+    private String time;
 
     public Report() {
+        content = new String[4][2];
+        time = Calendar.getInstance().getTime().toString();
+    }
+    public Report(String[][] content){
+        this.content = content;
+        time = Calendar.getInstance().getTime().toString();
+    }
 
+    public String[][] getContent() {
+        return content;
     }
-    public Report(ArrayList<Assignment> listAssign, Sheet sheet){
-        this.assignments = listAssign;
-        this.sheet = sheet;
-    }
-    public String to_UI() {
-        return null;
-    }
-    public ArrayList<String> reportAssignToUI(int assignIndex){
-        ArrayList<String> res = new ArrayList<String>();
-        ArrayList<Double> listScore = new ArrayList<Double>();
-        double min = 0;
-        double max = 0;
-        double ave = 0;
-        double med = 0;
-        double sumD = 0;
-        if (assignIndex == -1){
-            System.out.println("Invalid Assignment Name");
-            return res;
-        }
-        for(Double tempD : this.sheet.getScoreColumn(assignIndex)){
-            listScore.add(tempD);
-            sumD = sumD + tempD;
-        }
-        int listSize = listScore.size();
-        Collections.sort(listScore);
-        min = Collections.min(listScore);
-        max = Collections.max(listScore);
-        ave = (sumD - min - max) / listSize;
-        if(listSize % 2 == 0){
-            med = (listScore.get(listSize/2) + listScore.get(listSize/2-1)) / 2;
-        } else{
-            med = listScore.get(listSize/2);
-        }
-        res.add(Double.toString(min));
-        res.add(Double.toString(max));
-        res.add(Double.toString(ave));
-        res.add(Double.toString(med));
 
-        return res;
+    public void setContent(String[][] content) {
+        this.content = content;
     }
-    public ArrayList<String> reportCourseToUI(String courseName){
-        ArrayList<String> res = new ArrayList<String>();
-        ArrayList<Double> listScore = new ArrayList<Double>();
-        double min = 0;
-        double max = 0;
-        double ave = 0;
-        double med = 0;
-        double sumD = 0;
-        for(ArrayList<Cell> listCell : this.sheet.getAllCell()){
-            for(Cell tempC : listCell){
-                listScore.add(tempC.getScore());
-                sumD = sumD + tempC.getScore();
-            }
-        }
-        int listSize = listScore.size();
-        Collections.sort(listScore);
-        min = Collections.min(listScore);
-        max = Collections.max(listScore);
-        ave = (sumD - min - max) / listSize;
-        if(listSize % 2 == 0){
-            med = (listScore.get(listSize/2) + listScore.get(listSize/2-1)) / 2;
-        } else{
-            med = listScore.get(listSize/2);
-        }
-        res.add(Double.toString(min));
-        res.add(Double.toString(max));
-        res.add(Double.toString(ave));
-        res.add(Double.toString(med));
 
-        return res;
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }
