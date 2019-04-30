@@ -244,8 +244,23 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                         JOptionPane.showMessageDialog(null,"Invalid input!");
                         wSheet.setValueAt("0.0",row,col);
                     }
-
+                    isDataChanged = true;
+                    wSheet.fireTableDataChanged();//trytry
                 }
+            }
+        });
+
+        wSheet.addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                rowData = course.getTable();
+                DefaultTableModel tempModel = (DefaultTableModel) tSheet.getModel();
+                if(isDataChanged){
+                    isDataChanged = false;
+                    tempModel.setDataVector(rowData,columnNames);
+                    tSheet.repaint();
+                }
+
             }
         });
 
