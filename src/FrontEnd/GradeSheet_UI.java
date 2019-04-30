@@ -23,12 +23,14 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
     JButton report = new JButton("BackEnd.Report");
     JButton exCredit = new JButton("Extra Credit");
     JButton addNote = new JButton("Save Note");
-    JLabel note = new JLabel("Notes");
+    JLabel note = new JLabel("Note");
     JLabel noteTime = new JLabel();
     JPanel pBnote = new JPanel();
-    JPanel pB6 = new JPanel();
+    JPanel pB4 = new JPanel();
+    JPanel pB3 = new JPanel();
     JPanel pB2 = new JPanel();
-    JPanel pFunc6 = new JPanel();
+    JPanel pFunc4 = new JPanel();
+    JPanel pFunc3 = new JPanel();
     JPanel pFunc2 = new JPanel();
     JTextArea noteText = new JTextArea();
     DefaultTableModel mSheet;
@@ -52,8 +54,9 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         else {
             grade.setText("Show.TotalGrade");
         }
+        String title = course.getCourseName();
 
-        setTitle("Grade Sheet");
+        setTitle(title);
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
         /*assignment list*/
@@ -89,7 +92,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         System.out.println(extra + " --- if 3 extra good");
         if(extra == 3 && course.isShow_Total()){
             columnNames[length-1] = "Extra_credit";
-            columnNamesW[length-1] = "Extra_credit";
+            columnNamesW[length-1] = "    ";
             columnNames[length-2] = "Total";
             columnNamesW[length-2] = "    ";
         }
@@ -98,7 +101,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             columnNamesW[length-1] = "    ";
         }else if(extra == 3){
             columnNames[length-1] = "Extra_credit";
-            columnNamesW[length-1] = "Extra_credit";
+            columnNamesW[length-1] = "    ";
         }
         int j = 2;
         for(Assignment a: ass){
@@ -360,9 +363,11 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         JScrollPane wp = new JScrollPane(titleSheet);
 
 
-        pFunc6.setLayout(new FlowLayout());
+        pFunc4.setLayout(new FlowLayout());
+        pFunc3.setLayout(new FlowLayout());
         pFunc2.setLayout(new FlowLayout());
-        pB6.setLayout(new GridLayout(2,4));
+        pB4.setLayout(new GridLayout(1,4));
+        pB3.setLayout(new GridLayout(1,3));
         pB2.setLayout(new GridLayout(2,1));
         pBnote.setLayout(new GridLayout(1,1));
         //set color of button
@@ -374,27 +379,29 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         noteText.setLineWrap(true);
         JScrollPane notePane = new JScrollPane(noteText);
 
-        pB6.add(addStudent);
-        pB6.add(addColumn);
-        pB6.add(report);
-        pB6.add(studentInfo);
-        pB6.add(removeStudent);
-        pB6.add(exCredit);
-        pB6.add(grade);
+        pB4.add(addStudent);
+        pB4.add(removeStudent);
+        pB4.add(studentInfo);
+        pB4.add(exCredit);
+        pB3.add(addColumn);
+        pB3.add(report);
+        pB3.add(grade);
         pBnote.add(addNote);
         pB2.add(complete);
         pB2.add(back);
 
-        pFunc6.add(pB6);
+        pFunc4.add(pB4);
+        pFunc3.add(pB3);
         pFunc2.add(pB2);
-
+        note.setFont(new Font("Serif", Font.PLAIN, 18));
         wp.setBounds(50,50,800,85);
         jp.setBounds(50,135,800,400);
-        note.setBounds(900,40,200,50);
+        note.setBounds(985,40,200,50);
         notePane.setBounds(875,90,275,300);
         noteTime.setBounds(875, 390,275,50);
         pBnote.setBounds(875,450,265,30);
-        pFunc6.setBounds(100,550,700,100);
+        pFunc4.setBounds(100,550,700,50);
+        pFunc3.setBounds(100,590,700,50);
         pFunc2.setBounds(900,550,200, 100);
 
         contentPane.add(jp);
@@ -404,7 +411,8 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         contentPane.add(note);
         contentPane.add(noteTime);
         contentPane.add(pBnote);
-        contentPane.add(pFunc6);
+        contentPane.add(pFunc4);
+        contentPane.add(pFunc3);
         contentPane.add(pFunc2);
         addStudent.addActionListener(this);
         removeStudent.addActionListener(this);

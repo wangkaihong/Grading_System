@@ -24,9 +24,8 @@ public class showStudent_UI extends JFrame implements ActionListener {
     JLabel id = new JLabel();
     JLabel buEmail = new JLabel("Email: ");
     JLabel email = new JLabel();
-    ButtonGroup G2 = new ButtonGroup();
-    JRadioButton grad = new JRadioButton("Graduate");
-    JRadioButton under = new JRadioButton("Undergraduate");
+    JLabel studentType = new JLabel("Student Type: ");
+    JLabel st = new JLabel();
     JButton ret = new JButton("OK");
     Course course;
     Grading_System grading_system;
@@ -37,7 +36,7 @@ public class showStudent_UI extends JFrame implements ActionListener {
 
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
-        infoP.setLayout(new GridLayout(5,2));
+        infoP.setLayout(new GridLayout(6,2));
         infoP.add(firstName);
         infoP.add(fname);
         infoP.add(midName);
@@ -48,6 +47,8 @@ public class showStudent_UI extends JFrame implements ActionListener {
         infoP.add(id);
         infoP.add(buEmail);
         infoP.add(email);
+        infoP.add(studentType);
+        infoP.add(st);
 
         fname.setText(course.getStudents().get(index-1).getFirstName());
         mname.setText(course.getStudents().get(index-1).getMiddleInitial());
@@ -55,36 +56,26 @@ public class showStudent_UI extends JFrame implements ActionListener {
         id.setText(course.getStudents().get(index-1).getStudentId());
         email.setText(course.getStudents().get(index-1).getEmailAddress());
 
-        radioPanel.setLayout(new GridLayout(1,2));
-        radioPanel.add(grad);
-        radioPanel.add(under);
-        grad.enableInputMethods(false);
-        under.enableInputMethods(false);
 
-        G2.add(grad);
-        G2.add(under);
         boolean g = course.getStudents().get(index-1) instanceof Graduate;
         boolean ug = course.getStudents().get(index-1) instanceof Undergraduate;
         if(g == true){
-            grad.setSelected(true);
+            st.setText("Graduate");
         }else if(ug == true){
-            under.setSelected(true);
+            st.setText("Undergraduate");
         }
 
 
-        radioPanel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "Student Type"));
+
 
 
         bntP.add(ret);
         ret.addActionListener(this);
 
 
-        infoP.setBounds(100,50, 450,150 );
-        radioPanel.setBounds(100,200,450,50);
-        bntP.setBounds(115,275,400,50);
+        infoP.setBounds(125,50, 450,150);
+        bntP.setBounds(175,250,250,50);
         contentPane.add(infoP);
-        contentPane.add(radioPanel);
         contentPane.add(bntP);
 
 
