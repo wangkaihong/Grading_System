@@ -41,7 +41,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
     int colSize;
     Grading_System grading_system;
 
-
+    boolean isDataChanged = false;
 
     public GradeSheet_UI(Grading_System grading_system, Course course) {
         this.grading_system = grading_system;
@@ -272,6 +272,9 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
 
             }
         };
+
+        tSheet = new JTable(mSheet);//trytry
+
         mSheet.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
@@ -315,18 +318,34 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                             mSheet.setValueAt("0.0",row,col);
                             JOptionPane.showMessageDialog(null,"Unknown error!");
                         }
-
+                        isDataChanged = true;
+                        mSheet.fireTableDataChanged();//trytry
                         System.out.println(value +" ----change or add score");
                     }
+
                 }
-                mSheet.fireTableDataChanged();//trytry
+
             }
 
         });
 
+        mSheet.addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                rowData = course.getTable();
+                DefaultTableModel tempModel = (DefaultTableModel) tSheet.getModel();
+                if(isDataChanged){
+                    isDataChanged = false;
+                    tempModel.setDataVector(rowData,columnNames);
+                    tSheet.repaint();
+                }
+
+            }
+        });
+
         //weight check
 
-        tSheet = new JTable(mSheet);
+        //tSheet = new JTable(mSheet);//trytry
         // Set the size of scroll panel window
         tSheet.setPreferredScrollableViewportSize(new Dimension(400, 300));
         //spSheet = new JScrollPane(tSheet);
