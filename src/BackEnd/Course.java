@@ -920,7 +920,6 @@ public class Course implements Reportable {
         } else{
             med = listScore.get(listSize/2);
         }
-        
         res[0][0] = String.valueOf(df.format(min));
         res[0][1] = String.valueOf(df.format(max));
         res[0][2] = String.valueOf(df.format(ave));
@@ -961,10 +960,10 @@ public class Course implements Reportable {
         } else{
             med = listScore.get(listSize/2);
         }
-        res[0][0] = df.format(String.valueOf(min));
-        res[0][1] = df.format(String.valueOf(max));
-        res[0][2] = df.format(String.valueOf(ave));
-        res[0][3] = df.format(String.valueOf(med));
+        res[0][0] = String.valueOf(df.format(min));
+        res[0][1] = String.valueOf(df.format(max));
+        res[0][2] = String.valueOf(df.format(ave));
+        res[0][3] = String.valueOf(df.format(med));
         return res;
     }
 
