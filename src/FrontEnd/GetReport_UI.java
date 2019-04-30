@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 public class GetReport_UI extends JFrame implements ActionListener{
+    JPanel selectReportLabel = new JPanel();
     JPanel selectReport = new JPanel();
     JPanel confirmOrNot = new JPanel();
     JLabel select = new JLabel("Select one assignment to view report:");
@@ -34,8 +35,9 @@ public class GetReport_UI extends JFrame implements ActionListener{
 
         JComboBox assignment = new JComboBox(assignmentList);
         assignment.setSelectedItem(null);
+        assignment.setPreferredSize(new Dimension(300, 30));
 
-        selectReport.add(select);
+        selectReportLabel.add(select);
         selectReport.add(assignment);
         confirmOrNot.add(confirm);
         confirmOrNot.add(returnBack);
@@ -51,9 +53,10 @@ public class GetReport_UI extends JFrame implements ActionListener{
             }
         });
 
-        selectReport.setLayout(new GridLayout(2,1));
+
         confirmOrNot.setLayout(new GridLayout(1,2));
-        selectReport.setBounds(10,10,600,50);
+        selectReportLabel.setBounds(40,105,250,30);
+        selectReport.setBounds(300,100,350,30);
 
 
         confirmOrNot.setLayout(new GridLayout(2,1));
@@ -62,7 +65,8 @@ public class GetReport_UI extends JFrame implements ActionListener{
         confirmOrNot.setBounds(420,250,120,60);
 
 
-        contentPane.setLayout(null);;
+        contentPane.setLayout(null);
+        contentPane.add(selectReportLabel);
         contentPane.add(selectReport);
         contentPane.add(confirmOrNot);
 
