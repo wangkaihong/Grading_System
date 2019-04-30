@@ -480,6 +480,7 @@ public class Course implements Reportable {
         // parameters:
         // None
         // return String[][] of content of sheet, first two columns: ID, Name, null of unknown error
+        DecimalFormat df  = new DecimalFormat("#.00");
         try {
             if(show_Total) {
                 if (extra_credits.getExtra_credits() != null) {
@@ -509,13 +510,32 @@ public class Course implements Reportable {
                         table[i][1] = students.get(i - offset_row).getFirstName() + " " + students.get(i - offset_row).getLastName();
                         for (int j = offset_column; j < width - 1; j++) {
                             if (assignments.get(j - offset_column).getScoring_method().equals("raw")) {
-                                table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal());
+                                double s = ((sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal()));
+                                if(String.valueOf(s).length() >= 6) {
+                                    table[i][j] = String.valueOf(df.format(s));
+                                }
+                                else {
+                                    table[i][j] = String.valueOf(s);
+                                }
                             } else {
                                 if (assignments.get(j - offset_column).getScoring_method().equals("deduction")) {
-                                    table[i][j] = String.valueOf(assignments.get(j - offset_column).getTotal() - (sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal()));
+                                    double s = ((assignments.get(j - offset_column).getTotal() - (sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal())));
+                                    if(String.valueOf(s).length() >= 6) {
+                                        table[i][j] = String.valueOf(df.format(s));
+                                    }
+                                    else {
+                                        table[i][j] = String.valueOf(s);
+                                    }
                                 } else {
                                     if (assignments.get(j - offset_column).getScoring_method().equals("percentage")) {
-                                        table[i][j] = String.valueOf(sheet.getCellScore(i, j));
+                                        double s = ((sheet.getCellScore(i, j)));
+                                        if(String.valueOf(s).length() >= 6) {
+                                            table[i][j] = String.valueOf(df.format(s));
+                                        }
+                                        else {
+                                            table[i][j] = String.valueOf(s);
+                                        }
+
                                     } else {
                                         return null;
                                     }
@@ -552,16 +572,36 @@ public class Course implements Reportable {
                         table[i][1] = students.get(i - offset_row).getFirstName() + " " + students.get(i - offset_row).getLastName();
                         for (int j = offset_column; j < width - 1; j++) {
                             if (assignments.get(j - offset_column).getScoring_method().equals("raw")) {
-                                table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal());
+                                double s = ((sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal()));
+                                if(String.valueOf(s).length() >= 6) {
+                                    table[i][j] = String.valueOf(df.format(s));
+                                }
+                                else {
+                                    table[i][j] = String.valueOf(s);
+                                }
                             } else {
                                 if (assignments.get(j - offset_column).getScoring_method().equals("deduction")) {
-                                    table[i][j] = String.valueOf((sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal()) - assignments.get(j - offset_column).getTotal());
+                                    double s = ((assignments.get(j - offset_column).getTotal() - (sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal())));
+                                    if(String.valueOf(s).length() >= 6) {
+                                        table[i][j] = String.valueOf(df.format(s));
+                                    }
+                                    else {
+                                        table[i][j] = String.valueOf(s);
+                                    }
                                 } else {
                                     if (assignments.get(j - offset_column).getScoring_method().equals("percentage")) {
-                                        table[i][j] = String.valueOf(sheet.getCellScore(i, j));
+                                        double s = ((sheet.getCellScore(i, j)));
+                                        if(String.valueOf(s).length() >= 6) {
+                                            table[i][j] = String.valueOf(df.format(s));
+                                        }
+                                        else {
+                                            table[i][j] = String.valueOf(s);
+                                        }
+
                                     } else {
                                         return null;
                                     }
+
                                 }
                             }
                         }
@@ -598,13 +638,32 @@ public class Course implements Reportable {
                         table[i][1] = students.get(i - offset_row).getFirstName() + " " + students.get(i - offset_row).getLastName();
                         for (int j = offset_column; j < width - 1; j++) {
                             if (assignments.get(j - offset_column).getScoring_method().equals("raw")) {
-                                table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal());
+                                double s = ((sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal()));
+                                if(String.valueOf(s).length() >= 6) {
+                                    table[i][j] = String.valueOf(df.format(s));
+                                }
+                                else {
+                                    table[i][j] = String.valueOf(s);
+                                }
                             } else {
                                 if (assignments.get(j - offset_column).getScoring_method().equals("deduction")) {
-                                    table[i][j] = String.valueOf(assignments.get(j - offset_column).getTotal() - (sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal()));
+                                    double s = ((assignments.get(j - offset_column).getTotal() - (sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal())));
+                                    if(String.valueOf(s).length() >= 6) {
+                                        table[i][j] = String.valueOf(df.format(s));
+                                    }
+                                    else {
+                                        table[i][j] = String.valueOf(s);
+                                    }
                                 } else {
                                     if (assignments.get(j - offset_column).getScoring_method().equals("percentage")) {
-                                        table[i][j] = String.valueOf(sheet.getCellScore(i, j));
+                                        double s = ((sheet.getCellScore(i, j)));
+                                        if(String.valueOf(s).length() >= 6) {
+                                            table[i][j] = String.valueOf(df.format(s));
+                                        }
+                                        else {
+                                            table[i][j] = String.valueOf(s);
+                                        }
+
                                     } else {
                                         return null;
                                     }
@@ -639,16 +698,36 @@ public class Course implements Reportable {
                         table[i][1] = students.get(i - offset_row).getFirstName() + " " + students.get(i - offset_row).getLastName();
                         for (int j = offset_column; j < width - 1; j++) {
                             if (assignments.get(j - offset_column).getScoring_method().equals("raw")) {
-                                table[i][j] = String.valueOf(sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal());
+                                double s = ((sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal()));
+                                if(String.valueOf(s).length() >= 6) {
+                                    table[i][j] = String.valueOf(df.format(s));
+                                }
+                                else {
+                                    table[i][j] = String.valueOf(s);
+                                }
                             } else {
                                 if (assignments.get(j - offset_column).getScoring_method().equals("deduction")) {
-                                    table[i][j] = String.valueOf((sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal()) - assignments.get(j - offset_column).getTotal());
+                                    double s = ((assignments.get(j - offset_column).getTotal() - (sheet.getCellScore(i, j) * assignments.get(j - offset_column).getTotal())));
+                                    if(String.valueOf(s).length() >= 6) {
+                                        table[i][j] = String.valueOf(df.format(s));
+                                    }
+                                    else {
+                                        table[i][j] = String.valueOf(s);
+                                    }
                                 } else {
                                     if (assignments.get(j - offset_column).getScoring_method().equals("percentage")) {
-                                        table[i][j] = String.valueOf(sheet.getCellScore(i, j));
+                                        double s = ((sheet.getCellScore(i, j)));
+                                        if(String.valueOf(s).length() >= 6) {
+                                            table[i][j] = String.valueOf(df.format(s));
+                                        }
+                                        else {
+                                            table[i][j] = String.valueOf(s);
+                                        }
+
                                     } else {
                                         return null;
                                     }
+
                                 }
                             }
                         }
@@ -678,6 +757,8 @@ public class Course implements Reportable {
                     return 4;
                 }
                 double input = Double.valueOf(score) / assignments.get(real_cor2).getTotal();
+                DecimalFormat df  = new DecimalFormat("#.00");
+                input = Double.valueOf(df.format(input));
                 sheet.setScore(cor1, cor2, input);
             }
             else {
@@ -686,6 +767,8 @@ public class Course implements Reportable {
                         return 4;
                     }
                     double input = (Double.valueOf(score) + assignments.get(real_cor2).getTotal()) / assignments.get(real_cor2).getTotal();
+                    DecimalFormat df  = new DecimalFormat("#.00");
+                    input = Double.valueOf(df.format(input));
                     sheet.setScore(cor1, cor2, input);
                 }
                 else {
@@ -694,6 +777,8 @@ public class Course implements Reportable {
                             return 4;
                         }
                         double input = Double.valueOf(score);
+                        DecimalFormat df  = new DecimalFormat("#.00");
+                        input = Double.valueOf(df.format(input));
                         sheet.setScore(cor1, cor2, input);
                     }
                     else {
@@ -801,12 +886,16 @@ public class Course implements Reportable {
         double ave = 0;
         double med = 0;
         double sumD = 0;
+
+        DecimalFormat df  = new DecimalFormat("#.0000");
+
         if (assignIndex == -1){
             System.out.println("Invalid Assignment Name");
             return null;
         } else if(assignIndex == this.getAssignments().size() + 1){
             return reportTotalToUI();
         }
+
         int i = -1;
         int listSize = 0;
         for(Double tempD : this.sheet.getScoreColumn(assignIndex+2)){
@@ -831,15 +920,16 @@ public class Course implements Reportable {
         } else{
             med = listScore.get(listSize/2);
         }
-        res[0][0] = String.valueOf(min);
-        res[0][1] = String.valueOf(max);
-        res[0][2] = String.valueOf(ave);
-        res[0][3] = String.valueOf(med);
+        res[0][0] = df.format(String.valueOf(min));
+        res[0][1] = df.format(String.valueOf(max));
+        res[0][2] = df.format(String.valueOf(ave));
+        res[0][3] = df.format(String.valueOf(med));
 
         return res;
     }
 
     public String[][] reportTotalToUI(){
+        DecimalFormat df  = new DecimalFormat("#.00");
         String[][] res = new String[1][4];
         double min = 0;
         double max = 0;
@@ -870,10 +960,10 @@ public class Course implements Reportable {
         } else{
             med = listScore.get(listSize/2);
         }
-        res[0][0] = String.valueOf(min);
-        res[0][1] = String.valueOf(max);
-        res[0][2] = String.valueOf(ave);
-        res[0][3] = String.valueOf(med);
+        res[0][0] = df.format(String.valueOf(min));
+        res[0][1] = df.format(String.valueOf(max));
+        res[0][2] = df.format(String.valueOf(ave));
+        res[0][3] = df.format(String.valueOf(med));
         return res;
     }
 
@@ -940,7 +1030,7 @@ public class Course implements Reportable {
         //
         // return 1 if succeeded, return 2 if unknown error
         double[] res = new double[students.size()];
-        DecimalFormat df  = new DecimalFormat("###.00");
+        DecimalFormat df  = new DecimalFormat("#.00");
         for(int i = 0; i < res.length ;i++) {
             if(students.get(i) instanceof Undergraduate) {
                 ArrayList<Double> row = sheet.getScoreRow(i + 1);
