@@ -763,12 +763,13 @@ public class Course implements Reportable {
             }
             else {
                 if (assignments.get(real_cor2).getScoring_method().equals("deduction")) {
-                    if(Double.valueOf(score) > 0 || Double.valueOf(score) < -assignments.get(real_cor2).getTotal()) {
+                    if(Double.valueOf(score) < 0 || Double.valueOf(score) > assignments.get(real_cor2).getTotal()) {
                         return 4;
                     }
-                    double input = (Double.valueOf(score) + assignments.get(real_cor2).getTotal()) / assignments.get(real_cor2).getTotal();
+                    double input = (-Double.valueOf(score) + assignments.get(real_cor2).getTotal()) / assignments.get(real_cor2).getTotal();
                     DecimalFormat df  = new DecimalFormat("#.00");
                     input = Double.valueOf(df.format(input));
+                    System.out.println("！！！！"+input);
                     sheet.setScore(cor1, cor2, input);
                 }
                 else {
