@@ -763,12 +763,13 @@ public class Course implements Reportable {
             }
             else {
                 if (assignments.get(real_cor2).getScoring_method().equals("deduction")) {
-                    if(Double.valueOf(score) > 0 || Double.valueOf(score) < -assignments.get(real_cor2).getTotal()) {
+                    if(Double.valueOf(score) < 0 || Double.valueOf(score) > assignments.get(real_cor2).getTotal()) {
                         return 4;
                     }
-                    double input = (Double.valueOf(score) + assignments.get(real_cor2).getTotal()) / assignments.get(real_cor2).getTotal();
+                    double input = (-Double.valueOf(score) + assignments.get(real_cor2).getTotal()) / assignments.get(real_cor2).getTotal();
                     DecimalFormat df  = new DecimalFormat("#.00");
                     input = Double.valueOf(df.format(input));
+                    System.out.println("！！！！"+input);
                     sheet.setScore(cor1, cor2, input);
                 }
                 else {
@@ -920,10 +921,10 @@ public class Course implements Reportable {
         } else{
             med = listScore.get(listSize/2);
         }
-        res[0][0] = df.format(String.valueOf(min));
-        res[0][1] = df.format(String.valueOf(max));
-        res[0][2] = df.format(String.valueOf(ave));
-        res[0][3] = df.format(String.valueOf(med));
+        res[0][0] = String.valueOf(df.format(min));
+        res[0][1] = String.valueOf(df.format(max));
+        res[0][2] = String.valueOf(df.format(ave));
+        res[0][3] = String.valueOf(df.format(med));
 
         return res;
     }
@@ -960,10 +961,10 @@ public class Course implements Reportable {
         } else{
             med = listScore.get(listSize/2);
         }
-        res[0][0] = df.format(String.valueOf(min));
-        res[0][1] = df.format(String.valueOf(max));
-        res[0][2] = df.format(String.valueOf(ave));
-        res[0][3] = df.format(String.valueOf(med));
+        res[0][0] = String.valueOf(df.format(min));
+        res[0][1] = String.valueOf(df.format(max));
+        res[0][2] = String.valueOf(df.format(ave));
+        res[0][3] = String.valueOf(df.format(med));
         return res;
     }
 
