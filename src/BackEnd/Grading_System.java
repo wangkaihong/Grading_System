@@ -112,7 +112,7 @@ public class Grading_System {
         }
     }
 
-    public ArrayList<Student> getStudentsFromFile(String student_file_dir) throws FileNotFoundException, InvalidStudentFileException, Exception{
+        public ArrayList<Student> getStudentsFromFile(String student_file_dir) throws FileNotFoundException, InvalidStudentFileException, Exception{
         ArrayList<Student> stduent_list = new ArrayList<>();
         try {
             Scanner scanner = new Scanner(new File(student_file_dir));
