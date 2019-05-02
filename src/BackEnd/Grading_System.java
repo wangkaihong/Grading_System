@@ -159,6 +159,9 @@ public class Grading_System {
         if(courses.remove(previous_Course_ind)==null) {
             return 3;
         }
+        FileIO fileIO = new FileIO();
+        Course deleteCourse = this.getCourses().get(previous_Course_ind);
+        fileIO.deleteClassFile(deleteCourse.getCourseName()+deleteCourse.getSemester());
         return 1;
     }
 
