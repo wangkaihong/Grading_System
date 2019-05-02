@@ -80,16 +80,16 @@ public class ModifyCol_UI extends JFrame implements ActionListener, MouseListene
         confirm.addActionListener(this);
         addRow.addActionListener(this);
         tSheet.addMouseListener(this);
-        pTable.setBounds(50,50,600,500);
-        pFs.setBounds(600,350,400,200);
-        pWaring.setBounds(650,200,300,200);
+        pTable.setBounds(50,50,650,500);
+        pFs.setBounds(625,350,400,200);
+        pWaring.setBounds(670,200,300,200);
         //pWaring.setVisible(false);
         contentPane.add(pTable);
         contentPane.add(pFs);
         contentPane.add(pWaring);
         pWaring.setVisible(false);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setSize(1000, 600);
+        this.setSize(950, 600);
         this.setTitle("Modify Assignment");
         this.setVisible(true);
     }
@@ -187,7 +187,7 @@ public class ModifyCol_UI extends JFrame implements ActionListener, MouseListene
                 new GradeSheet_UI(grading_system, course);
 
             }else{
-                JOptionPane.showMessageDialog(null,"Total weights is invalid!");
+                JOptionPane.showMessageDialog(null,"Total weight is invalid!");
             }
         }
     }

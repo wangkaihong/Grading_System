@@ -21,6 +21,7 @@ public class Select_Course_UI extends JFrame implements ActionListener {
 
 
     JButton enter = new JButton("Enter Course");
+    JButton delete = new JButton("Delete Course");
     JButton add = new JButton("Create New Course");
     JButton logout = new JButton("Log out");
 
@@ -61,11 +62,13 @@ public class Select_Course_UI extends JFrame implements ActionListener {
         add.addActionListener(this);
         enter.addActionListener(this);
         logout.addActionListener(this);
-        buttons.setLayout(new GridLayout(3, 1));
+        delete.addActionListener(this);
+        buttons.setLayout(new GridLayout(4, 1));
         buttons.add(enter);
+        buttons.add(delete);
         buttons.add(add);
         buttons.add(logout);
-        buttons.setBounds(400, 200, 200, 100);
+        buttons.setBounds(400, 200, 200, 120);
         contentPane.add(buttons);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(640, 360);
@@ -95,6 +98,20 @@ public class Select_Course_UI extends JFrame implements ActionListener {
         } else if (e.getSource() == logout) {
             dispose();
             new Grading_System_UI(grading_system);
+        } else if (e.getSource() == delete){
+            if (getSelect == -1){
+                JOptionPane.showMessageDialog(null,"Please select a course");
+            } else {
+                int input = JOptionPane.showConfirmDialog(null, "Are you sure to delete this course?");
+                if (input == JOptionPane.YES_OPTION){
+                    grading_system.deleteCourse(getSelect);
+                    dispose();
+                    new Select_Course_UI(grading_system);
+                } else {
+                    dispose();
+                    new Select_Course_UI(grading_system);
+                }
+            }
         }
     }
 }
