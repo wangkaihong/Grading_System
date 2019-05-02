@@ -27,9 +27,9 @@ public class Grading_System_UI extends JFrame implements ActionListener{
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
 
-        login.setBackground(new java.awt.Color(255, 255, 255));
         login.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         login.setLabel("Log in");
+        login.setForeground(Color.BLUE);
         login.addActionListener(this);
 
 

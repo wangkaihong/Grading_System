@@ -62,7 +62,8 @@ public class Add_Assignment_info_UI extends JFrame implements ActionListener {
         contentPane.add(importBox);
 
 
-
+        next.setForeground(Color.BLUE);
+        cancel.setForeground(Color.RED);
 
         skip.addActionListener(this);
         next.addActionListener(this);

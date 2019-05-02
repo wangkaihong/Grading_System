@@ -52,6 +52,7 @@ public class Add_Class_UI extends JFrame implements ActionListener {
         inputs.setBounds(170,30,350,205);
         contentPane.add(inputs);
 
+        next.setForeground(Color.BLUE);
         next.addActionListener(this);
         cancel.addActionListener(this);
         buttons.setLayout(new GridLayout(2,1));

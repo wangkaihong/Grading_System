@@ -38,6 +38,9 @@ public class Select_Course_UI extends JFrame implements ActionListener {
 
         contentPane.setLayout(null);
 
+        enter.setForeground(Color.BLUE);
+        delete.setForeground(Color.RED);
+
         String defaultMessage ="please select";
         ComboBoxEditor editor= courses.getEditor();
         courses.configureEditor(editor,defaultMessage);

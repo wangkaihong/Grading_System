@@ -44,6 +44,8 @@ public class Add_Student_info_UI extends JFrame implements ActionListener {
         p.add(file_path);
         p.add(browse);
 
+        ok.setForeground(Color.BLUE);
+        cancel.setForeground(Color.RED);
         ok.addActionListener(this);
         cancel.addActionListener(this);
         returnBack.addActionListener(this);
