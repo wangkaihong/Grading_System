@@ -570,4 +570,47 @@ public class FileIO {
         }
         return listAssign;
     }
+
+    public void deleteClassFile(String filename){
+        try{
+            File file = new File(filePath+"\\"+filename+"Criteria.json");
+            if(file.delete()){
+                System.out.println(file.getName() + "deleted");
+            }else{
+                System.out.println("deletion failed");
+            }
+            file = new File(filePath+"\\"+filename+"ExtraCredit.json");
+            if(file.delete()){
+                System.out.println(file.getName() + "deleted");
+            }else{
+                System.out.println("deletion failed");
+            }
+            file = new File(filePath+"\\"+filename+"Student.json");
+            if(file.delete()){
+                System.out.println(file.getName() + "deleted");
+            }else{
+                System.out.println("deletion failed");
+            }
+            file = new File(filePath+"\\"+filename+"Assignment.json");
+            if(file.delete()){
+                System.out.println(file.getName() + "deleted");
+            }else{
+                System.out.println("deletion failed");
+            }
+            file = new File(filePath+"\\"+filename+"Cell.json");
+            if(file.delete()){
+                System.out.println(file.getName() + "deleted");
+            }else{
+                System.out.println("deletion failed");
+            }
+            file = new File(filePath+"\\"+filename+"TempAddAssign.json");
+            if(file.delete()){
+                System.out.println(file.getName() + "deleted");
+            }else{
+                System.out.println("deletion failed");
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 }
