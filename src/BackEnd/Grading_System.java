@@ -112,7 +112,7 @@ public class Grading_System {
         }
     }
 
-    public ArrayList<Student> getStudentsFromFile(String student_file_dir) throws FileNotFoundException, InvalidStudentFileException, Exception{
+        public ArrayList<Student> getStudentsFromFile(String student_file_dir) throws FileNotFoundException, InvalidStudentFileException, Exception{
         ArrayList<Student> stduent_list = new ArrayList<>();
         try {
             Scanner scanner = new Scanner(new File(student_file_dir));
@@ -153,13 +153,23 @@ public class Grading_System {
         // parameters:
         // previous_Course_ind: int :index of the course
         // return 1 if succeeded, return 2 if course not found, return 3 if unknown error
-        if(previous_Course_ind >= courses.size()) {
+        if(previous_Course_ind >= courses.size() || previous_Course_ind < 0) {
             return 2;
         }
-        if(courses.remove(previous_Course_ind)==null) {
+        if(courses.get(previous_Course_ind)==null) {
             return 3;
         }
-        return 1;
+        try {
+            FileIO fileIO = new FileIO();
+            Course deleteCourse = this.getCourses().get(previous_Course_ind);
+            fileIO.deleteClassFile(deleteCourse.getCourseName() + deleteCourse.getSemester());
+            courses.remove(previous_Course_ind);
+            fileIO.writeCourse(getCourses());
+            return 1;
+        }
+        catch (Exception e) {
+            return 3;
+        }
     }
 
     public static void main(String[] args){
