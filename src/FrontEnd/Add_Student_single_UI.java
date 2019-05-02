@@ -96,15 +96,39 @@ public class Add_Student_single_UI extends JFrame implements ActionListener {
             String studentEmail = email.getText();
             String studentType = this.G2.getSelection().getActionCommand().toLowerCase();
 
-            System.out.println(studentType);
             if(studentFName.isEmpty() || studentLName.isEmpty() || studentID.isEmpty()|| studentEmail.isEmpty()
                     || studentEmail.isEmpty() || studentType.isEmpty()){
                 JOptionPane.showMessageDialog(null,"Please fill all the blank!");
             }
             else{
-                System.out.println(course.addStudent(studentFName, studentMName,studentLName,studentID,studentEmail,studentType) + " --- addStudent");
+                int state =course.addStudent(studentFName, studentMName,studentLName,studentID,studentEmail,studentType);
                 //GradeSheet_UI.addRows(studentID,studentFName+" "+ studentLName);
                 //course.getStudents();
+                if(state == 2) {
+                    JOptionPane.showMessageDialog(null,"Invalid First Name");
+                }
+                if(state == 3) {
+                    JOptionPane.showMessageDialog(null,"Invalid Middle Initial");
+                }
+                if(state == 4) {
+                    JOptionPane.showMessageDialog(null,"Invalid Last Name");
+                }
+                if(state == 5) {
+                    JOptionPane.showMessageDialog(null,"Invalid Student ID");
+                }
+                if(state == 6) {
+                    JOptionPane.showMessageDialog(null,"Invalid Email Address");
+                }
+                if(state == 7) {
+                    JOptionPane.showMessageDialog(null,"Invalid Student Type");
+                }
+                if(state == 8) {
+                    JOptionPane.showMessageDialog(null,"Invalid operation, course is ended");
+                }
+                if(state == 9) {
+                    JOptionPane.showMessageDialog(null,"Unknown error");
+                }
+
                 dispose();
                 new GradeSheet_UI(grading_system,course);
             }

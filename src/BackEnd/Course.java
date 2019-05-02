@@ -210,9 +210,7 @@ public class Course implements Reportable {
         try {
             if(studentType.equals("undergraduate")) {
                 Student student = new Undergraduate(firstName, middleInitial, lastName, studentId, emailAddress, false);
-                //System.out.println(student.toString());
                 students.add(student);
-                //System.out.println(student.toString()+"2");
                 if(extra_credits.getExtra_credits() != null) {
                     extra_credits.add_one();
                 }
@@ -724,7 +722,6 @@ public class Course implements Reportable {
                     double input = (-Double.valueOf(score) + assignments.get(real_cor2).getTotal()) / assignments.get(real_cor2).getTotal();
                     DecimalFormat df  = new DecimalFormat("#.00");
                     input = Double.valueOf(df.format(input));
-                    System.out.println("！！！！"+input);
                     sheet.setScore(cor1, cor2, input);
                 }
                 else {
@@ -843,7 +840,6 @@ public class Course implements Reportable {
             DecimalFormat df  = new DecimalFormat("#.0000");
 
             if (assignIndex == -1){
-                System.out.println("Invalid Assignment Name");
                 return null;
             } else if(assignIndex == this.getAssignments().size() + 1){
                 return reportTotalToUI();
@@ -1014,12 +1010,10 @@ public class Course implements Reportable {
         for(int i = 0; i < students.size(); i++) {
             sheet.setScore(i + 1,sheet.getWidth() - 1,res[i]);
         }
-        System.out.print("array:"+res[0]+","+res[1]+","+res[2]);
         return 1;
     }
     public static void main(String[] args) {
         String a = "1a";
         double b = Double.valueOf(a);
-        System.out.print(b);
     }
 }

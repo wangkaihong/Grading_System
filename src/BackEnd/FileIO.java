@@ -82,7 +82,6 @@ public class FileIO {
 
     public void writeExtraCredit(Extra_credit extraCredit, String filename){
         //Input an instance of Extra_credit class, write it to JSON file
-        System.out.println("Try77");//testtest
         JSONObject obj1 = new JSONObject();
         ArrayList<String> tempNull = new ArrayList<String>();
         if(extraCredit.getExtra_credits() == null){
@@ -91,7 +90,6 @@ public class FileIO {
         } else {
             obj1.put("ExtraCredits",extraCredit.getExtra_credits());
         }
-        System.out.println("Try80");//testtest
 
         try(FileWriter fw1 = new FileWriter(filePath+"\\"+filename+"ExtraCredit.json")){
             fw1.write(obj1.toJSONString());
@@ -114,10 +112,8 @@ public class FileIO {
             JSONObject readExtra = (JSONObject) obj;
             ArrayList<String> tempStr = (ArrayList<String>)readExtra.get("ExtraCredits");
             if(tempStr.get(0) instanceof  String){
-                System.out.println("Try106");//testtest
                 res = new Extra_credit(null);
             } else {
-                System.out.println("Try110");//testtest
                 listExtraCredits = (ArrayList<Double>) readExtra.get("ExtraCredits");
                 res = new Extra_credit(listExtraCredits);
             }
@@ -273,7 +269,6 @@ public class FileIO {
                     Assignment assign = new Assignment(name, total, scoring_method);
                     listAssign.add(assign);
                 } else {
-                    System.out.println("Error! Invalid Assignment Type");
                 }
                 i = i + 1;
             }
@@ -407,13 +402,10 @@ public class FileIO {
             //write cell matrix instead of sheet
             writeCell(course.getSheet().getAllCell(), course.getCourseName()+course.getSemester());
             writeStudentInfo(course.getStudents(), course.getCourseName()+course.getSemester());
-            System.out.println("AssignGet"+course.getCriteria_G());//testtest
             writeAssignment(course.getAssignments(), course.getCourseName()+course.getSemester());
             writeCriteria(course.getCriteria_UG(), course.getCourseName()+course.getSemester()+"UG");
             writeCriteria(course.getCriteria_G(), course.getCourseName()+course.getSemester()+"G");
-            System.out.println("Try353");//testtest
             writeExtraCredit(course.getExtra_credits(),course.getCourseName()+course.getSemester());
-            System.out.println("Try355");//testtest
 
             out1.put("jOut"+Integer.toString(count1),obj1);
 
@@ -547,7 +539,6 @@ public class FileIO {
                     Assignment assign = new Assignment(name, total, scoring_method);
                     listAssign.add(assign);
                 } else {
-                    System.out.println("Error! Invalid Assignment Type");
                 }
                 i = i + 1;
             }
@@ -574,47 +565,19 @@ public class FileIO {
     public void deleteClassFile(String filename){
         try{
             File file = new File(filePath+"\\"+filename+"GCriteria.json");
-            if(file.delete()){
-                System.out.println(file.getName() + "deleted");
-            }else{
-                System.out.println("deletion failed");
-            }
+            file.delete();
             file = new File(filePath+"\\"+filename+"UGCriteria.json");
-            if(file.delete()){
-                System.out.println(file.getName() + "deleted");
-            }else{
-                System.out.println("deletion failed");
-            }
+            file.delete();
             file = new File(filePath+"\\"+filename+"ExtraCredit.json");
-            if(file.delete()){
-                System.out.println(file.getName() + "deleted");
-            }else{
-                System.out.println("deletion failed");
-            }
+            file.delete();
             file = new File(filePath+"\\"+filename+"Student.json");
-            if(file.delete()){
-                System.out.println(file.getName() + "deleted");
-            }else{
-                System.out.println("deletion failed");
-            }
+            file.delete();
             file = new File(filePath+"\\"+filename+"Assignment.json");
-            if(file.delete()){
-                System.out.println(file.getName() + "deleted");
-            }else{
-                System.out.println("deletion failed");
-            }
+            file.delete();
             file = new File(filePath+"\\"+filename+"Cell.json");
-            if(file.delete()){
-                System.out.println(file.getName() + "deleted");
-            }else{
-                System.out.println("deletion failed");
-            }
+            file.delete();
             file = new File(filePath+"\\"+filename+"TempAddAssign.json");
-            if(file.delete()){
-                System.out.println(file.getName() + "deleted");
-            }else{
-                System.out.println("deletion failed");
-            }
+            file.delete();
         }catch(Exception e){
             e.printStackTrace();
         }

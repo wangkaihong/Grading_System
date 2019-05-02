@@ -61,7 +61,25 @@ public class ModifyCol_UI extends JFrame implements ActionListener, MouseListene
                         String totalS = (String)table.getValueAt(row,1);
                         String way = (String) table.getValueAt(row,4);
                         double total = Double.parseDouble(totalS);
-                        System.out.println(course.changeAssignment(row,name,total,way) + "---- change assign");
+                        int state = course.changeAssignment(row,name,total,way);
+                        if(state == 2) {
+                            JOptionPane.showMessageDialog(null, "Assignment not found!");
+                        }
+                        if(state == 3) {
+                            JOptionPane.showMessageDialog(null, "Invalid assignment name!");
+                        }
+                        if(state == 4) {
+                            JOptionPane.showMessageDialog(null, "Invalid total score!");
+                        }
+                        if(state == 5) {
+                            JOptionPane.showMessageDialog(null, "Invalid scoring way!");
+                        }
+                        if(state == 6) {
+                            JOptionPane.showMessageDialog(null, "Invalid operation, course is ended!");
+                        }
+                        if(state == 7) {
+                            JOptionPane.showMessageDialog(null, "Unknown error!");
+                        }
                     }
 
                 }
@@ -164,10 +182,7 @@ public class ModifyCol_UI extends JFrame implements ActionListener, MouseListene
                         }
                     }
                 } else {
-                    System.out.println("Invalid Assignments");
                 }
-//                System.out.println(course.changeCriteria_G(weightGpush) + "add Gweight");
-//                System.out.println(course.changeCriteria_UG(weightUpush) + "add Uweight");
                 int state1 = course.changeCriteria_G(weightGpush);
                 int state2 = course.changeCriteria_UG(weightUpush);
                 if(state1 == 2 || state2 == 2) {
@@ -216,7 +231,6 @@ public class ModifyCol_UI extends JFrame implements ActionListener, MouseListene
             totalWeightG += amountG;
 
         }
-        System.out.println(totalWeight + "--total weight");
         if(totalWeight > 1 || totalWeightG > 1){
             pWaring.setVisible(true);
         }else{

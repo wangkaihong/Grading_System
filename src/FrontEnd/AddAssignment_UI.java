@@ -144,7 +144,6 @@ public class AddAssignment_UI extends JFrame implements ActionListener {
                 ModifyCol_UI.addRows(name, totalS, us, gs, scoring,isExam);
                 dispose();
                 //=new ModifyCol_UI(grading_system,course);
-                System.out.print("scoring way is :" + scoring);
             }
         }
     }
