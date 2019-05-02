@@ -183,7 +183,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                                 }
                             } else {
                                 //show notification
-                                JOptionPane.showMessageDialog(null, "Total weights is invalid!");
+                                JOptionPane.showMessageDialog(null, "Total weight is invalid!");
                                 wSheet.setValueAt("0.0", row, col);
                                 weightChange[col - 2] = 0;
                                 int state = course.changeCriteria_UG(weightChange);
@@ -222,7 +222,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                                 }
                             } else {
                                 //show notification
-                                JOptionPane.showMessageDialog(null, "Total weights is invalid!");
+                                JOptionPane.showMessageDialog(null, "Total weight is invalid!");
                                 wSheet.setValueAt("0.0", row, col);
                                 weightChange[col - 2] = 0;
                                 int state = course.changeCriteria_G(weightChange);
