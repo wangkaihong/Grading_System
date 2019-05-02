@@ -573,7 +573,13 @@ public class FileIO {
 
     public void deleteClassFile(String filename){
         try{
-            File file = new File(filePath+"\\"+filename+"Criteria.json");
+            File file = new File(filePath+"\\"+filename+"GCriteria.json");
+            if(file.delete()){
+                System.out.println(file.getName() + "deleted");
+            }else{
+                System.out.println("deletion failed");
+            }
+            file = new File(filePath+"\\"+filename+"UGCriteria.json");
             if(file.delete()){
                 System.out.println(file.getName() + "deleted");
             }else{
