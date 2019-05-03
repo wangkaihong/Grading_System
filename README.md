@@ -4,12 +4,12 @@ Eplus is a user-friendly grading system for lecturers with outstanding performan
 
 ## Environmental prerequisite:
 
-|            | Mac                          |  Windows                                   |
-| --------   | -----:                       | :----:                                     |
+|            |            Mac               |  Windows                                   |
+| --------   | :-----:                       | :----:                                     |
 | OS         | OS X Mavericks 10.9 or newer |   Windows 7 or newer                       |
 | Processor  | Dual core from Intel         |   Dual core from Intel or AMD at 2.8 GHz   |
 | Memory     | 4 GB RAM                     |   4 GB RAM                                 |
-| JDK        | Java 7.0 or above                                                         |
+| JDK        | Java 7.0 or above            |   Java 7.0 or above                        |
 
 
 ## Installation:
