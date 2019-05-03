@@ -13,8 +13,8 @@ Eplus is a user-friendly grading system for lecturers with outstanding performan
 
 
 ## Installation:
-1. To implement JSON Simple Lib, first, download the json-simple-1.1.1.jar file (already provided in the archive); 
-2. Then Click “File” from the toolbar, select “Project Structure”; 
+1. To implement JSON Simple Lib, first, download the json-simple-1.1.1.jar file (already provided in the archive).
+2. Then Click “File” from the toolbar, select “Project Structure”.
 3. Select json-simple-1.1.1.jar at the left panel; Dependencies tab, this module will be added to the project.  
 4. A csv file including students information is also provided.
 
