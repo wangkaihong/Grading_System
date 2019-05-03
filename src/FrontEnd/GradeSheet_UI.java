@@ -454,7 +454,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
             }
         }
         else if(e.getSource() == grade){
-            if(grade.getText().equals("Show.TotalGrade")) {
+            if(grade.getText().equals("Show TotalGrade")) {
                 course.setShow_Total(true);
                 FileIO fileIO = new FileIO();
                 fileIO.writeCourse(grading_system.getCourses());
