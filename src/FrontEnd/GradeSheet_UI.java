@@ -54,7 +54,7 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
         else {
             grade.setText("Show TotalGrade");
         }
-        String title = course.getCourseName();
+        String title = course.getCourseName() + " " + course.getSemester();
 
         setTitle(title);
         Container contentPane = this.getContentPane();
@@ -229,6 +229,16 @@ public class GradeSheet_UI extends JFrame implements ActionListener, MouseListen
                                 }
                             }
                         } else {
+                            int state = course.changeTotal(col - 2, Double.parseDouble(value));
+                            if (state == 2) {
+                                JOptionPane.showMessageDialog(null, "Assignment not found!");
+                            }
+                            if (state == 3) {
+                                JOptionPane.showMessageDialog(null, "Invalid operation, course is ended!");
+                            }
+                            if (state == 4) {
+                                JOptionPane.showMessageDialog(null, "Unknown error!");
+                            }
                         }
                     }
                     catch (Exception e2) {
