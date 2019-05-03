@@ -114,9 +114,13 @@ public class Grading_System_UI extends JFrame implements ActionListener{
 
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == login){
-            dispose();
-
-            new Select_Course_UI(grading_system);
+            if(inputUserName.getText().equals("cpk") && String.valueOf(inputPassWord.getPassword()).equals("1234")) {
+                dispose();
+                new Select_Course_UI(grading_system);
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Incorrect username or password!");
+            }
         }
     }
     public static void main(String[] args) {
